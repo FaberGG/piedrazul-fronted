@@ -2,10 +2,8 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-lista-citas-page',
-  template: `
-    <h1>Agenda</h1>
-    <p>Infraestructura base lista para implementar RF-01.</p>
-  `
+  templateUrl: './lista-citas-page.component.html',
+  styleUrl: './lista-citas-page.component.css'
 })
 export class ListaCitasPageComponent {}
 

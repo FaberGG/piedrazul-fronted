@@ -1,0 +1,8 @@
+<header class="topbar">
+  <div>
+    <strong>{{ authService.currentUser()?.nombreCompleto || 'Usuario' }}</strong>
+    <span class="topbar__role">{{ authService.currentUser()?.rol || '' }}</span>
+  </div>
+  <button type="button" (click)="logout()">Cerrar sesion</button>
+</header>
+

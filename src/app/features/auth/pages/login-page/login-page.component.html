@@ -1,0 +1,23 @@
+<section class="login-page">
+  <h1>Iniciar sesion</h1>
+  <form [formGroup]="form" (ngSubmit)="submit()" class="login-page__form">
+    <label>
+      Usuario
+      <input type="text" formControlName="username" />
+    </label>
+
+    <label>
+      Contrasena
+      <input type="password" formControlName="password" />
+    </label>
+
+    @if (errorMessage()) {
+      <p class="login-page__error">{{ errorMessage() }}</p>
+    }
+
+    <button type="submit" [disabled]="form.invalid || isLoading()">
+      {{ isLoading() ? 'Ingresando...' : 'Ingresar' }}
+    </button>
+  </form>
+</section>
+

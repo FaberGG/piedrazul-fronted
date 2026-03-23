@@ -7,54 +7,8 @@ import { AuthService } from '../../../../core/auth/auth.service';
 @Component({
   selector: 'app-login-page',
   imports: [ReactiveFormsModule],
-  template: `
-    <section class="login-page">
-      <h1>Iniciar sesion</h1>
-      <form [formGroup]="form" (ngSubmit)="submit()" class="login-page__form">
-        <label>
-          Usuario
-          <input type="text" formControlName="username" />
-        </label>
-
-        <label>
-          Contrasena
-          <input type="password" formControlName="password" />
-        </label>
-
-        @if (errorMessage()) {
-          <p class="login-page__error">{{ errorMessage() }}</p>
-        }
-
-        <button type="submit" [disabled]="form.invalid || isLoading()">
-          {{ isLoading() ? 'Ingresando...' : 'Ingresar' }}
-        </button>
-      </form>
-    </section>
-  `,
-  styles: [
-    `
-      .login-page {
-        max-width: 360px;
-        margin: 3rem auto;
-        padding: 1rem;
-      }
-
-      .login-page__form {
-        display: grid;
-        gap: 0.75rem;
-      }
-
-      .login-page__error {
-        color: #b91c1c;
-        margin: 0;
-      }
-
-      label {
-        display: grid;
-        gap: 0.25rem;
-      }
-    `
-  ]
+  templateUrl: './login-page.component.html',
+  styleUrl: './login-page.component.css'
 })
 export class LoginPageComponent {
   private readonly fb = inject(FormBuilder);
