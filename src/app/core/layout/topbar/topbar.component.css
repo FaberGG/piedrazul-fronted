@@ -2,12 +2,122 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.75rem 1rem;
-  border-bottom: 1px solid #e5e7eb;
+  gap: 1rem;
+  padding: 1.25rem 2.5rem;
+  border-radius: var(--layout-radius) var(--layout-radius) 0 0;
+  background: var(--neutro-white);
+  color: var(--neutro-gray-700);
+  transition: padding 180ms ease, box-shadow 180ms ease;
 }
 
-.topbar__role {
-  margin-left: 0.5rem;
-  color: #6b7280;
+.topbar__section {
+  min-width: 0;
+}
+
+.topbar__title {
+  margin: 0;
+  font-size: var(--font-size-topbar-title);
+  color: var(--neutro-gray-700);
+  font-weight: 500;
+  transition: font-size 180ms ease;
+}
+
+.topbar__description {
+  margin: 0.2rem 0 0;
+  color: var(--neutro-gray-500);
+  font-size: var(--font-size-topbar-description);
+  transition: opacity 150ms ease;
+}
+
+.topbar__profile {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+
+}
+
+.topbar__avatar {
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 50%;
+  background: var(--blue-green-500);
+  color: var(--neutro-white);
+  font-weight: 700;
+  display: grid;
+  place-items: center;
+}
+
+.topbar__user {
+  display: grid;
+  gap: 0.1rem;
+}
+
+.topbar__name {
+  font-size: var(--font-size-topbar-user-name);
+  font-weight: 500;
+}
+
+.topbar__email {
+  color: var(--neutro-gray-300);
+  font-size: var(--font-size-topbar-user-email);
+  font-weight: 400;
+}
+
+.topbar__account-switch {
+  width: 2rem;
+  height: 2rem;
+  border: 0;
+  background: var(--neutro-white);
+  color: var(--blue-green-500);
+  border-radius: 50%;
+  font-size: var(--font-size-base);
+  display: grid;
+  place-items: center;
+}
+
+.topbar__account-switch:disabled {
+  opacity: 1;
+  cursor: default;
+}
+
+.topbar--compact {
+  padding-top: 0.7rem;
+  padding-bottom: 0.7rem;
+  box-shadow: 0 8px 16px -16px var(--neutro-gray-700);
+}
+
+.topbar--compact .topbar__title {
+  font-size: 1.25rem;
+}
+
+.topbar--compact .topbar__description {
+  display: none;
+}
+
+.topbar--compact .topbar__avatar {
+  display: none;
+}
+
+.topbar--compact .topbar__user {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.topbar--compact .topbar__email {
+  white-space: nowrap;
+}
+
+@media (max-width: 720px) {
+  .topbar {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1rem 1.25rem;
+  }
+
+  .topbar__profile {
+    width: 100%;
+    justify-content: space-between;
+  }
 }
 

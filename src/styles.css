@@ -1,1 +1,65 @@
-/* You can add global styles to this file, and also import other style files */
+
+:root {
+  --font-family-base: 'Inter', sans-serif;
+  --font-size-base: 1rem;
+  --font-size-sm: 0.875rem;
+  --font-size-topbar-title: 1.5rem;
+  --font-size-topbar-description: 1rem;
+  --font-size-topbar-user-name: 1rem;
+  --font-size-topbar-user-email: 0.875rem;
+
+  --blue-green-50: #e6f4f9;
+  --blue-green-100: #c8eaf2;
+  --blue-green-200: #99dae9;
+  --blue-green-300: #68cbe1;
+  --blue-green-400: #35bfdc;
+  --blue-green-500: #00b4d8;
+  --blue-green-600: #0069ae;
+  --blue-green-700: #002e7f;
+  --blue-green-800: #00084d;
+  --blue-green-900: #000017;
+  --neutro-white: #f9fafa;
+  --neutro-gray-100: #d3dcde;
+  --neutro-gray-200: #bbcbce;
+  --neutro-gray-300: #a3b8bd;
+  --neutro-gray-400: #729299;
+  --neutro-gray-500: #607f85;
+  --neutro-gray-600: #445d62;
+  --neutro-gray-700: #1d3337;
+  --neutro-gray-800: #0e1f23;
+  --neutro-gray-900: #061a1e;
+  --neutro-black: #000f0f;
+
+  --layout-padding: 1rem;
+  --layout-gap: 0.3rem;
+  --layout-radius: 20px;
+  --menu-item-radius: 10px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  font-size: 16px;
+  font-family: var(--font-family-base);
+}
+
+body {
+  background: var(--blue-green-200);
+  color: var(--neutro-gray-700);
+}
+
+button,
+input,
+select,
+textarea {
+  font-family: var(--font-family-base);
+}
+
+a {
+  color: inherit;
+}

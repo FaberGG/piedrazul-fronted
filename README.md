@@ -11,6 +11,7 @@ Sistema web de agendamiento de citas médicas para la **Red de Servicios Médico
 - [Estructura de carpetas](#estructura-de-carpetas)
 - [Configuración y ejecución](#configuración-y-ejecución)
 - [Variables de entorno](#variables-de-entorno)
+- [Guia de estandares UI](#guia-de-estandares-ui)
 - [Guía de contribución](#guía-de-contribución)
 
 ---
@@ -249,6 +250,14 @@ production:   true
 ```
 
 > `environment.prod.ts` no debe contener credenciales ni datos sensibles. Si el despliegue requiere variables en tiempo de ejecución, usar un mecanismo de configuración externa (variables de entorno del servidor o un archivo de configuración inyectado en el CI/CD).
+
+---
+
+## Guia de estandares UI
+
+Para mantener consistencia visual (tipografia, colores, espaciados, estados y uso de tokens), consultar:
+
+- `guia-estandares-ui.md`
 
 ---
 

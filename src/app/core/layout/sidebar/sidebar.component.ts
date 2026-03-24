@@ -7,6 +7,7 @@ import { ROLES } from '../../../shared/constants/roles';
 interface MenuItem {
   label: string;
   path: string;
+  iconClass: string;
   allowedRoles: string[];
 }
 
@@ -21,14 +22,27 @@ export class SidebarComponent {
 
   private readonly items: MenuItem[] = [
     {
-      label: 'Agenda',
+      label: 'Agendar cita',
       path: '/agenda',
+      iconClass: 'fa-regular fa-calendar-plus',
       allowedRoles: [ROLES.ADMIN, ROLES.AGENDADOR, ROLES.MEDICO]
     },
     {
       label: 'Configuracion',
       path: '/configuracion',
+      iconClass: 'fa-solid fa-sliders',
       allowedRoles: [ROLES.ADMIN]
+    }
+  ];
+
+  readonly utilityItems = [
+    {
+      label: 'Ajustes',
+      iconClass: 'fa-solid fa-gear'
+    },
+    {
+      label: 'Ayuda y soporte',
+      iconClass: 'fa-solid fa-circle-question'
     }
   ];
 
@@ -40,5 +54,10 @@ export class SidebarComponent {
 
     return this.items.filter((item) => item.allowedRoles.includes(role));
   });
+
+
+  logout(): void {
+    this.authService.logout();
+  }
 }
 

@@ -10,13 +10,21 @@ export const configuracionRoutes: Routes = [
     path: '',
     component: ConfiguracionMedicoPageComponent,
     canActivate: [roleGuard],
-    data: { roles: [ROLES.ADMIN] }
+    data: {
+      roles: [ROLES.ADMIN],
+      sectionTitle: 'Configuracion de medicos',
+      sectionDescription: 'Ajusta parametros de atencion y horarios por medico.'
+    }
   },
   {
     path: 'global',
     component: ConfiguracionGlobalPageComponent,
     canActivate: [roleGuard],
-    data: { roles: [ROLES.ADMIN] }
+    data: {
+      roles: [ROLES.ADMIN],
+      sectionTitle: 'Configuracion global',
+      sectionDescription: 'Administra reglas generales del sistema de agendamiento.'
+    }
   }
 ];
 

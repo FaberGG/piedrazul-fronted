@@ -1,8 +1,20 @@
-<header class="topbar">
-  <div>
-    <strong>{{ authService.currentUser()?.nombreCompleto || 'Usuario' }}</strong>
-    <span class="topbar__role">{{ authService.currentUser()?.rol || '' }}</span>
+<header class="topbar" [class.topbar--compact]="isCompact()">
+  <div class="topbar__section">
+    <h1 class="topbar__title">{{ sectionTitle() }}</h1>
+    <p class="topbar__description">{{ sectionDescription() }}</p>
   </div>
-  <button type="button" (click)="logout()">Cerrar sesion</button>
+
+  <div class="topbar__profile">
+    <div class="topbar__avatar" aria-hidden="true">{{ userInitials() }}</div>
+
+    <div class="topbar__user">
+      <strong class="topbar__name">{{ authService.currentUser()?.nombreCompleto || 'Usuario' }}</strong>
+      <span class="topbar__email">{{ authService.currentUser()?.username || 'sin-correo@piedrazul.local' }}</span>
+    </div>
+
+    <button type="button" class="topbar__account-switch" aria-label="Cambiar cuenta" disabled>
+      <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+    </button>
+  </div>
 </header>
 

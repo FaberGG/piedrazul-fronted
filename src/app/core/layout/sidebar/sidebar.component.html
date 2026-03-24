@@ -1,15 +1,38 @@
 <aside class="sidebar">
-  <h2 class="sidebar__title">Piedrazul</h2>
-  <nav class="sidebar__nav">
+  <div class="sidebar__logo">
+    <div class="sidebar__logo-mark">PZ</div>
+    <div>
+      <h2 class="sidebar__title">PiedraAzul</h2>
+      <p class="sidebar__subtitle">Sistema de citas</p>
+    </div>
+  </div>
+
+  <nav class="sidebar__nav" aria-label="Menu principal">
     @for (item of visibleItems(); track item.path) {
       <a
         [routerLink]="item.path"
         routerLinkActive="sidebar__link--active"
+        [routerLinkActiveOptions]="{ exact: item.path === '/agenda' }"
         class="sidebar__link"
       >
-        {{ item.label }}
+        <i [class]="item.iconClass + ' sidebar__icon'" aria-hidden="true"></i>
+        <span>{{ item.label }}</span>
       </a>
     }
   </nav>
+
+  <div class="sidebar__footer" aria-label="Menu secundario">
+    @for (item of utilityItems; track item.label) {
+      <button type="button" class="sidebar__link sidebar__link--utility" aria-disabled="true">
+        <i [class]="item.iconClass + ' sidebar__icon'" aria-hidden="true"></i>
+        <span>{{ item.label }}</span>
+      </button>
+    }
+
+    <button type="button" class="sidebar__link sidebar__link--button" (click)="logout()">
+      <i class="fa-solid fa-right-from-bracket sidebar__icon" aria-hidden="true"></i>
+      <span>Cerrar sesion</span>
+    </button>
+  </div>
 </aside>
 
