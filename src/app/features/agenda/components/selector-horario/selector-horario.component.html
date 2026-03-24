@@ -1,0 +1,163 @@
+<section class="selector-horario" [formGroup]="form">
+  <header class="selector-horario__header">
+    <h2 class="selector-horario__title">
+      <i class="fa-regular fa-clock" aria-hidden="true"></i>
+      Seleccion de Horario
+    </h2>
+  </header>
+
+  <div class="selector-horario__fields">
+    <label class="selector-horario__field">
+      <span>Medico</span>
+      <select formControlName="medicoId">
+        <option [ngValue]="null">Selecciona un medico</option>
+        @for (medico of medicos(); track medico.id) {
+          <option [ngValue]="medico.id">{{ medico.nombresCompletos }} - {{ medico.especialidad }}</option>
+        }
+      </select>
+    </label>
+
+    <label class="selector-horario__field">
+      <span>Fecha</span>
+      <input type="date" formControlName="fecha" />
+    </label>
+
+    <label class="selector-horario__field">
+      <span>Hora</span>
+      <input type="time" formControlName="hora" step="60" readonly />
+    </label>
+  </div>
+
+  <div class="selector-horario__quick-actions">
+    <button type="button" class="selector-horario__btn selector-horario__btn--ghost" (click)="onAsignarGlobalRapido()">
+      Asignar primer espacio global
+    </button>
+
+    @if (disponibilidadGlobal()) {
+      <span class="selector-horario__global-tag">
+        {{ disponibilidadGlobal()?.medicoNombre || 'Medico' }} - {{ disponibilidadGlobal()?.fecha }} {{ disponibilidadGlobal()?.hora }}
+      </span>
+    }
+  </div>
+
+  <div class="selector-horario__agenda">
+    @if (cargandoAgenda()) {
+      <p class="selector-horario__status">Cargando agenda dinamica...</p>
+    } @else if (!agenda()) {
+      <p class="selector-horario__status">Selecciona medico y fecha para visualizar la agenda.</p>
+    } @else {
+      @for (bloque of bloques(); track bloque.rango; let bloqueIndex = $index) {
+        <section class="selector-horario__bloque">
+          <button type="button" class="selector-horario__bloque-header" (click)="onToggleBloque(bloqueIndex)">
+            <span>{{ bloque.rango }}</span>
+            <i class="fa-solid" [class.fa-chevron-down]="bloque.expanded" [class.fa-chevron-right]="!bloque.expanded"></i>
+          </button>
+
+          @if (bloque.expanded) {
+            <div class="selector-horario__slots">
+              @for (slot of bloque.slots; track $index; let slotIndex = $index) {
+                <article class="selector-horario__slot" [class.selector-horario__slot--selected]="esSlotSeleccionado(slot)">
+                  <div class="selector-horario__slot-meta">
+                    <strong>{{ slot.hora }}</strong>
+                    @if (slot.pacienteNombres) {
+                      <span>{{ slot.pacienteNombres }} {{ slot.pacienteApellidos || '' }}</span>
+                      <span>{{ slot.pacienteDocumento || '' }} - {{ slot.pacienteCelular || '' }}</span>
+                    } @else {
+                      <span>Disponible</span>
+                    }
+                  </div>
+
+                  @if (esSlotEspecial(slot)) {
+                    <div class="selector-horario__slot-especial">
+                      <div>
+                        <span class="selector-horario__slot-especial-label">Paciente actual</span>
+                        <p>
+                          @if (paciente) {
+                            {{ paciente.nombres }} {{ paciente.apellidos }} - {{ paciente.documento }} - {{ paciente.celular }}
+                          } @else {
+                            Completa la informacion del paciente para habilitar este slot.
+                          }
+                        </p>
+                      </div>
+                      <button
+                        type="button"
+                        class="selector-horario__btn"
+                        [disabled]="!pacienteValido"
+                        (click)="onSeleccionarSlot(slot, bloqueIndex, slotIndex)"
+                      >
+                        {{ esSlotSeleccionado(slot) ? 'Eliminar' : 'Seleccionar' }}
+                      </button>
+                    </div>
+                  }
+                </article>
+
+                @if (puedeMostrarAbrirEspacio(slot)) {
+                  <div class="selector-horario__gap">
+                    <button type="button" class="selector-horario__abrir-espacio" (click)="onSolicitarAbrirEspacio(slot)">
+                      + Abrir espacio
+                    </button>
+                  </div>
+                }
+              }
+            </div>
+          }
+        </section>
+      }
+
+      <div class="selector-horario__day-nav">
+        <button type="button" class="selector-horario__btn selector-horario__btn--ghost" (click)="onNavegarDia(-1)">
+          {{ diaAnteriorLabel() }}
+        </button>
+        <button type="button" class="selector-horario__btn selector-horario__btn--ghost" (click)="onNavegarDia(1)">
+          {{ diaSiguienteLabel() }}
+        </button>
+      </div>
+    }
+  </div>
+
+  <label class="selector-horario__field">
+    <span>Observaciones</span>
+    <textarea rows="3" formControlName="observaciones" placeholder="Opcional"></textarea>
+  </label>
+
+  <div class="selector-horario__final-actions">
+    <button type="button" class="selector-horario__btn selector-horario__btn--primary" (click)="onSolicitarAgendar()">
+      Agendar Cita
+    </button>
+    <button type="button" class="selector-horario__btn selector-horario__btn--ghost" (click)="onSolicitarCancelar()">
+      Cancelar
+    </button>
+  </div>
+
+  @if (mensajeOperacion()) {
+    <p class="selector-horario__status selector-horario__status--info">{{ mensajeOperacion() }}</p>
+  }
+
+  <app-modal-confirmacion
+    [visible]="mostrarModalAbrirEspacio()"
+    titulo="Abrir espacio"
+    mensaje="Seguro que desea abrir un espacio? Esto recortara el tiempo de las citas vecinas."
+    textoConfirmar="Abrir espacio"
+    (confirmar)="confirmarAbrirEspacio()"
+    (cancelar)="mostrarModalAbrirEspacio.set(false)"
+  />
+
+  <app-modal-confirmacion
+    [visible]="mostrarModalAgendar()"
+    titulo="Confirmar agendamiento"
+    mensaje="Deseas crear la cita en el horario seleccionado?"
+    textoConfirmar="Agendar"
+    (confirmar)="confirmarAgendar()"
+    (cancelar)="mostrarModalAgendar.set(false)"
+  />
+
+  <app-modal-confirmacion
+    [visible]="mostrarModalCancelar()"
+    titulo="Cancelar proceso"
+    mensaje="Deseas cancelar el proceso de agendamiento manual?"
+    textoConfirmar="Si, cancelar"
+    (confirmar)="confirmarCancelar()"
+    (cancelar)="mostrarModalCancelar.set(false)"
+  />
+</section>
+

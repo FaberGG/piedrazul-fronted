@@ -1,0 +1,28 @@
+.nueva-cita-page {
+  display: grid;
+  gap: 1rem;
+}
+
+.nueva-cita-page__header {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.nueva-cita-page__title {
+  margin: 0;
+  color: var(--neutro-gray-700);
+  font-size: var(--font-size-topbar-title);
+}
+
+.nueva-cita-page__subtitle {
+  margin: 0;
+  color: var(--neutro-gray-500);
+  font-size: var(--font-size-base);
+}
+
+.nueva-cita-page__feedback {
+  margin: 0;
+  color: var(--blue-green-600);
+  font-size: var(--font-size-base);
+}
+

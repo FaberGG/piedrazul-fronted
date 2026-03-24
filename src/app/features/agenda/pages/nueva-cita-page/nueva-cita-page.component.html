@@ -1,0 +1,20 @@
+<section class="nueva-cita-page">
+  <header class="nueva-cita-page__header">
+    <h1 class="nueva-cita-page__title">Agendar cita manual</h1>
+    <p class="nueva-cita-page__subtitle">Completa informacion del paciente y seleccion de horario dinamico.</p>
+  </header>
+
+  <app-formulario-paciente (pacienteChange)="onPacienteChange($event)" />
+
+  <app-selector-horario
+    [paciente]="paciente()"
+    [pacienteValido]="pacienteValido()"
+    (citaCreada)="onCitaCreada($event)"
+    (cancelado)="onCancelado()"
+  />
+
+  @if (mensaje()) {
+    <p class="nueva-cita-page__feedback">{{ mensaje() }}</p>
+  }
+</section>
+

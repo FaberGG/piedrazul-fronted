@@ -1,0 +1,62 @@
+.input-compartido {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.input-compartido__label {
+  font-size: var(--font-size-base);
+  color: var(--neutro-gray-700);
+  font-weight: 500;
+}
+
+.input-compartido__required {
+  color: var(--blue-green-600);
+}
+
+.input-compartido__control {
+  border: 1px solid var(--neutro-gray-200);
+  border-radius: var(--menu-item-radius);
+  background: var(--neutro-white);
+  display: flex;
+  align-items: center;
+  min-height: 2.75rem;
+}
+
+.input-compartido__control:focus-within {
+  border-color: var(--blue-green-500);
+  box-shadow: 0 0 0 3px var(--blue-green-50);
+}
+
+.input-compartido__icon {
+  color: var(--neutro-gray-400);
+  margin-left: 0.75rem;
+}
+
+.input-compartido__control--with-icon .input-compartido__field {
+  padding-left: 0.65rem;
+}
+
+.input-compartido__field {
+  width: 100%;
+  border: 0;
+  outline: none;
+  background: transparent;
+  color: var(--neutro-gray-700);
+  font-size: var(--font-size-base);
+  padding: 0.7rem 0.75rem;
+}
+
+.input-compartido__field::placeholder {
+  color: var(--neutro-gray-300);
+}
+
+.input-compartido__field:disabled {
+  color: var(--neutro-gray-400);
+  cursor: not-allowed;
+}
+
+.input-compartido__hint {
+  color: var(--blue-green-600);
+  font-size: var(--font-size-sm);
+}
+

@@ -1,0 +1,119 @@
+<section class="info-paciente" [formGroup]="form">
+  <header class="info-paciente__header">
+    <h2 class="info-paciente__title">
+      <i class="fa-solid fa-user-injured" aria-hidden="true"></i>
+      Informacion del Paciente
+    </h2>
+    <p class="info-paciente__subtitle">Completa o autocompleta los datos del paciente para la cita manual.</p>
+  </header>
+
+  <div class="info-paciente__grid info-paciente__grid--documento">
+    <div class="info-paciente__documento-wrapper">
+      <app-input-compartido
+        formControlName="documento"
+        label="Documento"
+        inputId="documento"
+        placeholder="Ej. 1234567890"
+        [required]="true"
+        iconClass="fa-solid fa-id-card"
+        [showTabHint]="haySugerencias()"
+        (keyDown)="onDocumentoKeyDown($event)"
+        (focused)="onDocumentoFocus()"
+        (blurred)="onDocumentoBlur()"
+      />
+
+      @if (cargandoSugerencias()) {
+        <div class="info-paciente__sugerencias-estado">Buscando pacientes...</div>
+      }
+
+      @if (mostrarSugerencias() && haySugerencias()) {
+        <ul class="info-paciente__sugerencias" role="listbox" aria-label="Sugerencias de paciente">
+          @for (sugerencia of sugerencias(); track sugerencia.id; let i = $index) {
+            <li>
+              <button
+                type="button"
+                class="info-paciente__sugerencia"
+                [class.info-paciente__sugerencia--active]="indiceActivo() === i"
+                (mouseenter)="onHoverSugerencia(i)"
+                (click)="seleccionarSugerencia(sugerencia)"
+              >
+                <span class="info-paciente__sugerencia-nombre">{{ sugerencia.nombresCompletos }}</span>
+                <span class="info-paciente__sugerencia-documento">{{ sugerencia.documento }}</span>
+              </button>
+            </li>
+          }
+        </ul>
+      }
+    </div>
+  </div>
+
+  <div class="info-paciente__grid">
+    <app-input-compartido
+      formControlName="nombres"
+      label="Nombres"
+      inputId="nombres"
+      [required]="true"
+      iconClass="fa-regular fa-user"
+    />
+
+    <app-input-compartido
+      formControlName="apellidos"
+      label="Apellidos"
+      inputId="apellidos"
+      [required]="true"
+      iconClass="fa-regular fa-user"
+    />
+
+    <app-input-compartido
+      formControlName="celular"
+      label="Celular"
+      inputId="celular"
+      [required]="true"
+      iconClass="fa-solid fa-mobile-screen"
+    />
+
+    <div class="info-paciente__field">
+      <label class="info-paciente__label" for="genero">
+        Genero
+        <span class="info-paciente__required" aria-hidden="true">*</span>
+      </label>
+      <div class="info-paciente__select-wrapper">
+        <i class="fa-solid fa-venus-mars info-paciente__select-icon" aria-hidden="true"></i>
+        <select id="genero" class="info-paciente__select" formControlName="genero">
+          <option value="">Selecciona genero</option>
+          @for (genero of generos; track genero) {
+            <option [value]="genero">{{ genero }}</option>
+          }
+        </select>
+      </div>
+    </div>
+
+    <app-input-compartido
+      formControlName="fechaNacimiento"
+      label="Fecha de nacimiento"
+      inputId="fechaNacimiento"
+      type="date"
+      iconClass="fa-regular fa-calendar"
+    />
+
+    <app-input-compartido
+      formControlName="correo"
+      label="Correo electronico"
+      inputId="correo"
+      type="email"
+      iconClass="fa-regular fa-envelope"
+      placeholder="nombre@correo.com"
+    />
+  </div>
+
+  <footer class="info-paciente__footer">
+    <span class="info-paciente__estado" [class.info-paciente__estado--ok]="pacienteAutocompletado()">
+      @if (pacienteAutocompletado()) {
+        Paciente encontrado: {{ obtenerNombreCompleto() }}
+      } @else {
+        Ingresa al menos 2 digitos en documento para buscar pacientes existentes.
+      }
+    </span>
+  </footer>
+</section>
+

@@ -1,0 +1,38 @@
+<div class="input-compartido">
+  @if (label) {
+    <label class="input-compartido__label" [for]="inputId">
+      {{ label }}
+      @if (required) {
+        <span class="input-compartido__required" aria-hidden="true">*</span>
+      }
+    </label>
+  }
+
+  <div class="input-compartido__control" [class.input-compartido__control--with-icon]="!!iconClass">
+    @if (iconClass) {
+      <span class="input-compartido__icon" aria-hidden="true">
+        <i [class]="iconClass"></i>
+      </span>
+    }
+
+    <input
+      class="input-compartido__field"
+      [id]="inputId"
+      [type]="type"
+      [value]="value"
+      [placeholder]="placeholder"
+      [required]="required"
+      [disabled]="isDisabled"
+      [autocomplete]="autocomplete"
+      (input)="onInput($event)"
+      (focus)="onFocus()"
+      (blur)="onBlur()"
+      (keydown)="onKeyDown($event)"
+    />
+  </div>
+
+  @if (showTabHint) {
+    <small class="input-compartido__hint">Presiona Tab para autocompletar</small>
+  }
+</div>
+

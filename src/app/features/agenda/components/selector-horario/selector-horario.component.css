@@ -1,0 +1,195 @@
+.selector-horario {
+  background: var(--neutro-white);
+  border: 1px solid var(--neutro-gray-100);
+  border-radius: var(--layout-radius);
+  padding: 1.25rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.selector-horario__title {
+  margin: 0;
+  color: var(--neutro-gray-700);
+  font-size: var(--font-size-topbar-description);
+  display: inline-flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.selector-horario__title i {
+  color: var(--blue-green-500);
+}
+
+.selector-horario__fields {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.selector-horario__field {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.selector-horario__field span {
+  color: var(--neutro-gray-700);
+  font-size: var(--font-size-base);
+}
+
+.selector-horario__field input,
+.selector-horario__field select,
+.selector-horario__field textarea {
+  border: 1px solid var(--neutro-gray-200);
+  border-radius: var(--menu-item-radius);
+  font-size: var(--font-size-base);
+  padding: 0.62rem 0.7rem;
+  color: var(--neutro-gray-700);
+  background: var(--neutro-white);
+}
+
+.selector-horario__quick-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.selector-horario__global-tag {
+  color: var(--blue-green-600);
+  font-size: var(--font-size-sm);
+}
+
+.selector-horario__agenda {
+  border: 1px solid var(--neutro-gray-100);
+  border-radius: var(--menu-item-radius);
+  padding: 0.75rem;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.selector-horario__bloque {
+  border: 1px solid var(--neutro-gray-100);
+  border-radius: var(--menu-item-radius);
+  overflow: hidden;
+}
+
+.selector-horario__bloque-header {
+  width: 100%;
+  border: 0;
+  padding: 0.65rem 0.75rem;
+  background: var(--blue-green-50);
+  color: var(--neutro-gray-700);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.selector-horario__slots {
+  display: grid;
+}
+
+.selector-horario__slot {
+  border-top: 1px solid var(--neutro-gray-100);
+  padding: 0.55rem 0.7rem;
+  display: grid;
+  gap: 0.4rem;
+}
+
+.selector-horario__slot--selected {
+  background: var(--blue-green-50);
+}
+
+.selector-horario__slot-meta {
+  display: grid;
+  gap: 0.15rem;
+  color: var(--neutro-gray-500);
+  font-size: var(--font-size-sm);
+}
+
+.selector-horario__slot-meta strong {
+  color: var(--neutro-gray-700);
+  font-size: var(--font-size-base);
+}
+
+.selector-horario__slot-especial {
+  border: 1px solid var(--blue-green-400);
+  border-radius: var(--menu-item-radius);
+  padding: 0.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.selector-horario__slot-especial p {
+  margin: 0.2rem 0 0;
+  color: var(--neutro-gray-700);
+  font-size: var(--font-size-sm);
+}
+
+.selector-horario__slot-especial-label {
+  color: var(--blue-green-600);
+  font-size: var(--font-size-sm);
+}
+
+.selector-horario__gap {
+  padding: 0 0.7rem 0.45rem;
+}
+
+.selector-horario__abrir-espacio {
+  border: 1px dashed var(--blue-green-500);
+  color: var(--blue-green-600);
+  background: var(--blue-green-50);
+  border-radius: var(--menu-item-radius);
+  padding: 0.3rem 0.55rem;
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 130ms ease;
+}
+
+.selector-horario__gap:hover .selector-horario__abrir-espacio {
+  opacity: 1;
+}
+
+.selector-horario__day-nav,
+.selector-horario__final-actions {
+  display: flex;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+}
+
+.selector-horario__btn {
+  border-radius: var(--menu-item-radius);
+  border: 1px solid var(--blue-green-600);
+  padding: 0.45rem 0.75rem;
+  font-size: var(--font-size-base);
+  cursor: pointer;
+}
+
+.selector-horario__btn--primary {
+  background: var(--blue-green-600);
+  color: var(--neutro-white);
+}
+
+.selector-horario__btn--ghost {
+  background: var(--neutro-white);
+  color: var(--blue-green-600);
+}
+
+.selector-horario__status {
+  margin: 0;
+  color: var(--neutro-gray-500);
+  font-size: var(--font-size-sm);
+}
+
+.selector-horario__status--info {
+  color: var(--blue-green-600);
+}
+
+@media (max-width: 920px) {
+  .selector-horario__fields {
+    grid-template-columns: 1fr;
+  }
+}
+
