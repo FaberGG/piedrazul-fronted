@@ -1,19 +1,18 @@
 <section class="info-paciente" [formGroup]="form">
   <header class="info-paciente__header">
     <h2 class="info-paciente__title">
-      <i class="fa-solid fa-user-injured" aria-hidden="true"></i>
+      <i class="fa-regular fa-circle-user"></i>
       Informacion del Paciente
     </h2>
-    <p class="info-paciente__subtitle">Completa o autocompleta los datos del paciente para la cita manual.</p>
   </header>
-
+<div class="info-paciente__content">
   <div class="info-paciente__grid info-paciente__grid--documento">
     <div class="info-paciente__documento-wrapper">
       <app-input-compartido
         formControlName="documento"
         label="Documento"
         inputId="documento"
-        placeholder="Ej. 1234567890"
+        placeholder="Ingresa el numero de documento"
         [required]="true"
         iconClass="fa-solid fa-id-card"
         [showTabHint]="haySugerencias()"
@@ -53,7 +52,8 @@
       label="Nombres"
       inputId="nombres"
       [required]="true"
-      iconClass="fa-regular fa-user"
+      placeholder="nombre@correo.com"
+
     />
 
     <app-input-compartido
@@ -61,7 +61,8 @@
       label="Apellidos"
       inputId="apellidos"
       [required]="true"
-      iconClass="fa-regular fa-user"
+      placeholder="nombre@correo.com"
+
     />
 
     <app-input-compartido
@@ -105,15 +106,6 @@
       placeholder="nombre@correo.com"
     />
   </div>
-
-  <footer class="info-paciente__footer">
-    <span class="info-paciente__estado" [class.info-paciente__estado--ok]="pacienteAutocompletado()">
-      @if (pacienteAutocompletado()) {
-        Paciente encontrado: {{ obtenerNombreCompleto() }}
-      } @else {
-        Ingresa al menos 2 digitos en documento para buscar pacientes existentes.
-      }
-    </span>
-  </footer>
+</div>
 </section>
 

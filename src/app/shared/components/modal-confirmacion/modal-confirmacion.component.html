@@ -4,6 +4,14 @@
       <h3 class="modal-confirmacion__title">{{ titulo }}</h3>
       <p class="modal-confirmacion__message">{{ mensaje }}</p>
 
+      @if (detalleLineas.length > 0) {
+        <ul class="modal-confirmacion__details">
+          @for (linea of detalleLineas; track linea) {
+            <li>{{ linea }}</li>
+          }
+        </ul>
+      }
+
       <div class="modal-confirmacion__actions">
         <button type="button" class="modal-confirmacion__btn modal-confirmacion__btn--ghost" (click)="cancelar.emit()">
           {{ textoCancelar }}

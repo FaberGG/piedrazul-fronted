@@ -30,6 +30,15 @@
   font-size: var(--font-size-base);
 }
 
+.modal-confirmacion__details {
+  margin: 0;
+  padding-left: 1rem;
+  color: var(--neutro-gray-700);
+  font-size: var(--font-size-sm);
+  display: grid;
+  gap: 0.2rem;
+}
+
 .modal-confirmacion__actions {
   display: flex;
   justify-content: flex-end;

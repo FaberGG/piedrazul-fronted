@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, DestroyRef, EventEmitter, Input, OnInit, Output, computed, inject, signal } from '@angular/core';
+import { Component, DestroyRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, computed, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { catchError, of, switchMap, tap } from 'rxjs';
+import { catchError, of, tap } from 'rxjs';
 
 import { ModalConfirmacionComponent } from '../../../../shared/components/modal-confirmacion/modal-confirmacion.component';
 import { AgendaDinamicaBloque, AgendaDinamicaResponse, AgendaDinamicaSlot } from '../../models/agenda-dinamica.model';
@@ -18,8 +18,22 @@ import { MedicoConfiguracion } from '../../models/medico-configuracion.model';
 import { AgendaManualService } from '../../services/agenda-manual.service';
 import { MedicosAgendaService } from '../../services/medicos-agenda.service';
 
+interface SlotUI extends AgendaDinamicaSlot {
+  uid: string;
+  hora24: string;
+  isOpenedGap?: boolean;
+  sourceHoraReferencia?: string;
+}
+
 interface BloqueUI extends AgendaDinamicaBloque {
+  slots: SlotUI[];
   expanded: boolean;
+}
+
+interface OpenSpaceReference {
+  bloqueIndex: number;
+  slotIndex: number;
+  slot: SlotUI;
 }
 
 @Component({
@@ -28,7 +42,7 @@ interface BloqueUI extends AgendaDinamicaBloque {
   templateUrl: './selector-horario.component.html',
   styleUrl: './selector-horario.component.css'
 })
-export class SelectorHorarioComponent implements OnInit {
+export class SelectorHorarioComponent implements OnInit, OnChanges {
   private readonly fb = inject(FormBuilder);
   private readonly destroyRef = inject(DestroyRef);
   private readonly agendaService = inject(AgendaManualService);
@@ -36,6 +50,7 @@ export class SelectorHorarioComponent implements OnInit {
 
   @Input() paciente: PacienteFormulario | null = null;
   @Input() pacienteValido = false;
+  @Input() resetKey = 0;
 
   @Output() readonly citaCreada = new EventEmitter<CitaManualResponse>();
   @Output() readonly cancelado = new EventEmitter<void>();
@@ -55,14 +70,20 @@ export class SelectorHorarioComponent implements OnInit {
   readonly cargandoMedicos = signal(false);
 
   readonly disponibilidadGlobal = signal<DisponibilidadGlobal | null>(null);
-  readonly slotSeleccionado = signal<{ hora: string; bloqueIndex: number; slotIndex: number } | null>(null);
-  readonly slotReferenciaPrioridad = signal<AgendaDinamicaSlot | null>(null);
+  readonly disponibilidadAutoPendiente = signal<DisponibilidadGlobal | null>(null);
+  readonly slotSeleccionado = signal<{ uid: string; hora: string; isOpenedGap: boolean; horaReferencia?: string } | null>(null);
+  readonly selectableSlotUids = signal<Set<string>>(new Set<string>());
+  readonly slotReferenciaPrioridad = signal<OpenSpaceReference | null>(null);
 
   readonly mostrarModalAbrirEspacio = signal(false);
+  readonly mostrarModalAuto = signal(false);
   readonly mostrarModalAgendar = signal(false);
   readonly mostrarModalCancelar = signal(false);
 
   readonly mensajeOperacion = signal('');
+  readonly ultimaFechaCargada = signal('');
+  readonly hoveredSlotUid = signal<string | null>(null);
+  readonly resumenModalLineas = signal<string[]>([]);
 
   readonly diaAnteriorLabel = computed(() => this.getDiaLabel(-1));
   readonly diaSiguienteLabel = computed(() => this.getDiaLabel(1));
@@ -78,6 +99,30 @@ export class SelectorHorarioComponent implements OnInit {
 
     return this.toHora24(time);
   });
+
+  readonly fechaCitaFormateada = computed(() => this.formatearFechaLarga(this.form.controls.fecha.value));
+
+  readonly navegacionBloqueada = computed(() => this.slotSeleccionado() !== null);
+
+  readonly autoDetalleLineas = computed(() => {
+    const auto = this.disponibilidadAutoPendiente();
+    if (!auto) {
+      return [] as string[];
+    }
+
+    const hora = this.toHora12(auto.hora);
+    return [
+      `Medico: ${auto.medicoNombre ?? 'No disponible'}`,
+      `Fecha: ${this.formatearFechaLarga(auto.fecha)}`,
+      `Hora sugerida: ${hora}`
+    ];
+  });
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['resetKey'] && !changes['resetKey'].firstChange) {
+      this.restablecerEstadoInicial(false);
+    }
+  }
 
   ngOnInit(): void {
     this.cargarMedicos();
@@ -107,6 +152,14 @@ export class SelectorHorarioComponent implements OnInit {
           return;
         }
 
+        if (this.navegacionBloqueada() && this.ultimaFechaCargada() && fecha !== this.ultimaFechaCargada()) {
+          this.form.controls.fecha.setValue(this.ultimaFechaCargada(), { emitEvent: false });
+          this.mensajeOperacion.set('No puedes cambiar la fecha mientras haya un horario seleccionado.');
+          return;
+        }
+
+        this.ultimaFechaCargada.set(fecha);
+
         this.cargarAgenda(medicoId, fecha);
       });
   }
@@ -123,70 +176,82 @@ export class SelectorHorarioComponent implements OnInit {
     );
   }
 
-  onSeleccionarSlot(slot: AgendaDinamicaSlot, bloqueIndex: number, slotIndex: number): void {
-    const hora = this.toHora24(slot.hora);
+  onSeleccionarSlot(slot: SlotUI): void {
+    const hora = slot.hora24;
     const actual = this.slotSeleccionado();
 
-    if (actual?.hora === hora) {
+    if (actual?.uid === slot.uid) {
       this.slotSeleccionado.set(null);
       this.form.controls.hora.setValue('');
       return;
     }
 
-    this.slotSeleccionado.set({ hora, bloqueIndex, slotIndex });
+    this.slotSeleccionado.set({
+      uid: slot.uid,
+      hora,
+      isOpenedGap: !!slot.isOpenedGap,
+      horaReferencia: slot.sourceHoraReferencia
+    });
     this.form.controls.hora.setValue(hora);
   }
 
-  onSolicitarAbrirEspacio(slot: AgendaDinamicaSlot): void {
-    this.slotReferenciaPrioridad.set(slot);
+  onSolicitarAbrirEspacio(bloqueIndex: number, slotIndex: number, slot: SlotUI): void {
+    if (this.tieneHuecoAbiertoDespues(slot, bloqueIndex)) {
+      return;
+    }
+
+    this.slotReferenciaPrioridad.set({ bloqueIndex, slotIndex, slot });
     this.mostrarModalAbrirEspacio.set(true);
   }
 
   confirmarAbrirEspacio(): void {
     this.mostrarModalAbrirEspacio.set(false);
 
-    const medicoId = this.form.controls.medicoId.value;
-    const fecha = this.form.controls.fecha.value;
-    const slot = this.slotReferenciaPrioridad();
-
-    if (!medicoId || !fecha || !slot || !this.pacienteValido || !this.paciente || !this.paciente.genero) {
+    const referencia = this.slotReferenciaPrioridad();
+    if (!referencia) {
       return;
     }
 
-    const payload: CrearCitaPrioridadRequest = {
-      ...this.paciente,
-      genero: this.paciente.genero,
-      medicoId,
-      fecha,
-      horaReferencia: this.toHora24(slot.hora),
-      observaciones: this.form.controls.observaciones.value || 'Sobrecupo autorizado'
-    };
+    this.bloques.update((bloques) => {
+      const objetivo = bloques[referencia.bloqueIndex];
+      if (!objetivo) {
+        return bloques;
+      }
 
-    this.agendaService
-      .abrirEspacioPrioritario(payload)
-      .pipe(
-        takeUntilDestroyed(this.destroyRef),
-        tap((respuesta) => {
-          this.form.controls.hora.setValue(this.toHora24(respuesta.hora));
-          this.slotSeleccionado.set({ hora: this.toHora24(respuesta.hora), bloqueIndex: -1, slotIndex: -1 });
-          this.mensajeOperacion.set('Se abrio un espacio prioritario y se preselecciono el nuevo horario.');
-        }),
-        switchMap(() => this.agendaService.obtenerAgendaDinamica(medicoId, fecha)),
-        catchError(() => {
-          this.mensajeOperacion.set('No fue posible abrir espacio en este momento.');
-          return of(null);
-        })
-      )
-      .subscribe((agenda) => {
-        if (!agenda) {
-          return;
-        }
+      const yaExisteHueco = objetivo.slots.some(
+        (item) => item.isOpenedGap && item.sourceHoraReferencia === referencia.slot.hora24
+      );
+      if (yaExisteHueco) {
+        return bloques;
+      }
 
-        this.actualizarAgenda(agenda);
-      });
+      const nuevosSlots = [...objetivo.slots];
+      const horaNueva = this.sumarMinutos(referencia.slot.hora24, this.getMinutosApertura());
+      const nuevoSlot: SlotUI = {
+        uid: `gap-${referencia.slot.uid}-${Date.now()}`,
+        hora: this.toHora12(horaNueva),
+        hora24: horaNueva,
+        estado: 'DISPONIBLE',
+        isOpenedGap: true,
+        sourceHoraReferencia: referencia.slot.hora24,
+        permiteAbrirPrioridadPosterior: false
+      };
+
+      nuevosSlots.splice(referencia.slotIndex + 1, 0, nuevoSlot);
+
+      return bloques.map((bloque, index) => (index === referencia.bloqueIndex ? { ...bloque, slots: nuevosSlots } : bloque));
+    });
+
+    this.mensajeOperacion.set('Se agrego un nuevo espacio disponible. Seleccionalo si deseas usarlo.');
+    this.slotReferenciaPrioridad.set(null);
   }
 
   onNavegarDia(offset: -1 | 1): void {
+    if (this.navegacionBloqueada()) {
+      this.mensajeOperacion.set('Primero elimina el horario seleccionado para cambiar de dia.');
+      return;
+    }
+
     const actual = this.form.controls.fecha.value;
     if (!actual) {
       return;
@@ -196,21 +261,39 @@ export class SelectorHorarioComponent implements OnInit {
     this.form.controls.fecha.setValue(siguiente);
   }
 
-  onAsignarGlobalRapido(): void {
+  onSolicitarAutoAsignacion(): void {
     this.agendaService
       .obtenerPrimeraDisponibilidadGlobal()
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((disponibilidad) => {
-        this.disponibilidadGlobal.set(disponibilidad);
-        this.form.patchValue({
-          medicoId: disponibilidad.medicoId,
-          fecha: disponibilidad.fecha,
-          hora: this.toHora24(disponibilidad.hora)
-        });
+        this.disponibilidadAutoPendiente.set(disponibilidad);
+        this.mostrarModalAuto.set(true);
       });
   }
 
+  confirmarAutoAsignacion(): void {
+    const disponibilidad = this.disponibilidadAutoPendiente();
+    if (!disponibilidad) {
+      return;
+    }
+
+    this.disponibilidadGlobal.set(disponibilidad);
+    this.mostrarModalAuto.set(false);
+    this.disponibilidadAutoPendiente.set(null);
+    this.form.patchValue({
+      medicoId: disponibilidad.medicoId,
+      fecha: disponibilidad.fecha,
+      hora: this.toHora24(disponibilidad.hora)
+    });
+  }
+
   onSolicitarAgendar(): void {
+    if (!this.puedeConfirmarAgendamiento()) {
+      this.mensajeOperacion.set('Completa paciente y selecciona un horario antes de continuar.');
+      return;
+    }
+
+    this.resumenModalLineas.set(this.construirResumenAgendamiento());
     this.mostrarModalAgendar.set(true);
   }
 
@@ -235,12 +318,41 @@ export class SelectorHorarioComponent implements OnInit {
       observaciones: this.form.controls.observaciones.value || undefined
     };
 
+    const seleccion = this.slotSeleccionado();
+    const esHuecoAbierto = !!seleccion?.isOpenedGap;
+
+    if (esHuecoAbierto && seleccion?.horaReferencia) {
+      const payloadPrioridad: CrearCitaPrioridadRequest = {
+        ...this.paciente,
+        genero: this.paciente.genero,
+        medicoId,
+        fecha,
+        horaReferencia: seleccion.horaReferencia,
+        observaciones: this.form.controls.observaciones.value || 'Sobrecupo autorizado'
+      };
+
+      this.agendaService
+        .abrirEspacioPrioritario(payloadPrioridad)
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe((respuesta) => {
+          this.mensajeOperacion.set('Cita agendada correctamente.');
+          this.restablecerEstadoInicial();
+          this.citaCreada.emit(respuesta);
+        }, () => {
+          this.mensajeOperacion.set('No fue posible agendar la cita en ese hueco. Intenta otro horario.');
+        });
+      return;
+    }
+
     this.agendaService
       .crearCitaManual(payload)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((respuesta) => {
         this.mensajeOperacion.set('Cita agendada correctamente.');
+        this.restablecerEstadoInicial();
         this.citaCreada.emit(respuesta);
+      }, () => {
+        this.mensajeOperacion.set('No se pudo agendar la cita. Verifica el horario seleccionado.');
       });
   }
 
@@ -250,26 +362,36 @@ export class SelectorHorarioComponent implements OnInit {
 
   confirmarCancelar(): void {
     this.mostrarModalCancelar.set(false);
-    this.form.patchValue({ hora: '', observaciones: '' });
-    this.slotSeleccionado.set(null);
+    this.restablecerEstadoInicial();
     this.cancelado.emit();
   }
 
-  esSlotEspecial(slot: AgendaDinamicaSlot): boolean {
-    const especial = this.primerSlotDisponibleNormalizado();
-    if (!especial) {
-      return false;
+  esSlotEspecial(slot: SlotUI): boolean {
+    if (slot.isOpenedGap) {
+      return true;
     }
 
-    return this.toHora24(slot.hora) === especial;
+    return this.selectableSlotUids().has(slot.uid);
   }
 
-  esSlotSeleccionado(slot: AgendaDinamicaSlot): boolean {
-    return this.slotSeleccionado()?.hora === this.toHora24(slot.hora);
+  esSlotSeleccionado(slot: SlotUI): boolean {
+    return this.slotSeleccionado()?.uid === slot.uid;
   }
 
-  puedeMostrarAbrirEspacio(slot: AgendaDinamicaSlot): boolean {
-    return !!slot.permiteAbrirPrioridadPosterior;
+  puedeMostrarAbrirEspacio(slot: SlotUI): boolean {
+    return !!slot.permiteAbrirPrioridadPosterior && !slot.isOpenedGap;
+  }
+
+  puedeMostrarAbrirEspacioEnBloque(slot: SlotUI, bloqueIndex: number): boolean {
+    return this.puedeMostrarAbrirEspacio(slot) && !this.tieneHuecoAbiertoDespues(slot, bloqueIndex);
+  }
+
+  onHoverSlot(slotUid: string | null): void {
+    this.hoveredSlotUid.set(slotUid);
+  }
+
+  esGapVisible(slot: SlotUI, bloqueIndex: number): boolean {
+    return this.hoveredSlotUid() === slot.uid && this.puedeMostrarAbrirEspacioEnBloque(slot, bloqueIndex);
   }
 
   private cargarMedicos(): void {
@@ -305,6 +427,7 @@ export class SelectorHorarioComponent implements OnInit {
       )
       .subscribe((disponibilidad) => {
         const fecha = disponibilidad?.fecha ?? this.fechaHoy();
+        this.ultimaFechaCargada.set(fecha);
         this.form.patchValue({
           fecha,
           hora: disponibilidad ? this.toHora24(disponibilidad.hora) : ''
@@ -334,7 +457,24 @@ export class SelectorHorarioComponent implements OnInit {
 
   private actualizarAgenda(agenda: AgendaDinamicaResponse): void {
     this.agenda.set(agenda);
-    this.bloques.set(agenda.bloques.map((bloque) => ({ ...bloque, expanded: bloque.estaExpandido })));
+    const bloquesActualizados = agenda.bloques.map((bloque, bloqueIndex) => ({
+      ...bloque,
+      slots: bloque.slots.map((slot, slotIndex) => ({
+        ...slot,
+        uid: `slot-${bloqueIndex}-${slotIndex}-${this.toHora24(slot.hora)}`,
+        hora24: this.toHora24(slot.hora)
+      })),
+      expanded: bloque.estaExpandido
+    }));
+
+    this.bloques.set(bloquesActualizados);
+    this.selectableSlotUids.set(this.calcularSlotsSeleccionables(bloquesActualizados));
+
+    const seleccionado = this.slotSeleccionado();
+    if (seleccionado && !this.existeSlotSeleccionadoValido(bloquesActualizados, seleccionado.uid)) {
+      this.slotSeleccionado.set(null);
+      this.form.controls.hora.setValue('');
+    }
   }
 
   private getDiaLabel(offset: -1 | 1): string {
@@ -425,6 +565,188 @@ export class SelectorHorarioComponent implements OnInit {
     }
 
     return raw;
+  }
+
+  private toHora12(value: string): string {
+    const normalized = this.toHora24(value);
+    const parts = normalized.split(':');
+    if (parts.length < 2) {
+      return normalized;
+    }
+
+    const hours = Number(parts[0]);
+    const minutes = parts[1];
+    const period = hours >= 12 ? 'PM' : 'AM';
+    const hour12 = hours % 12 || 12;
+    return `${hour12}:${minutes} ${period}`;
+  }
+
+  private sumarMinutos(hora24: string, minutos: number): string {
+    const [hours, mins] = hora24.split(':').map((item) => Number(item));
+    const baseDate = new Date();
+    baseDate.setHours(hours || 0, mins || 0, 0, 0);
+    baseDate.setMinutes(baseDate.getMinutes() + minutos);
+    const nextHours = String(baseDate.getHours()).padStart(2, '0');
+    const nextMinutes = String(baseDate.getMinutes()).padStart(2, '0');
+    return `${nextHours}:${nextMinutes}:00`;
+  }
+
+  private formatearFechaLarga(fechaIso: string): string {
+    if (!fechaIso) {
+      return '-';
+    }
+
+    const fecha = new Date(`${fechaIso}T00:00:00`);
+    if (Number.isNaN(fecha.getTime())) {
+      return fechaIso;
+    }
+
+    return new Intl.DateTimeFormat('es-CO', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric'
+    }).format(fecha);
+  }
+
+  private getNombrePaciente(): string {
+    if (!this.paciente) {
+      return '-';
+    }
+
+    return `${this.paciente.nombres} ${this.paciente.apellidos}`.trim();
+  }
+
+  private getMinutosApertura(): number {
+    const minutos = this.configuracionMedico()?.intervaloMinutos;
+    return minutos && minutos > 0 ? minutos : 15;
+  }
+
+  private puedeConfirmarAgendamiento(): boolean {
+    const medicoId = this.form.controls.medicoId.value;
+    const fecha = this.form.controls.fecha.value;
+    const hora = this.form.controls.hora.value;
+
+    return !!medicoId && !!fecha && !!hora && !!this.slotSeleccionado() && this.pacienteValido && !!this.paciente?.genero;
+  }
+
+  private construirResumenAgendamiento(): string[] {
+    const medicoId = this.form.controls.medicoId.value;
+    const medico = this.medicos().find((item) => item.id === medicoId);
+
+    return [
+      `Paciente: ${this.getNombrePaciente()}`,
+      `Documento: ${this.paciente?.documento || '-'}`,
+      `Medico: ${medico?.nombresCompletos || '-'}`,
+      `Fecha: ${this.formatearFechaLarga(this.form.controls.fecha.value)}`,
+      `Hora: ${this.toHora12(this.form.controls.hora.value)}`
+    ];
+  }
+
+  private restablecerEstadoInicial(clearMessage = true): void {
+    this.form.reset({
+      medicoId: null,
+      fecha: '',
+      hora: '',
+      observaciones: ''
+    });
+
+    this.agenda.set(null);
+    this.bloques.set([]);
+    this.configuracionMedico.set(null);
+    this.disponibilidadGlobal.set(null);
+    this.disponibilidadAutoPendiente.set(null);
+    this.selectableSlotUids.set(new Set<string>());
+    this.slotSeleccionado.set(null);
+    this.slotReferenciaPrioridad.set(null);
+    this.hoveredSlotUid.set(null);
+    this.resumenModalLineas.set([]);
+    this.ultimaFechaCargada.set('');
+    this.cargandoAgenda.set(false);
+    this.mostrarModalAbrirEspacio.set(false);
+    this.mostrarModalAuto.set(false);
+    this.mostrarModalAgendar.set(false);
+    this.mostrarModalCancelar.set(false);
+
+    if (clearMessage) {
+      this.mensajeOperacion.set('');
+    }
+  }
+
+  private tieneHuecoAbiertoDespues(slot: SlotUI, bloqueIndex: number): boolean {
+    const bloque = this.bloques()[bloqueIndex];
+    if (!bloque) {
+      return false;
+    }
+
+    return bloque.slots.some((item) => item.isOpenedGap && item.sourceHoraReferencia === slot.hora24);
+  }
+
+  private calcularSlotsSeleccionables(bloques: BloqueUI[]): Set<string> {
+    const seleccionables = new Set<string>();
+
+    const primerSlot = this.primerSlotDisponibleNormalizado();
+    if (primerSlot) {
+      for (const bloque of bloques) {
+        const candidato = bloque.slots.find((slot) => slot.hora24 === primerSlot && this.esSlotLibre(slot));
+        if (candidato) {
+          seleccionables.add(candidato.uid);
+          break;
+        }
+      }
+    }
+
+    const slotsPlanos = bloques.flatMap((bloque) => bloque.slots);
+    const ultimoIndiceOcupado = this.buscarUltimoIndiceOcupado(slotsPlanos);
+    const primerLibreDespues = slotsPlanos
+      .slice(ultimoIndiceOcupado + 1)
+      .find((slot) => this.esSlotLibre(slot) && !slot.isOpenedGap);
+
+    if (primerLibreDespues) {
+      seleccionables.add(primerLibreDespues.uid);
+    }
+
+    return seleccionables;
+  }
+
+  private buscarUltimoIndiceOcupado(slots: SlotUI[]): number {
+    for (let i = slots.length - 1; i >= 0; i -= 1) {
+      if (!this.esSlotLibre(slots[i])) {
+        return i;
+      }
+    }
+
+    return -1;
+  }
+
+  private esSlotLibre(slot: SlotUI): boolean {
+    const estado = String(slot.estado ?? '').toUpperCase();
+    const tienePaciente = !!slot.pacienteNombres || !!slot.pacienteDocumento;
+
+    if (slot.isOpenedGap) {
+      return true;
+    }
+
+    if (estado.includes('OCUP')) {
+      return false;
+    }
+
+    if (estado.includes('LIBRE') || estado.includes('DISPON')) {
+      return true;
+    }
+
+    return !tienePaciente;
+  }
+
+  private existeSlotSeleccionadoValido(bloques: BloqueUI[], uid: string): boolean {
+    for (const bloque of bloques) {
+      for (const slot of bloque.slots) {
+        if (slot.uid === uid) {
+          return !!slot.isOpenedGap || this.selectableSlotUids().has(uid);
+        }
+      }
+    }
+
+    return false;
   }
 }
 

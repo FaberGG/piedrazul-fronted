@@ -9,6 +9,16 @@ import { NuevaCitaPageComponent } from './pages/nueva-cita-page/nueva-cita-page.
 export const agendaStaffRoutes: Routes = [
   {
     path: '',
+    component: NuevaCitaPageComponent,
+    canActivate: [roleGuard],
+    data: {
+      roles: [ROLES.ADMIN, ROLES.AGENDADOR, ROLES.MEDICO],
+      sectionTitle: 'Agendar cita',
+      sectionDescription: 'Registra una nueva cita con datos del paciente y horario disponible.'
+    }
+  },
+  {
+    path: 'lista',
     component: ListaCitasPageComponent,
     canActivate: [roleGuard],
     data: {
@@ -19,13 +29,8 @@ export const agendaStaffRoutes: Routes = [
   },
   {
     path: 'nueva-cita',
-    component: NuevaCitaPageComponent,
-    canActivate: [roleGuard],
-    data: {
-      roles: [ROLES.ADMIN, ROLES.AGENDADOR, ROLES.MEDICO],
-      sectionTitle: 'Agendar cita manual',
-      sectionDescription: 'Registra una nueva cita con datos del paciente y horario disponible.'
-    }
+    pathMatch: 'full',
+    redirectTo: ''
   }
 ];
 

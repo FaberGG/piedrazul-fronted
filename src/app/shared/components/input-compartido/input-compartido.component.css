@@ -28,7 +28,7 @@
 }
 
 .input-compartido__icon {
-  color: var(--neutro-gray-400);
+  color: var(--neutro-gray-300);
   margin-left: 0.75rem;
 }
 
@@ -48,6 +48,7 @@
 
 .input-compartido__field::placeholder {
   color: var(--neutro-gray-300);
+  font-weight: 500;
 }
 
 .input-compartido__field:disabled {

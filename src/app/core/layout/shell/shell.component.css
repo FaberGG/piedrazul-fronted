@@ -30,9 +30,10 @@
 
 .shell__main {
   border-radius: 0 0 var(--layout-radius) var(--layout-radius);
-  background: var(--neutro-white);
+  background: var(--blue-green-50);
   color: var(--neutro-gray-700);
-  padding: clamp(0.75rem, 2vw, 1.25rem);
+  /*padding: clamp(0.75rem, 2vw, 1.25rem);*/
+  padding: 30px 40px;
   min-height: calc(100vh - 12rem);
 }
 

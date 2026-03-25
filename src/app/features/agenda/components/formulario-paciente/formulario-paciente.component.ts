@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, DestroyRef, EventEmitter, Output, computed, inject, signal } from '@angular/core';
+import { Component, DestroyRef, EventEmitter, Input, OnChanges, Output, SimpleChanges, computed, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { catchError, debounceTime, distinctUntilChanged, filter, of, switchMap, tap } from 'rxjs';
@@ -16,8 +16,9 @@ import { PacientesAgendaService } from '../../services/pacientes-agenda.service'
   templateUrl: './formulario-paciente.component.html',
   styleUrl: './formulario-paciente.component.css'
 })
-export class FormularioPacienteComponent {
+export class FormularioPacienteComponent implements OnChanges {
       @Output() readonly pacienteChange = new EventEmitter<{ paciente: PacienteFormulario; valido: boolean }>();
+  @Input() resetKey = 0;
 
   private readonly fb = inject(FormBuilder);
   private readonly pacientesService = inject(PacientesAgendaService);
@@ -57,6 +58,12 @@ export class FormularioPacienteComponent {
     });
 
     this.emitirEstadoPaciente();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['resetKey'] && !changes['resetKey'].firstChange) {
+      this.resetearFormulario();
+    }
   }
 
   seleccionarSugerencia(sugerencia: PacienteBusqueda): void {
@@ -239,6 +246,27 @@ export class FormularioPacienteComponent {
       },
       valido: this.form.valid
     });
+  }
+
+  private resetearFormulario(): void {
+    this.form.enable();
+    this.form.reset({
+      documento: '',
+      nombres: '',
+      apellidos: '',
+      celular: '',
+      genero: '',
+      fechaNacimiento: null,
+      correo: null
+    });
+
+    this.documentoAutocompletado = null;
+    this.pacienteAutocompletado.set(false);
+    this.sugerencias.set([]);
+    this.mostrarSugerencias.set(false);
+    this.indiceActivo.set(0);
+    this.cargandoSugerencias.set(false);
+    this.emitirEstadoPaciente();
   }
 }
 

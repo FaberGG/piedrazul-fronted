@@ -1,28 +1,35 @@
 .info-paciente {
-  background: var(--neutro-white);
-  border: 1px solid var(--neutro-gray-100);
-  border-radius: var(--layout-radius);
-  padding: 1.25rem;
   display: grid;
-  gap: 1rem;
+  gap: 0.25rem;
 }
 
 .info-paciente__header {
+  background: var(--neutro-white);
   display: grid;
   gap: 0.35rem;
+  padding: 0.875rem 1.25rem;
+  border-radius: var(--layout-radius) var(--layout-radius) 0 0;
+}
+
+.info-paciente__content{
+  background: var(--neutro-white);
+  display: grid;
+  padding:1.5rem 1.25rem;
+  border-radius:  0 0 var(--layout-radius) var(--layout-radius);
 }
 
 .info-paciente__title {
   margin: 0;
   color: var(--neutro-gray-700);
-  font-size: var(--font-size-topbar-description);
+  font-size: 1.25rem;
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
+  font-weight: 600;
 }
 
 .info-paciente__title i {
-  color: var(--blue-green-500);
+  font-size: 1.5rem;
 }
 
 .info-paciente__subtitle {
@@ -34,11 +41,13 @@
 .info-paciente__grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.9rem;
+  gap: 1.5rem;
 }
 
 .info-paciente__grid--documento {
   grid-template-columns: minmax(0, 1fr);
+  padding-bottom: 1.25rem;
+
 }
 
 .info-paciente__documento-wrapper {
@@ -119,7 +128,7 @@
 }
 
 .info-paciente__select-icon {
-  color: var(--neutro-gray-400);
+  color: var(--neutro-gray-300);
   margin-left: 0.75rem;
 }
 

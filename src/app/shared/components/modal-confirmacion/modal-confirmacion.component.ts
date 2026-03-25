@@ -11,6 +11,7 @@ export class ModalConfirmacionComponent {
   @Input() visible = false;
   @Input() titulo = 'Confirmacion';
   @Input() mensaje = '';
+  @Input() detalleLineas: string[] = [];
   @Input() textoConfirmar = 'Confirmar';
   @Input() textoCancelar = 'Cancelar';
 

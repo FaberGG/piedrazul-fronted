@@ -14,6 +14,7 @@ export class NuevaCitaPageComponent {
   readonly paciente = signal<PacienteFormulario | null>(null);
   readonly pacienteValido = signal(false);
   readonly mensaje = signal('');
+  readonly resetKey = signal(0);
 
   onPacienteChange(evento: { paciente: PacienteFormulario; valido: boolean }): void {
     this.paciente.set(evento.paciente);
@@ -22,10 +23,18 @@ export class NuevaCitaPageComponent {
 
   onCitaCreada(cita: CitaManualResponse): void {
     this.mensaje.set(`Cita creada para ${cita.pacienteNombre} a las ${cita.hora}.`);
+    this.reiniciarFlujo();
   }
 
   onCancelado(): void {
-    this.mensaje.set('Se cancelo el flujo de agendamiento manual.');
+    this.mensaje.set('Se cancelo el flujo de agendamiento de cita.');
+    this.reiniciarFlujo();
+  }
+
+  private reiniciarFlujo(): void {
+    this.paciente.set(null);
+    this.pacienteValido.set(false);
+    this.resetKey.update((value) => value + 1);
   }
 }
 
