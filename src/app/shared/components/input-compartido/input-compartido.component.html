@@ -8,7 +8,11 @@
     </label>
   }
 
-  <div class="input-compartido__control" [class.input-compartido__control--with-icon]="!!iconClass">
+  <div
+    class="input-compartido__control"
+    [class.input-compartido__control--with-icon]="!!iconClass"
+    [class.input-compartido__control--invalid]="invalid"
+  >
     @if (iconClass) {
       <span class="input-compartido__icon" aria-hidden="true">
         <i [class]="iconClass"></i>
@@ -24,6 +28,12 @@
       [required]="required"
       [disabled]="isDisabled"
       [autocomplete]="autocomplete"
+      [attr.inputmode]="inputMode || null"
+      [attr.pattern]="pattern || null"
+      [attr.maxlength]="maxLength ?? null"
+      [min]="min || ''"
+      [max]="max || ''"
+      [attr.aria-invalid]="invalid"
       (input)="onInput($event)"
       (focus)="onFocus()"
       (blur)="onBlur()"
@@ -33,6 +43,10 @@
 
   @if (showTabHint) {
     <small class="input-compartido__hint">Presiona Tab para autocompletar</small>
+  }
+
+  @if (invalid && errorMessage) {
+    <small class="input-compartido__error">{{ errorMessage }}</small>
   }
 </div>
 

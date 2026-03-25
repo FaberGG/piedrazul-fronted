@@ -127,6 +127,14 @@
   box-shadow: 0 0 0 3px var(--blue-green-50);
 }
 
+.info-paciente__select-wrapper--invalid {
+  border-color: var(--blue-green-600);
+}
+
+.info-paciente__select-wrapper--invalid:focus-within {
+  box-shadow: 0 0 0 3px var(--blue-green-100);
+}
+
 .info-paciente__select-icon {
   color: var(--neutro-gray-300);
   margin-left: 0.75rem;
@@ -158,6 +166,11 @@
 
 .info-paciente__estado--ok {
   color: var(--blue-green-600);
+}
+
+.info-paciente__error {
+  color: var(--blue-green-600);
+  font-size: var(--font-size-sm);
 }
 
 @media (max-width: 920px) {

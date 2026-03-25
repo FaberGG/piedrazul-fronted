@@ -24,6 +24,13 @@ export class InputCompartidoComponent implements ControlValueAccessor {
   @Input() required = false;
   @Input() showTabHint = false;
   @Input() autocomplete = 'off';
+  @Input() inputMode?: string;
+  @Input() pattern?: string;
+  @Input() maxLength?: number;
+  @Input() min?: string;
+  @Input() max?: string;
+  @Input() invalid = false;
+  @Input() errorMessage = '';
 
   @Output() readonly keyDown = new EventEmitter<KeyboardEvent>();
   @Output() readonly blurred = new EventEmitter<void>();

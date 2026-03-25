@@ -16,6 +16,10 @@
         [required]="true"
         iconClass="fa-solid fa-id-card"
         [showTabHint]="haySugerencias()"
+        inputMode="numeric"
+        pattern="[0-9]*"
+        [invalid]="esCampoInvalido('documento')"
+        [errorMessage]="getMensajeError('documento')"
         (keyDown)="onDocumentoKeyDown($event)"
         (focused)="onDocumentoFocus()"
         (blurred)="onDocumentoBlur()"
@@ -52,8 +56,9 @@
       label="Nombres"
       inputId="nombres"
       [required]="true"
-      placeholder="nombre@correo.com"
-
+      placeholder="Ingresa los nombres"
+      [invalid]="esCampoInvalido('nombres')"
+      [errorMessage]="getMensajeError('nombres')"
     />
 
     <app-input-compartido
@@ -61,8 +66,9 @@
       label="Apellidos"
       inputId="apellidos"
       [required]="true"
-      placeholder="nombre@correo.com"
-
+      placeholder="Ingresa los apellidos"
+      [invalid]="esCampoInvalido('apellidos')"
+      [errorMessage]="getMensajeError('apellidos')"
     />
 
     <app-input-compartido
@@ -71,6 +77,11 @@
       inputId="celular"
       [required]="true"
       iconClass="fa-solid fa-mobile-screen"
+      inputMode="numeric"
+      pattern="[0-9]*"
+      [maxLength]="10"
+      [invalid]="esCampoInvalido('celular')"
+      [errorMessage]="getMensajeError('celular')"
     />
 
     <div class="info-paciente__field">
@@ -78,7 +89,7 @@
         Genero
         <span class="info-paciente__required" aria-hidden="true">*</span>
       </label>
-      <div class="info-paciente__select-wrapper">
+      <div class="info-paciente__select-wrapper" [class.info-paciente__select-wrapper--invalid]="esCampoInvalido('genero')">
         <i class="fa-solid fa-venus-mars info-paciente__select-icon" aria-hidden="true"></i>
         <select id="genero" class="info-paciente__select" formControlName="genero">
           <option value="">Selecciona genero</option>
@@ -87,6 +98,9 @@
           }
         </select>
       </div>
+      @if (esCampoInvalido('genero')) {
+        <small class="info-paciente__error">{{ getMensajeError('genero') }}</small>
+      }
     </div>
 
     <app-input-compartido
@@ -95,6 +109,9 @@
       inputId="fechaNacimiento"
       type="date"
       iconClass="fa-regular fa-calendar"
+      [max]="fechaMaximaNacimiento"
+      [invalid]="esCampoInvalido('fechaNacimiento')"
+      [errorMessage]="getMensajeError('fechaNacimiento')"
     />
 
     <app-input-compartido
@@ -104,6 +121,8 @@
       type="email"
       iconClass="fa-regular fa-envelope"
       placeholder="nombre@correo.com"
+      [invalid]="esCampoInvalido('correo')"
+      [errorMessage]="getMensajeError('correo')"
     />
   </div>
 </div>

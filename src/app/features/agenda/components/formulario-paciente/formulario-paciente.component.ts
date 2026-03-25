@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, DestroyRef, EventEmitter, Input, OnChanges, Output, SimpleChanges, computed, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { catchError, debounceTime, distinctUntilChanged, filter, of, switchMap, tap } from 'rxjs';
 
 import { InputCompartidoComponent } from '../../../../shared/components/input-compartido/input-compartido.component';
@@ -17,7 +17,7 @@ import { PacientesAgendaService } from '../../services/pacientes-agenda.service'
   styleUrl: './formulario-paciente.component.css'
 })
 export class FormularioPacienteComponent implements OnChanges {
-      @Output() readonly pacienteChange = new EventEmitter<{ paciente: PacienteFormulario; valido: boolean }>();
+  @Output() readonly pacienteChange = new EventEmitter<{ paciente: PacienteFormulario; valido: boolean }>();
   @Input() resetKey = 0;
 
   private readonly fb = inject(FormBuilder);
@@ -25,14 +25,15 @@ export class FormularioPacienteComponent implements OnChanges {
   private readonly destroyRef = inject(DestroyRef);
 
   readonly generos: GeneroPaciente[] = ['MASCULINO', 'FEMENINO', 'OTRO'];
+  readonly fechaMaximaNacimiento = this.toIsoDate(new Date());
 
   readonly form = this.fb.group({
-    documento: this.fb.nonNullable.control('', [Validators.required, Validators.minLength(2)]),
-    nombres: this.fb.nonNullable.control('', Validators.required),
-    apellidos: this.fb.nonNullable.control('', Validators.required),
-    celular: this.fb.nonNullable.control('', Validators.required),
+    documento: this.fb.nonNullable.control('', [Validators.required, Validators.minLength(2), Validators.pattern(/^\d+$/)]),
+    nombres: this.fb.nonNullable.control('', [Validators.required, this.noSoloEspaciosValidator()]),
+    apellidos: this.fb.nonNullable.control('', [Validators.required, this.noSoloEspaciosValidator()]),
+    celular: this.fb.nonNullable.control('', [Validators.required, Validators.pattern(/^\d{10}$/)]),
     genero: this.fb.nonNullable.control<GeneroPaciente | ''>('', Validators.required),
-    fechaNacimiento: this.fb.control<string | null>(null),
+    fechaNacimiento: this.fb.control<string | null>(null, this.fechaNoFuturaValidator()),
     correo: this.fb.control<string | null>(null, Validators.email)
   });
 
@@ -144,7 +145,7 @@ export class FormularioPacienteComponent implements OnChanges {
         distinctUntilChanged(),
         filter(() => !this.pacienteAutocompletado()),
         switchMap((documento) => {
-          const documentoLimpio = (documento ?? '').trim();
+          const documentoLimpio = this.normalizarDigitos((documento ?? '').trim());
 
           if (documentoLimpio.length < 2) {
             this.sugerencias.set([]);
@@ -162,6 +163,7 @@ export class FormularioPacienteComponent implements OnChanges {
             }),
             catchError(() => of([] as PacienteBusqueda[]))
           );
+
         })
       )
       .subscribe((resultado) => {
@@ -180,6 +182,7 @@ export class FormularioPacienteComponent implements OnChanges {
       this.emitirEstadoPaciente();
     }
   }
+
 
   private aplicarPacienteExistente(paciente: PacienteDetalle): void {
     this.documentoAutocompletado = paciente.documento;
@@ -248,6 +251,49 @@ export class FormularioPacienteComponent implements OnChanges {
     });
   }
 
+  esCampoInvalido(controlName: keyof typeof this.form.controls): boolean {
+    const control = this.form.controls[controlName];
+    return control.invalid && (control.touched || control.dirty);
+  }
+
+  getMensajeError(controlName: keyof typeof this.form.controls): string {
+    const control = this.form.controls[controlName];
+    if (!control.errors) {
+      return '';
+    }
+
+    if (control.errors['required']) {
+      return 'Este campo es obligatorio.';
+    }
+
+    if (control.errors['pattern']) {
+      if (controlName === 'documento') {
+        return 'El documento solo acepta numeros.';
+      }
+      if (controlName === 'celular') {
+        return 'El celular debe tener 10 digitos numericos.';
+      }
+    }
+
+    if (control.errors['minlength'] && controlName === 'documento') {
+      return 'Ingresa al menos 2 digitos para buscar.';
+    }
+
+    if (control.errors['whitespace']) {
+      return 'Este campo no puede estar vacio.';
+    }
+
+    if (control.errors['email']) {
+      return 'Ingresa un correo electronico valido.';
+    }
+
+    if (control.errors['futureDate']) {
+      return 'La fecha de nacimiento no puede ser posterior a hoy.';
+    }
+
+    return 'Valor invalido.';
+  }
+
   private resetearFormulario(): void {
     this.form.enable();
     this.form.reset({
@@ -267,6 +313,43 @@ export class FormularioPacienteComponent implements OnChanges {
     this.indiceActivo.set(0);
     this.cargandoSugerencias.set(false);
     this.emitirEstadoPaciente();
+  }
+
+  private noSoloEspaciosValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const value = String(control.value ?? '');
+      return value.trim().length > 0 ? null : { whitespace: true };
+    };
+  }
+
+  private fechaNoFuturaValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const value = String(control.value ?? '').trim();
+      if (!value) {
+        return null;
+      }
+
+      const fecha = new Date(`${value}T00:00:00`);
+      if (Number.isNaN(fecha.getTime())) {
+        return { futureDate: true };
+      }
+
+      const hoy = new Date();
+      hoy.setHours(0, 0, 0, 0);
+
+      return fecha > hoy ? { futureDate: true } : null;
+    };
+  }
+
+  private toIsoDate(date: Date): string {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+
+  private normalizarDigitos(value: string): string {
+    return value.replace(/\D+/g, '');
   }
 }
 

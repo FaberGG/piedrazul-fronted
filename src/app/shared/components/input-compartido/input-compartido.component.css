@@ -27,6 +27,14 @@
   box-shadow: 0 0 0 3px var(--blue-green-50);
 }
 
+.input-compartido__control--invalid {
+  border-color: var(--blue-green-600);
+}
+
+.input-compartido__control--invalid:focus-within {
+  box-shadow: 0 0 0 3px var(--blue-green-100);
+}
+
 .input-compartido__icon {
   color: var(--neutro-gray-300);
   margin-left: 0.75rem;
@@ -57,6 +65,11 @@
 }
 
 .input-compartido__hint {
+  color: var(--blue-green-600);
+  font-size: var(--font-size-sm);
+}
+
+.input-compartido__error {
   color: var(--blue-green-600);
   font-size: var(--font-size-sm);
 }
