@@ -20,6 +20,7 @@
   display: flex;
   align-items: center;
   min-height: 2.75rem;
+  padding-right: 0.5rem;
 }
 
 .input-compartido__control:focus-within {
@@ -52,6 +53,44 @@
   color: var(--neutro-gray-700);
   font-size: var(--font-size-base);
   padding: 0.7rem 0.75rem;
+}
+
+.input-compartido__field--hide-date-indicator::-webkit-calendar-picker-indicator {
+  opacity: 0;
+  width: 0;
+  pointer-events: none;
+}
+
+.input-compartido__tab-badge {
+  background: var(--blue-green-100);
+  color: var(--blue-green-600);
+  border-radius: 999px;
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  line-height: 1;
+  padding: 0.2rem 0.5rem;
+  margin-left: 0.35rem;
+}
+
+.input-compartido__clear {
+  border: 0;
+  background: transparent;
+  color: var(--neutro-gray-400);
+  cursor: pointer;
+  border-radius: 999px;
+  font-size: 1.1rem;
+  line-height: 1;
+  width: 1.6rem;
+  height: 1.6rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 0.2rem;
+}
+
+.input-compartido__clear:hover {
+  color: var(--neutro-gray-700);
+  background: var(--blue-green-50);
 }
 
 .input-compartido__field::placeholder {

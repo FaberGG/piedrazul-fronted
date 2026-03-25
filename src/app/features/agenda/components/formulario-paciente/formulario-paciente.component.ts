@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, DestroyRef, EventEmitter, Input, OnChanges, Output, SimpleChanges, computed, inject, signal } from '@angular/core';
+import { Component, DestroyRef, ElementRef, EventEmitter, HostListener, Input, OnChanges, Output, SimpleChanges, computed, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { AbstractControl, FormBuilder, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { catchError, debounceTime, distinctUntilChanged, filter, of, switchMap, tap } from 'rxjs';
@@ -23,6 +23,7 @@ export class FormularioPacienteComponent implements OnChanges {
   private readonly fb = inject(FormBuilder);
   private readonly pacientesService = inject(PacientesAgendaService);
   private readonly destroyRef = inject(DestroyRef);
+  private readonly hostElement = inject(ElementRef<HTMLElement>);
 
   readonly generos: GeneroPaciente[] = ['MASCULINO', 'FEMENINO', 'OTRO'];
   readonly fechaMaximaNacimiento = this.toIsoDate(new Date());
@@ -112,12 +113,12 @@ export class FormularioPacienteComponent implements OnChanges {
     }
 
     if (event.key === 'Escape') {
-      this.ocultarSugerencias();
+      this.cerrarDropdownSugerencias();
     }
   }
 
   onDocumentoBlur(): void {
-    window.setTimeout(() => this.ocultarSugerencias(), 100);
+    window.setTimeout(() => this.cerrarDropdownSugerencias(), 100);
   }
 
   onDocumentoFocus(): void {
@@ -128,6 +129,28 @@ export class FormularioPacienteComponent implements OnChanges {
 
   onHoverSugerencia(index: number): void {
     this.indiceActivo.set(index);
+  }
+
+  onLimpiarDocumento(): void {
+    this.form.controls.documento.setValue('');
+    this.limpiarCamposPaciente();
+    this.habilitarCamposPaciente();
+    this.documentoAutocompletado = null;
+    this.pacienteAutocompletado.set(false);
+    this.ocultarSugerencias();
+    this.emitirEstadoPaciente();
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent): void {
+    const target = event.target as Node | null;
+    if (!target) {
+      return;
+    }
+
+    if (!this.hostElement.nativeElement.contains(target)) {
+      this.cerrarDropdownSugerencias();
+    }
   }
 
   obtenerNombreCompleto(): string {
@@ -174,6 +197,16 @@ export class FormularioPacienteComponent implements OnChanges {
   }
 
   private onDocumentoMutado(documento: string): void {
+    if (!documento.trim().length) {
+      this.limpiarCamposPaciente();
+      this.habilitarCamposPaciente();
+      this.documentoAutocompletado = null;
+      this.pacienteAutocompletado.set(false);
+      this.ocultarSugerencias();
+      this.emitirEstadoPaciente();
+      return;
+    }
+
     if (this.documentoAutocompletado && documento !== this.documentoAutocompletado) {
       this.limpiarCamposPaciente();
       this.habilitarCamposPaciente();
@@ -230,8 +263,12 @@ export class FormularioPacienteComponent implements OnChanges {
   }
 
   private ocultarSugerencias(): void {
-    this.mostrarSugerencias.set(false);
     this.sugerencias.set([]);
+    this.cerrarDropdownSugerencias();
+  }
+
+  private cerrarDropdownSugerencias(): void {
+    this.mostrarSugerencias.set(false);
   }
 
   private emitirEstadoPaciente(): void {

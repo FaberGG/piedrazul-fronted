@@ -21,6 +21,7 @@
 
     <input
       class="input-compartido__field"
+      [class.input-compartido__field--hide-date-indicator]="type === 'date' && hideNativeDateIcon"
       [id]="inputId"
       [type]="type"
       [value]="value"
@@ -39,6 +40,22 @@
       (blur)="onBlur()"
       (keydown)="onKeyDown($event)"
     />
+
+    @if (showTabBadge) {
+      <span class="input-compartido__tab-badge" aria-hidden="true">{{ tabBadgeText }}</span>
+    }
+
+    @if (clearable && value && !isDisabled) {
+      <button
+        type="button"
+        class="input-compartido__clear"
+        aria-label="Limpiar campo"
+        (mousedown)="$event.preventDefault()"
+        (click)="onClear()"
+      >
+        &times;
+      </button>
+    }
   </div>
 
   @if (showTabHint) {

@@ -31,10 +31,15 @@ export class InputCompartidoComponent implements ControlValueAccessor {
   @Input() max?: string;
   @Input() invalid = false;
   @Input() errorMessage = '';
+  @Input() clearable = false;
+  @Input() showTabBadge = false;
+  @Input() tabBadgeText = 'Tab';
+  @Input() hideNativeDateIcon = false;
 
   @Output() readonly keyDown = new EventEmitter<KeyboardEvent>();
   @Output() readonly blurred = new EventEmitter<void>();
   @Output() readonly focused = new EventEmitter<void>();
+  @Output() readonly clearClicked = new EventEmitter<void>();
 
   value = '';
   isDisabled = false;
@@ -75,6 +80,13 @@ export class InputCompartidoComponent implements ControlValueAccessor {
 
   onKeyDown(event: KeyboardEvent): void {
     this.keyDown.emit(event);
+  }
+
+  onClear(): void {
+    this.value = '';
+    this.onChange('');
+    this.onTouched();
+    this.clearClicked.emit();
   }
 }
 

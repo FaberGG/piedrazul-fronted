@@ -198,6 +198,10 @@ export class SelectorHorarioComponent implements OnInit, OnChanges {
   }
 
   onSolicitarAbrirEspacio(bloqueIndex: number, slotIndex: number, slot: SlotUI): void {
+    if (!this.puedeMostrarAbrirEspacioEnBloque(slot, bloqueIndex)) {
+      return;
+    }
+
     if (this.tieneHuecoAbiertoDespues(slot, bloqueIndex)) {
       return;
     }
@@ -386,7 +390,9 @@ export class SelectorHorarioComponent implements OnInit, OnChanges {
   }
 
   puedeMostrarAbrirEspacioEnBloque(slot: SlotUI, bloqueIndex: number): boolean {
-    return this.puedeMostrarAbrirEspacio(slot) && !this.tieneHuecoAbiertoDespues(slot, bloqueIndex);
+    return this.puedeMostrarAbrirEspacio(slot)
+      && !this.estaAntesDelPrimerLibre(slot)
+      && !this.tieneHuecoAbiertoDespues(slot, bloqueIndex);
   }
 
   onHoverSlot(slotUid: string | null): void {
@@ -678,6 +684,21 @@ export class SelectorHorarioComponent implements OnInit, OnChanges {
     }
 
     return bloque.slots.some((item) => item.isOpenedGap && item.sourceHoraReferencia === slot.hora24);
+  }
+
+  private estaAntesDelPrimerLibre(slot: SlotUI): boolean {
+    const primerLibre = this.primerSlotDisponibleNormalizado() ?? this.buscarPrimerLibreEnAgenda();
+    if (!primerLibre) {
+      return false;
+    }
+
+    return slot.hora24 < primerLibre;
+  }
+
+  private buscarPrimerLibreEnAgenda(): string | null {
+    const slots = this.bloques().flatMap((bloque) => bloque.slots);
+    const libre = slots.find((item) => this.esSlotLibre(item));
+    return libre?.hora24 ?? null;
   }
 
   private calcularSlotsSeleccionables(bloques: BloqueUI[]): Set<string> {
