@@ -43,6 +43,8 @@ interface OpenSpaceReference {
   styleUrl: './selector-horario.component.css'
 })
 export class SelectorHorarioComponent implements OnInit, OnChanges {
+  private static readonly PRIORITY_OPEN_GAP_MINUTES = 15;
+
   private readonly fb = inject(FormBuilder);
   private readonly destroyRef = inject(DestroyRef);
   private readonly agendaService = inject(AgendaManualService);
@@ -226,7 +228,8 @@ export class SelectorHorarioComponent implements OnInit, OnChanges {
       }
 
       const nuevosSlots = [...objetivo.slots];
-      const horaNueva = this.sumarMinutos(referencia.slot.hora24, this.getMinutosApertura());
+      // Backend creates priority slots relative to the reference appointment time.
+      const horaNueva = this.sumarMinutos(referencia.slot.hora24, SelectorHorarioComponent.PRIORITY_OPEN_GAP_MINUTES);
       const nuevoSlot: SlotUI = {
         uid: `gap-${referencia.slot.uid}-${Date.now()}`,
         hora: this.toHora12(horaNueva),
@@ -616,10 +619,6 @@ export class SelectorHorarioComponent implements OnInit, OnChanges {
     return `${this.paciente.nombres} ${this.paciente.apellidos}`.trim();
   }
 
-  private getMinutosApertura(): number {
-    const minutos = this.configuracionMedico()?.intervaloMinutos;
-    return minutos && minutos > 0 ? minutos : 15;
-  }
 
   private puedeConfirmarAgendamiento(): boolean {
     const medicoId = this.form.controls.medicoId.value;
