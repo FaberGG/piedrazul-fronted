@@ -1,3 +1,73 @@
-<h1>Agendamiento autonomo</h1>
-<p>Infraestructura base lista para implementar RF-03.</p>
+<div class="page-wrapper">
 
+  <h2>Agendar mi cita</h2>
+
+  <!-- Error -->
+  <div *ngIf="error()" class="alert-error">{{ error() }}</div>
+
+  <!-- Confirmación -->
+  <div *ngIf="citaConfirmada()" class="alert-success">
+    <h5>¡Cita agendada exitosamente!</h5>
+    <p><strong>Médico:</strong> {{ citaConfirmada()?.medicoNombre }}</p>
+    <p><strong>Especialidad:</strong> {{ citaConfirmada()?.especialidad }}</p>
+    <p><strong>Fecha:</strong> {{ citaConfirmada()?.fecha }}</p>
+    <p><strong>Hora:</strong> {{ citaConfirmada()?.hora }}</p>
+    <p><strong>Estado:</strong> {{ citaConfirmada()?.estado }}</p>
+  </div>
+
+  <!-- Formulario -->
+  <div *ngIf="!citaConfirmada()" class="card">
+
+    <div class="mb-3">
+      <label class="form-label">Médico / Terapista</label>
+      <select class="form-select"
+              [disabled]="cargandoMedicos()"
+              (change)="onMedicoOFechaChange()"
+              [(ngModel)]="medicoSeleccionado">
+        <option [value]="null">Selecciona un médico</option>
+        <option *ngFor="let m of medicos()" [value]="m.id">
+          {{ m.nombresCompletos }} — {{ m.especialidad }}
+        </option>
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Fecha</label>
+      <input type="date"
+             class="form-control"
+             (change)="onMedicoOFechaChange()"
+             [(ngModel)]="fechaSeleccionada" />
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Horario disponible</label>
+      <div *ngIf="cargandoFranjas()" class="text-muted">Cargando horarios...</div>
+      <div *ngIf="!cargandoFranjas() && franjas().length === 0 && fechaSeleccionada()" class="text-muted">
+        No hay horarios disponibles para esta fecha
+      </div>
+      <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.5rem;">
+        <button *ngFor="let franja of franjas()"
+                class="franja-btn"
+                [class.selected]="horaSeleccionada() === franja"
+                (click)="horaSeleccionada.set(franja)">
+          {{ franja }}
+        </button>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Observaciones (opcional)</label>
+      <textarea class="form-control"
+                rows="3"
+                [(ngModel)]="observaciones">
+      </textarea>
+    </div>
+
+    <button class="btn-confirmar"
+            [disabled]="enviando() || !medicoSeleccionado() || !fechaSeleccionada() || !horaSeleccionada()"
+            (click)="agendar()">
+      {{ enviando() ? 'Agendando...' : 'Confirmar cita' }}
+    </button>
+
+  </div>
+</div>
