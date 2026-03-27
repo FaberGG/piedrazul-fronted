@@ -7,6 +7,7 @@
   border-radius: var(--layout-radius) var(--layout-radius) 0 0;
   background: var(--neutro-white);
   color: var(--neutro-gray-700);
+  overflow: hidden;
   transition: padding 180ms ease, box-shadow 180ms ease;
 }
 
@@ -33,7 +34,7 @@
   display: flex;
   align-items: center;
   gap: 0.8rem;
-
+  min-width: 0;
 }
 
 .topbar__avatar {
@@ -50,17 +51,24 @@
 .topbar__user {
   display: grid;
   gap: 0.1rem;
+  min-width: 0;
 }
 
 .topbar__name {
   font-size: var(--font-size-topbar-user-name);
   font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .topbar__email {
   color: var(--neutro-gray-300);
   font-size: var(--font-size-topbar-user-email);
   font-weight: 400;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .topbar__account-switch {
@@ -106,6 +114,10 @@
 
 .topbar--compact .topbar__email {
   white-space: nowrap;
+}
+
+.topbar--compact .topbar__profile {
+  max-width: min(48%, 28rem);
 }
 
 @media (max-width: 720px) {

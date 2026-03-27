@@ -6,6 +6,7 @@ import { AuthService } from '../../../../core/auth/auth.service';
 
 @Component({
   selector: 'app-login-page',
+  standalone: true,
   imports: [ReactiveFormsModule],
   templateUrl: './login-page.component.html',
   styleUrl: './login-page.component.css'
@@ -42,5 +43,10 @@ export class LoginPageComponent {
         this.errorMessage.set('Credenciales invalidas. Intenta nuevamente.');
       }
     });
+  }
+
+  // 👉 Método para ir al registro
+  goToRegister(): void {
+    this.router.navigate(['/register']);
   }
 }

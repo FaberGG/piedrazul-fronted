@@ -1,0 +1,63 @@
+
+<div class="page">
+
+  <div class="form-card">
+
+    <div class="form-header">
+      <h2 class="form-title">Información del administrador</h2>
+    </div>
+
+    <div *ngIf="errorMessage()" class="error-banner">
+      {{ errorMessage() }}
+    </div>
+
+    <form
+      [formGroup]="formAdmin"
+      (ngSubmit)="registrarAdmin()"
+      class="form-grid two-columns">
+
+      <!-- Usuario -->
+      <div class="field full-width">
+        <label>Usuario (correo)*</label>
+        <input
+          type="email"
+          formControlName="username"
+          placeholder="admin@ejemplo.com"
+          [class.input-error]="isInvalid(formAdmin, 'username')"
+          [class.input-ok]="isValid(formAdmin, 'username')"
+          (input)="validateOnInput(formAdmin, 'username')" />
+        <span class="error-msg" *ngIf="isInvalid(formAdmin,'username')">
+          {{ getError(formAdmin,'username') }}
+        </span>
+      </div>
+
+      <!-- Contraseña -->
+      <div class="field full-width">
+        <label>Contraseña*</label>
+        <input
+          type="password"
+          formControlName="password"
+          placeholder="Mínimo 6 caracteres"
+          [class.input-error]="isInvalid(formAdmin, 'password')"
+          [class.input-ok]="isValid(formAdmin, 'password')"
+          (input)="validateOnInput(formAdmin, 'password')" />
+        <span class="error-msg" *ngIf="isInvalid(formAdmin,'password')">
+          {{ getError(formAdmin,'password') }}
+        </span>
+      </div>
+
+      <!-- Botón -->
+      <div class="form-actions full-width">
+        <button
+          class="btn-registrar"
+          type="submit"
+          [disabled]="isLoading()">
+          {{ isLoading() ? 'Registrando...' : 'Registrar Administrador' }}
+        </button>
+      </div>
+
+    </form>
+
+  </div>
+
+</div>

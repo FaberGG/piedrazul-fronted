@@ -1,0 +1,341 @@
+.register-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-image: url('/assets/images/fondo.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  font-family: Arial, sans-serif;
+}
+
+.register-page__header {
+  background-color: #F9FAFA;
+  width: 100%;
+  padding: 0.5rem 1rem;
+}
+
+.register-page__brand {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1a4a6b;
+  margin: 0 0 0.25rem;
+  font-style: italic;
+  font-family: Georgia, serif;
+  letter-spacing: -0.5px;
+}
+
+.register-page__tagline {
+  font-size: 0.78rem;
+  color: #2e8b5a;
+  margin: 0;
+}
+
+.register-page__content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+  max-width: 760px;
+  width: 100%;
+  align-self: center;
+}
+
+.register-page__title-bar {
+  background-color: rgba(255, 255, 255, 0.88);
+  border-radius: 8px 8px 0 0;
+  padding: 0.75rem 1.25rem;
+  text-align: center;
+  border-bottom: 1px solid #d0e8f0;
+}
+
+.register-page__title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #1a4a6b;
+  margin: 0 0 0.15rem;
+}
+
+.register-page__subtitle {
+  font-size: 0.78rem;
+  color: #555;
+  margin: 0;
+}
+
+.register-page__card {
+  background: rgba(255, 255, 255, 0.92);
+  padding: 1.25rem 1.5rem 1.5rem;
+  box-shadow: 0 2px 16px rgba(26, 74, 107, 0.1);
+  border-radius: 0 0 8px 8px;
+}
+
+.register-page__section-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #1a4a6b;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1.5px solid #c8e6f0;
+}
+
+.register-page__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.85rem 1.25rem;
+}
+
+.register-page__field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.register-page__label {
+  font-size: 0.8rem;
+  color: #333;
+  font-weight: 500;
+}
+
+.register-page__input {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #c8d8e4;
+  border-radius: 6px;
+  font-size: 0.88rem;
+  font-family: Arial, sans-serif;
+  color: #222;
+  background: #fff;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.register-page__input::placeholder {
+  color: #aab8c2;
+  font-size: 0.83rem;
+}
+
+.register-page__input:focus {
+  border-color: #1a8c5a;
+  box-shadow: 0 0 0 3px rgba(26, 140, 90, 0.12);
+}
+
+.register-page__input-icon-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.register-page__input-icon {
+  position: absolute;
+  left: 0.6rem;
+  color: #aab8c2;
+  pointer-events: none;
+}
+
+.register-page__input--icon {
+  padding-left: 2rem;
+}
+
+.register-page__select {
+  appearance: none;
+  cursor: pointer;
+}
+
+.register-page__input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.register-page__input-wrapper .register-page__input {
+  padding-right: 3rem;
+}
+
+.register-page__tab-btn {
+  position: absolute;
+  right: 0.4rem;
+  background: #e8f0f5;
+  border: 1px solid #c8d8e4;
+  border-radius: 4px;
+  padding: 0.15rem 0.45rem;
+  font-size: 0.7rem;
+  color: #555;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.register-page__tab-btn:hover {
+  background: #d0e4ef;
+}
+
+.register-page__error {
+  color: #c0392b;
+  font-size: 0.75rem;
+  margin: 0;
+}
+
+.register-page__error--global {
+  text-align: center;
+  margin-top: 0.5rem;
+}
+
+.register-page__actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1.25rem;
+}
+
+.register-page__submit {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background-color: #1a8c5a;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.6rem 1.25rem;
+  font-size: 0.9rem;
+  font-family: Arial, sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s, opacity 0.2s;
+}
+
+.register-page__submit:hover:not(:disabled) {
+  background-color: #157a4e;
+}
+
+.register-page__submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.register-page__footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 0.5rem 1rem;
+  font-size: 0.75rem;
+  background-color: #F9FAFA;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.register-page__footer-left {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  color: #555;
+}
+
+.register-page__footer-section {
+  font-weight: 600;
+  color: #333;
+  margin: 0 0 0.1rem;
+}
+
+.register-page__footer-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #555;
+  text-decoration: none;
+}
+
+.register-page__footer-item:hover {
+  color: #1a4a6b;
+}
+
+.register-page__footer-email {
+  color: #888;
+  font-size: 0.7rem;
+  margin-top: 0.15rem;
+}
+
+.register-page__footer-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.2rem;
+}
+
+.register-page__footer-brand {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1a4a6b;
+  font-family: Georgia, serif;
+  font-style: italic;
+  margin: 0;
+}
+
+.register-page__footer-link-sm {
+  color: #555;
+  text-decoration: none;
+  font-size: 0.72rem;
+}
+
+.register-page__footer-link-sm:hover {
+  color: #1a4a6b;
+  text-decoration: underline;
+}
+
+.register-page__status {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #2e8b5a;
+  font-size: 0.72rem;
+}
+
+.register-page__status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: #2e8b5a;
+  flex-shrink: 0;
+}
+
+@media (max-width: 600px) {
+  .register-page__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .register-page__content {
+    padding: 1rem;
+  }
+
+ 
+}
+
+/* Estado por defecto */
+.register-page__input {
+  border: 1px solid #c8d8e4;
+  border-radius: 6px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+/* Estado inválido → rojo */
+.register-page__input--error,
+.register-page__input.ng-invalid.ng-touched {
+  border-color: #c0392b !important;
+  box-shadow: 0 0 0 3px rgba(192, 57, 43, 0.12) !important;
+}
+
+/* Estado válido → verde */
+.register-page__input--success,
+.register-page__input.ng-valid.ng-touched {
+  border-color: #1a8c5a !important;
+  box-shadow: 0 0 0 3px rgba(26, 140, 90, 0.12) !important;
+}
+
+/* Mensajes de error */
+.register-page__error {
+  color: #c0392b;
+  font-size: 0.75rem;
+  margin-top: 4px;
+}

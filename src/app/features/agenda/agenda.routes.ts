@@ -4,12 +4,13 @@ import { roleGuard } from '../../core/guards/role.guard';
 import { ROLES } from '../../shared/constants/roles';
 import { AgendarAutonomoPageComponent } from './pages/agendar-autonomo-page/agendar-autonomo-page.component';
 import { ListaCitasPageComponent } from './pages/lista-citas-page/lista-citas-page.component';
+import { NuevaCitaPageComponent } from './pages/nueva-cita-page/nueva-cita-page.component'; // Importar de Right
 
 export const agendaStaffRoutes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'listar'
+    redirectTo: 'listar' // Decisión de UX: La lista suele ser la vista principal
   },
   {
     path: 'listar',
@@ -17,8 +18,18 @@ export const agendaStaffRoutes: Routes = [
     canActivate: [roleGuard],
     data: {
       roles: [ROLES.ADMIN, ROLES.AGENDADOR, ROLES.MEDICO],
-      sectionTitle: 'Agenda medica',
-      sectionDescription: 'Administra las citas por medico, fecha y disponibilidad.'
+      sectionTitle: 'Agenda Médica',
+      sectionDescription: 'Administra las citas por médico, fecha y disponibilidad.'
+    }
+  },
+  {
+    path: 'nueva-cita',
+    component: NuevaCitaPageComponent,
+    canActivate: [roleGuard],
+    data: {
+      roles: [ROLES.ADMIN, ROLES.AGENDADOR, ROLES.MEDICO],
+      sectionTitle: 'Agendar Cita',
+      sectionDescription: 'Registra una nueva cita con datos del paciente y horario disponible.'
     }
   }
 ];
@@ -30,9 +41,8 @@ export const agendaPatientRoutes: Routes = [
     canActivate: [roleGuard],
     data: {
       roles: [ROLES.PACIENTE],
-      sectionTitle: 'Agendamiento autonomo',
-      sectionDescription: 'Programa tu cita en linea segun la disponibilidad de especialistas.'
+      sectionTitle: 'Agendamiento Autónomo',
+      sectionDescription: 'Programa tu cita en línea según la disponibilidad de especialistas.'
     }
   }
 ];
-

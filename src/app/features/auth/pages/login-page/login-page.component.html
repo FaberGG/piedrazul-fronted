@@ -1,23 +1,84 @@
 <section class="login-page">
-  <h1>Iniciar sesion</h1>
-  <form [formGroup]="form" (ngSubmit)="submit()" class="login-page__form">
-    <label>
-      Usuario
-      <input type="text" formControlName="username" />
-    </label>
+  <header class="login-page__header">
+    <h1 class="login-page__brand">Piedra azul</h1>
+    <p class="login-page__tagline">Sistema de agendamiento de citas</p>
+  </header>
 
-    <label>
-      Contrasena
-      <input type="password" formControlName="password" />
-    </label>
-
-    @if (errorMessage()) {
-      <p class="login-page__error">{{ errorMessage() }}</p>
-    }
-
-    <button type="submit" [disabled]="form.invalid || isLoading()">
-      {{ isLoading() ? 'Ingresando...' : 'Ingresar' }}
+  <div class="login-page__card">
+    <button type="button" class="login-page__register-btn" routerLink="/register">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+        <circle cx="12" cy="7" r="4"/>
+      </svg>
+      Iniciar Sesión
     </button>
-  </form>
-</section>
 
+    <form [formGroup]="form" (ngSubmit)="submit()" class="login-page__form">
+      <div class="login-page__field">
+        <label for="username" class="login-page__label">Nombre de usuario *</label>
+        <input
+          id="username"
+          type="text"
+          formControlName="username"
+          class="login-page__input"
+          placeholder="Ingrese el nombre de usuario"
+        />
+      </div>
+
+      <div class="login-page__field">
+        <label for="password" class="login-page__label">Contraseña *</label>
+        <input
+          id="password"
+          type="password"
+          formControlName="password"
+          class="login-page__input"
+          placeholder="Ingrese la contraseña"
+        />
+      </div>
+
+      @if (errorMessage()) {
+        <p class="login-page__error">{{ errorMessage() }}</p>
+      }
+
+      <button
+        type="submit"
+        class="login-page__submit"
+        [disabled]="form.invalid || isLoading()"
+      >
+        {{ isLoading() ? 'Ingresando...' : 'Iniciar sesión' }}
+      </button>
+    </form>
+
+   <button class="login-page__add-account" (click)="goToRegister()">
+  Agregar cuenta
+</button>
+  </div>
+
+  <footer class="login-page__footer">
+    <div class="login-page__footer-left">
+      <p class="login-page__footer-section">Configuración</p>
+      <a href="#" class="login-page__footer-item">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+        </svg>
+        Ajustes
+      </a>
+      <a href="#" class="login-page__footer-item">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/>
+        </svg>
+        Ayuda y soporte
+      </a>
+      <span class="login-page__footer-email">Soporte.soporte&#64;piedraazul.com</span>
+    </div>
+
+    <div class="login-page__footer-right">
+      <p class="login-page__footer-brand">Piedra azul</p>
+      <a href="#" class="login-page__footer-link-sm">Términos y privacidad</a>
+      <span class="login-page__status">
+        <span class="login-page__status-dot"></span>
+        Sistema activo
+      </span>
+    </div>
+  </footer>
+</section>
