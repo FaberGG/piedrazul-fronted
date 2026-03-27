@@ -1,0 +1,140 @@
+
+/* CONTENEDOR GENERAL */
+.page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 32px 40px;
+  min-height: 420px;
+  background-image: url('/assets/images/fondo.png');
+  background-size: cover;
+  background-position: center;
+}
+
+/* TARJETA */
+.form-card {
+  width: 100%;
+  max-width: 900px;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 24px 28px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+/* HEADER */
+.form-header {
+  margin-bottom: 20px;
+}
+
+.form-title {
+  font-size: 22px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+/* GRID */
+.form-grid {
+  display: grid;
+  gap: 20px;
+}
+
+.two-columns {
+  grid-template-columns: 1fr 1fr;
+}
+
+/* COLUMNAS */
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* CAMPOS */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+label {
+  font-size: 13px;
+  color: #374151;
+  font-weight: 500;
+}
+
+/* INPUTS */
+input,
+select {
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  font-size: 14px;
+  transition: all 0.2s ease;
+  outline: none;
+}
+
+/* FOCUS */
+input:focus,
+select:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.15);
+}
+
+/* VALIDACIONES */
+.input-error {
+  border-color: #ef4444;
+}
+
+.input-ok {
+  border-color: #22c55e;
+}
+
+/* MENSAJES DE ERROR */
+.error-msg {
+  font-size: 12px;
+  color: #ef4444;
+}
+
+/* BANNER ERROR */
+.error-banner {
+  background: #fee2e2;
+  color: #b91c1c;
+  padding: 10px 12px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  font-size: 13px;
+}
+
+/* BOTÓN */
+.form-actions {
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.full-width {
+  grid-column: span 2;
+}
+
+.btn-registrar {
+  background: #3b82f6;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+/* HOVER */
+.btn-registrar:hover {
+  background: #2563eb;
+}
+
+/* DISABLED */
+.btn-registrar:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+}
+

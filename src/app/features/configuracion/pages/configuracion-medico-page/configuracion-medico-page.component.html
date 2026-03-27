@@ -1,3 +1,134 @@
-<h1>Configuracion por medico</h1>
-<p>Infraestructura base lista para implementar RF-04.</p>
 
+<div class="config-layout">
+
+  <!-- ── PANEL IZQUIERDO: Lista de médicos ── -->
+  <aside class="medicos-panel">
+    <div class="panel-header">
+      <h2 class="panel-title">Médicos</h2>
+      <p class="panel-sub">Selecciona un médico para configurar su horario</p>
+    </div>
+
+    <div *ngIf="isLoadingMedicos()" class="loading-msg">Cargando médicos...</div>
+    <div *ngIf="!isLoadingMedicos() && medicos().length === 0" class="empty-msg">
+      No hay médicos registrados.
+    </div>
+
+    <ul class="medico-list">
+      <li
+        *ngFor="let m of medicos()"
+        class="medico-item"
+        [class.selected]="medicoSeleccionado()?.medicoId === m.id"
+        (click)="seleccionarMedico(m)">
+        <div class="medico-avatar">{{ m.nombresCompletos | slice:0:1 }}</div>
+        <div class="medico-info">
+          <span class="medico-nombre">{{ m.nombresCompletos }}</span>
+          <span class="medico-esp">{{ m.especialidad }}</span>
+        </div>
+        <span class="medico-badge" [class.activo]="m.activo">
+          {{ m.activo ? 'Activo' : 'Inactivo' }}
+        </span>
+      </li>
+    </ul>
+  </aside>
+
+  <!-- ── PANEL DERECHO: Formulario de configuración ── -->
+  <main class="config-panel">
+
+    <!-- Sin médico seleccionado -->
+    <div *ngIf="!medicoSeleccionado() && !isLoadingConfig()" class="empty-state">
+      <div class="empty-icon"></div>
+      <p>Selecciona un médico de la lista para configurar su agenda.</p>
+    </div>
+
+    <!-- Cargando configuración -->
+    <div *ngIf="isLoadingConfig()" class="loading-msg center">Cargando configuración...</div>
+
+    <!-- Formulario -->
+    <div *ngIf="medicoSeleccionado() && !isLoadingConfig()">
+
+      <div class="config-header">
+        <div>
+          <h2 class="config-title">{{ medicoSeleccionado()?.medicoNombre }}</h2>
+          <p class="config-sub">{{ medicoSeleccionado()?.especialidad }}</p>
+        </div>
+        <span class="badge-estado" [class.activo]="medicoSeleccionado()?.activo">
+          {{ medicoSeleccionado()?.activo ? 'Activo' : 'Inactivo' }}
+        </span>
+      </div>
+
+      <div *ngIf="error()" class="alert alert-error">⚠ {{ error() }}</div>
+      <div *ngIf="success()" class="alert alert-success">✔ {{ success() }}</div>
+
+      <form [formGroup]="form" (ngSubmit)="guardar()" class="form-body">
+
+        <!-- Días de atención -->
+        <div class="field">
+          <label class="field-label">Días de atención *</label>
+          <div class="dias-grid">
+            <button
+              *ngFor="let dia of diasSemana"
+              type="button"
+              class="dia-btn"
+              [class.selected]="isDiaSeleccionado(dia.valor)"
+              (click)="toggleDia(dia.valor)">
+              {{ dia.etiqueta | slice:0:3 }}
+            </button>
+          </div>
+        </div>
+
+        <!-- Franjas horarias -->
+        <div class="row-fields">
+          <div class="field">
+            <label class="field-label">Hora inicio *</label>
+            <input
+              type="time"
+              formControlName="horaInicio"
+              class="input"
+              [class.input-error]="isInvalid('horaInicio')" />
+            <span class="error-msg" *ngIf="isInvalid('horaInicio')">Requerido.</span>
+          </div>
+
+          <div class="field">
+            <label class="field-label">Hora fin *</label>
+            <input
+              type="time"
+              formControlName="horaFin"
+              class="input"
+              [class.input-error]="isInvalid('horaFin')" />
+            <span class="error-msg" *ngIf="isInvalid('horaFin')">Requerido.</span>
+          </div>
+        </div>
+
+        <!-- Intervalo entre citas -->
+        <div class="field">
+          <label class="field-label">Intervalo entre citas (minutos) *</label>
+          <div class="intervalos-grid">
+            <button
+              *ngFor="let i of intervalos"
+              type="button"
+              class="intervalo-btn"
+              [class.selected]="form.get('intervaloMinutos')?.value === i"
+              (click)="form.get('intervaloMinutos')?.setValue(i)">
+              {{ i }} min
+            </button>
+          </div>
+          <span class="error-msg" *ngIf="isInvalid('intervaloMinutos')">Seleccione un intervalo.</span>
+        </div>
+
+        <!-- Capacidad diaria (solo lectura) -->
+        <div class="field" *ngIf="medicoSeleccionado()?.capacidadDiaria">
+          <label class="field-label">Capacidad diaria calculada</label>
+          <div class="readonly-badge">{{ medicoSeleccionado()?.capacidadDiaria }} citas/día</div>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn-primary" [disabled]="isGuardando()">
+            {{ isGuardando() ? 'Guardando...' : 'Guardar Configuración' }}
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </main>
+
+</div>

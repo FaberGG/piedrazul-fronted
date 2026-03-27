@@ -37,13 +37,15 @@ export class SidebarComponent {
 
   readonly utilityItems = [
     {
-      label: 'Ajustes',
-      iconClass: 'fa-solid fa-gear'
-    },
-    {
-      label: 'Ayuda y soporte',
-      iconClass: 'fa-solid fa-circle-question'
-    }
+    label: 'Ajustes',
+    iconClass: 'fa-solid fa-gear',
+    path: '/admin/configuracion'
+  },
+  {
+    label: 'Ayuda y soporte',
+    iconClass: 'fa-solid fa-circle-question',
+    path: '/soporte' // o la ruta que quieras
+  }
   ];
 
   readonly visibleItems = computed(() => {

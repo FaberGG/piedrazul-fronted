@@ -1,3 +1,97 @@
-<h1>Configuracion global</h1>
-<p>Infraestructura base lista para implementar RF-04.</p>
+<div class="config-layout">
 
+  <!-- ── VENTANA DE AGENDAMIENTO ── -->
+  <section class="config-card">
+    <div class="card-header">
+      <div class="card-icon">📅</div>
+      <div>
+        <h2 class="card-title">Ventana de Agendamiento</h2>
+        <p class="card-sub">Define cuántas semanas hacia adelante los pacientes pueden agendar citas (1 – 12 semanas).</p>
+      </div>
+    </div>
+
+    <form [formGroup]="formVentana" (ngSubmit)="guardarVentana()" class="form-body">
+
+      <div *ngIf="errorVentana()" class="alert alert-error">⚠ {{ errorVentana() }}</div>
+      <div *ngIf="successVentana()" class="alert alert-success">✔ {{ successVentana() }}</div>
+
+      <div class="field">
+        <label class="field-label">Semanas disponibles *</label>
+        <div class="semanas-grid">
+          <button
+            *ngFor="let s of semanas"
+            type="button"
+            class="semana-btn"
+            [class.selected]="formVentana.get('ventanaAgendamientoSemanas')?.value === s"
+            (click)="formVentana.get('ventanaAgendamientoSemanas')?.setValue(s)">
+            {{ s }}
+          </button>
+        </div>
+        <span class="selected-label" *ngIf="formVentana.get('ventanaAgendamientoSemanas')?.value">
+          Seleccionado: <strong>{{ formVentana.get('ventanaAgendamientoSemanas')?.value }} semana(s)</strong>
+        </span>
+        <span class="error-msg" *ngIf="isInvalid(formVentana, 'ventanaAgendamientoSemanas')">
+          Seleccione una ventana entre 1 y 12 semanas.
+        </span>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn-primary" [disabled]="isLoadingVentana()">
+          {{ isLoadingVentana() ? 'Guardando...' : 'Guardar Ventana' }}
+        </button>
+      </div>
+    </form>
+  </section>
+
+  <!-- ── DÍAS NO LABORALES ── -->
+  <section class="config-card">
+    <div class="card-header">
+      <div class="card-icon">🚫</div>
+      <div>
+        <h2 class="card-title">Días No Laborales</h2>
+        <p class="card-sub">Registra festivos o días especiales en los que no se atenderán citas.</p>
+      </div>
+    </div>
+
+    <form [formGroup]="formDia" (ngSubmit)="agregarDia()" class="form-body form-inline">
+
+      <div *ngIf="errorDia()" class="alert alert-error">⚠ {{ errorDia() }}</div>
+      <div *ngIf="successDia()" class="alert alert-success">✔ {{ successDia() }}</div>
+
+      <div class="inline-fields">
+        <div class="field">
+          <label class="field-label">Fecha *</label>
+          <input type="date" formControlName="fecha" class="input"
+            [class.input-error]="isInvalid(formDia, 'fecha')" />
+          <span class="error-msg" *ngIf="isInvalid(formDia, 'fecha')">La fecha es obligatoria.</span>
+        </div>
+
+        <div class="field field-grow">
+          <label class="field-label">Descripción</label>
+          <input type="text" formControlName="descripcion" class="input"
+            placeholder="Ej: Día de la independencia" />
+        </div>
+
+        <button type="submit" class="btn-primary btn-add" [disabled]="isLoadingDia()">
+          {{ isLoadingDia() ? '...' : '+ Agregar' }}
+        </button>
+      </div>
+    </form>
+
+    <!-- Lista de días -->
+    <div class="dias-list">
+      <div *ngIf="isLoadingDias()" class="loading-msg">Cargando días...</div>
+      <div *ngIf="!isLoadingDias() && diasNoLaborales().length === 0" class="empty-msg">
+        No hay días no laborales registrados.
+      </div>
+      <div class="dia-item" *ngFor="let dia of diasNoLaborales()">
+        <div class="dia-info">
+          <span class="dia-fecha">{{ dia.fecha | date:'dd/MM/yyyy' }}</span>
+          <span class="dia-desc">{{ dia.descripcion || '—' }}</span>
+        </div>
+        <button class="btn-delete" (click)="eliminarDia(dia.id)" title="Eliminar">✕</button>
+      </div>
+    </div>
+  </section>
+
+</div>

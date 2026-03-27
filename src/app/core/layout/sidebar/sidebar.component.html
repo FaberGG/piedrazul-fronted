@@ -22,11 +22,14 @@
   </nav>
 
   <div class="sidebar__footer" aria-label="Menu secundario">
-    @for (item of utilityItems; track item.label) {
-      <button type="button" class="sidebar__link sidebar__link--utility" aria-disabled="true">
-        <i [class]="item.iconClass + ' sidebar__icon'" aria-hidden="true"></i>
-        <span>{{ item.label }}</span>
-      </button>
+   @for (item of utilityItems; track item.label) {
+  <a
+    [routerLink]="item.path"
+    class="sidebar__link sidebar__link--utility"
+  >
+    <i [class]="item.iconClass + ' sidebar__icon'" aria-hidden="true"></i>
+    <span>{{ item.label }}</span>
+  </a>
     }
 
     <button type="button" class="sidebar__link sidebar__link--button" (click)="logout()">
