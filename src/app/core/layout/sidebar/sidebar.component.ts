@@ -22,9 +22,9 @@ export class SidebarComponent {
 
   private readonly items: MenuItem[] = [
     {
-      label: 'Agendar cita',
-      path: '/agenda',
-      iconClass: 'fa-regular fa-calendar-plus',
+      label: 'Listar citas',
+      path: '/agenda/listar',
+      iconClass: 'fa-solid fa-list-ol',
       allowedRoles: [ROLES.ADMIN, ROLES.AGENDADOR, ROLES.MEDICO]
     },
     {

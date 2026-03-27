@@ -22,7 +22,7 @@ export const routes: Routes = [
       {
         path: '',
         pathMatch: 'full',
-        redirectTo: 'agenda'
+        redirectTo: 'agenda/listar'
       },
       {
         path: 'agenda',

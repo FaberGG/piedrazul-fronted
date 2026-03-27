@@ -8,6 +8,11 @@ import { ListaCitasPageComponent } from './pages/lista-citas-page/lista-citas-pa
 export const agendaStaffRoutes: Routes = [
   {
     path: '',
+    pathMatch: 'full',
+    redirectTo: 'listar'
+  },
+  {
+    path: 'listar',
     component: ListaCitasPageComponent,
     canActivate: [roleGuard],
     data: {
