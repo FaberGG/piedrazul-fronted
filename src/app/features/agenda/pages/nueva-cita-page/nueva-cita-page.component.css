@@ -1,0 +1,12 @@
+.nueva-cita-page {
+  display: grid;
+  gap: 1rem;
+}
+
+
+.nueva-cita-page__feedback {
+  margin: 0;
+  color: var(--blue-green-600);
+  font-size: var(--font-size-base);
+}
+

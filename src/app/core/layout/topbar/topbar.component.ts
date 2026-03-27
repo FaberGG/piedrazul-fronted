@@ -1,5 +1,5 @@
 import { toSignal } from '@angular/core/rxjs-interop';
-import { Component, HostListener, computed, inject, signal } from '@angular/core';
+import { Component, HostListener, OnInit, computed, inject, signal } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter, startWith } from 'rxjs';
 
@@ -10,8 +10,11 @@ import { AuthService } from '../../auth/auth.service';
   templateUrl: './topbar.component.html',
   styleUrl: './topbar.component.css'
 })
-export class TopbarComponent {
-      readonly isCompact = signal(false);
+export class TopbarComponent implements OnInit {
+  private static readonly COMPACT_SCROLL_IN = 42;
+  private static readonly COMPACT_SCROLL_OUT = 12;
+
+  readonly isCompact = signal(false);
 
   readonly authService = inject(AuthService);
   private readonly router = inject(Router);
@@ -50,9 +53,31 @@ export class TopbarComponent {
       .join('');
   });
 
+  ngOnInit(): void {
+    this.syncCompactState(window.scrollY);
+  }
+
   @HostListener('window:scroll')
   onWindowScroll(): void {
-    this.isCompact.set(window.scrollY > 24);
+    this.syncCompactState(window.scrollY);
+  }
+
+  @HostListener('window:resize')
+  onWindowResize(): void {
+    this.syncCompactState(window.scrollY);
+  }
+
+  private syncCompactState(scrollTop: number): void {
+    const compactNow = this.isCompact();
+
+    if (!compactNow && scrollTop >= TopbarComponent.COMPACT_SCROLL_IN) {
+      this.isCompact.set(true);
+      return;
+    }
+
+    if (compactNow && scrollTop <= TopbarComponent.COMPACT_SCROLL_OUT) {
+      this.isCompact.set(false);
+    }
   }
 
 

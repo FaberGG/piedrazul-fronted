@@ -1,0 +1,17 @@
+<section class="nueva-cita-page">
+
+  <app-formulario-paciente [resetKey]="resetKey()" (pacienteChange)="onPacienteChange($event)" />
+
+  <app-selector-horario
+    [paciente]="paciente()"
+    [pacienteValido]="pacienteValido()"
+    [resetKey]="resetKey()"
+    (citaCreada)="onCitaCreada($event)"
+    (cancelado)="onCancelado()"
+  />
+
+  @if (mensaje()) {
+    <p class="nueva-cita-page__feedback">{{ mensaje() }}</p>
+  }
+</section>
+

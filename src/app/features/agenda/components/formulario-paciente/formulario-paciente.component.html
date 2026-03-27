@@ -1,0 +1,136 @@
+<section class="info-paciente" [formGroup]="form">
+  <header class="info-paciente__header">
+    <h2 class="info-paciente__title">
+      <i class="fa-regular fa-circle-user"></i>
+      Informacion del Paciente
+    </h2>
+  </header>
+  <div class="info-paciente__content">
+    <div class="info-paciente__row info-paciente__row--triple">
+      <div class="info-paciente__documento-wrapper">
+        <app-input-compartido
+          formControlName="documento"
+          label="Numero de documento"
+          inputId="documento"
+          placeholder="Ingresa el numero de documento"
+          [required]="true"
+          iconClass="fa-solid fa-id-card"
+          [showTabBadge]="haySugerencias() && mostrarSugerencias()"
+          tabBadgeText="Tab"
+          [clearable]="true"
+          inputMode="numeric"
+          pattern="[0-9]*"
+          [invalid]="esCampoInvalido('documento')"
+          [errorMessage]="getMensajeError('documento')"
+          (clearClicked)="onLimpiarDocumento()"
+          (keyDown)="onDocumentoKeyDown($event)"
+          (focused)="onDocumentoFocus()"
+          (blurred)="onDocumentoBlur()"
+        />
+
+        @if (mostrarSugerencias() && haySugerencias()) {
+          <div class="info-paciente__dropdown" role="listbox" aria-label="Sugerencias de paciente">
+            <ul class="info-paciente__sugerencias">
+              @for (sugerencia of sugerencias(); track sugerencia.id; let i = $index) {
+                <li>
+                  <button
+                    type="button"
+                    class="info-paciente__sugerencia"
+                    [class.info-paciente__sugerencia--active]="indiceActivo() === i"
+                    (mouseenter)="onHoverSugerencia(i)"
+                    (mousedown)="$event.preventDefault(); seleccionarSugerencia(sugerencia)"
+                  >
+                    <span class="info-paciente__sugerencia-nombre">{{ sugerencia.nombresCompletos }}</span>
+                    <span class="info-paciente__sugerencia-documento">{{ sugerencia.documento }}</span>
+                  </button>
+                </li>
+              }
+            </ul>
+          </div>
+        }
+      </div>
+
+      <app-input-compartido
+        formControlName="nombres"
+        label="Nombres"
+        inputId="nombres"
+        [required]="true"
+        placeholder="Ingresa los nombres del paciente"
+        [invalid]="esCampoInvalido('nombres')"
+        [errorMessage]="getMensajeError('nombres')"
+      />
+
+      <app-input-compartido
+        formControlName="apellidos"
+        label="Apellidos"
+        inputId="apellidos"
+        [required]="true"
+        placeholder="Ingresa los apellidos del paciente"
+        [invalid]="esCampoInvalido('apellidos')"
+        [errorMessage]="getMensajeError('apellidos')"
+      />
+    </div>
+
+    <div class="info-paciente__row info-paciente__row--double">
+      <app-input-compartido
+        formControlName="celular"
+        label="Numero de celular"
+        inputId="celular"
+        [required]="true"
+        iconClass="fa-solid fa-mobile-screen"
+        placeholder="Ingresa el numero de celular"
+        inputMode="numeric"
+        pattern="[0-9]*"
+        [maxLength]="10"
+        [invalid]="esCampoInvalido('celular')"
+        [errorMessage]="getMensajeError('celular')"
+      />
+
+      <div class="info-paciente__field">
+        <label class="info-paciente__label" for="genero">
+          Genero
+          <span class="info-paciente__required" aria-hidden="true">*</span>
+        </label>
+        <div class="info-paciente__select-wrapper" [class.info-paciente__select-wrapper--invalid]="esCampoInvalido('genero')">
+          <i class="fa-solid fa-venus-mars info-paciente__select-icon" aria-hidden="true"></i>
+          <select id="genero" class="info-paciente__select" formControlName="genero">
+            <option value="">Seleccione el genero</option>
+            @for (genero of generos; track genero) {
+              <option [value]="genero">{{ genero }}</option>
+            }
+          </select>
+          <i class="fa-solid fa-chevron-down info-paciente__select-chevron" aria-hidden="true"></i>
+        </div>
+        @if (esCampoInvalido('genero')) {
+          <small class="info-paciente__error">{{ getMensajeError('genero') }}</small>
+        }
+      </div>
+    </div>
+
+    <div class="info-paciente__row info-paciente__row--double">
+      <app-input-compartido
+        formControlName="correo"
+        label="Correo electronico"
+        inputId="correo"
+        type="email"
+        iconClass="fa-regular fa-envelope"
+        placeholder="Ingresa el correo"
+        [invalid]="esCampoInvalido('correo')"
+        [errorMessage]="getMensajeError('correo')"
+      />
+
+      <app-input-compartido
+        formControlName="fechaNacimiento"
+        label="Fecha de nacimiento"
+        inputId="fechaNacimiento"
+        type="date"
+        iconClass="fa-regular fa-calendar"
+        [hideNativeDateIcon]="true"
+        [max]="fechaMaximaNacimiento"
+        [invalid]="esCampoInvalido('fechaNacimiento')"
+        [errorMessage]="getMensajeError('fechaNacimiento')"
+      />
+    </div>
+  </div>
+</section>
+

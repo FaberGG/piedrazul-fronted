@@ -1,0 +1,69 @@
+<div class="input-compartido">
+  @if (label) {
+    <label class="input-compartido__label" [for]="inputId">
+      {{ label }}
+      @if (required) {
+        <span class="input-compartido__required" aria-hidden="true">*</span>
+      }
+    </label>
+  }
+
+  <div
+    class="input-compartido__control"
+    [class.input-compartido__control--with-icon]="!!iconClass"
+    [class.input-compartido__control--invalid]="invalid"
+  >
+    @if (iconClass) {
+      <span class="input-compartido__icon" aria-hidden="true">
+        <i [class]="iconClass"></i>
+      </span>
+    }
+
+    <input
+      class="input-compartido__field"
+      [class.input-compartido__field--hide-date-indicator]="type === 'date' && hideNativeDateIcon"
+      [id]="inputId"
+      [type]="type"
+      [value]="value"
+      [placeholder]="placeholder"
+      [required]="required"
+      [disabled]="isDisabled"
+      [autocomplete]="autocomplete"
+      [attr.inputmode]="inputMode || null"
+      [attr.pattern]="pattern || null"
+      [attr.maxlength]="maxLength ?? null"
+      [min]="min || ''"
+      [max]="max || ''"
+      [attr.aria-invalid]="invalid"
+      (input)="onInput($event)"
+      (focus)="onFocus()"
+      (blur)="onBlur()"
+      (keydown)="onKeyDown($event)"
+    />
+
+    @if (showTabBadge) {
+      <span class="input-compartido__tab-badge" aria-hidden="true">{{ tabBadgeText }}</span>
+    }
+
+    @if (clearable && value && !isDisabled) {
+      <button
+        type="button"
+        class="input-compartido__clear"
+        aria-label="Limpiar campo"
+        (mousedown)="$event.preventDefault()"
+        (click)="onClear()"
+      >
+        &times;
+      </button>
+    }
+  </div>
+
+  @if (showTabHint) {
+    <small class="input-compartido__hint">Presiona Tab para autocompletar</small>
+  }
+
+  @if (invalid && errorMessage) {
+    <small class="input-compartido__error">{{ errorMessage }}</small>
+  }
+</div>
+
