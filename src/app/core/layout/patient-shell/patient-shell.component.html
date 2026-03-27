@@ -1,7 +1,9 @@
 <div class="patient-shell">
-  <header class="patient-shell__header">Piedrazul - Portal Paciente</header>
+  <header class="patient-shell__header">
+    <span>Piedrazul - Portal Paciente</span>
+    <button class="btn-logout" (click)="logout()">Cerrar sesión</button>
+  </header>
   <main class="patient-shell__content">
     <router-outlet />
   </main>
 </div>
-
