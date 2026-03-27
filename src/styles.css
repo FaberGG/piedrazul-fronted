@@ -1,6 +1,6 @@
 
 :root {
-  --font-family-base: 'Inter', sans-serif;
+  --font-family-base: 'Inter', 'nunito', sans-serif;
   --font-size-base: 1rem;
   --font-size-sm: 0.875rem;
   --font-size-topbar-title: 1.5rem;
@@ -63,3 +63,4 @@ textarea {
 a {
   color: inherit;
 }
+

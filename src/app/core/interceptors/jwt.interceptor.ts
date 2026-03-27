@@ -3,7 +3,7 @@ import { inject } from '@angular/core';
 
 import { TokenService } from '../auth/token.service';
 
-const PUBLIC_ROUTES = ['/auth/login', '/auth/register'];
+const PUBLIC_ROUTES = ['/auth/login', '/auth/register/paciente'];
 
 export const jwtInterceptor: HttpInterceptorFn = (req, next) => {
   const isPublic = PUBLIC_ROUTES.some((route) => req.url.includes(route));

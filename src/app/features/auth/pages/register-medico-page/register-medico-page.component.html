@@ -1,0 +1,151 @@
+
+<div class="page">
+
+  <div class="form-card">
+
+    <div class="form-header">
+      <h2 class="form-title">Información del médico</h2>
+    </div>
+
+    <div *ngIf="errorMessage()" class="error-banner">
+      {{ errorMessage() }}
+    </div>
+
+    <form
+      [formGroup]="formMedico"
+      (ngSubmit)="registrarMedico()"
+      class="form-grid two-columns">
+
+      <!-- COLUMNA IZQUIERDA -->
+      <div class="column">
+
+        <div class="field">
+          <label>Nombres*</label>
+          <input
+            type="text"
+            formControlName="nombres"
+            placeholder="Ej: Juan Carlos"
+            [class.input-error]="isInvalid(formMedico, 'nombres')"
+            [class.input-ok]="isValid(formMedico, 'nombres')"
+            (input)="validateOnInput(formMedico, 'nombres')" />
+          <span class="error-msg" *ngIf="isInvalid(formMedico, 'nombres')">
+            {{ getError(formMedico, 'nombres') }}
+          </span>
+        </div>
+
+        <div class="field">
+          <label>Apellidos*</label>
+          <input
+            type="text"
+            formControlName="apellidos"
+            placeholder="Ej: García López"
+            [class.input-error]="isInvalid(formMedico, 'apellidos')"
+            [class.input-ok]="isValid(formMedico, 'apellidos')"
+            (input)="validateOnInput(formMedico, 'apellidos')" />
+          <span class="error-msg" *ngIf="isInvalid(formMedico, 'apellidos')">
+            {{ getError(formMedico, 'apellidos') }}
+          </span>
+        </div>
+
+        <div class="field">
+          <label>Género*</label>
+          <select
+            formControlName="genero"
+            [class.input-error]="isInvalid(formMedico, 'genero')"
+            [class.input-ok]="isValid(formMedico, 'genero')"
+            (change)="validateOnInput(formMedico, 'genero')">
+            <option value disabled>Seleccione</option>
+            <option value="masculino">Masculino</option>
+            <option value="femenino">Femenino</option>
+            <option value="otro">Otro</option>
+          </select>
+          <span class="error-msg" *ngIf="isInvalid(formMedico, 'genero')">
+            {{ getError(formMedico, 'genero') }}
+          </span>
+        </div>
+
+        <div class="field">
+          <label>Tipo*</label>
+          <select
+            formControlName="tipo"
+            [class.input-error]="isInvalid(formMedico, 'tipo')"
+            [class.input-ok]="isValid(formMedico, 'tipo')"
+            (change)="validateOnInput(formMedico, 'tipo')">
+            <option value disabled>Seleccione tipo</option>
+            <option *ngFor="let tipo of tiposValidos" [value]="tipo">
+              {{ tipo }}
+            </option>
+          </select>
+          <span class="error-msg" *ngIf="isInvalid(formMedico, 'tipo')">
+            {{ getError(formMedico, 'tipo') }}
+          </span>
+        </div>
+
+      </div>
+
+      <!-- COLUMNA DERECHA -->
+      <div class="column">
+
+        <div class="field">
+          <label>Correo*</label>
+          <input
+            type="email"
+            formControlName="correo"
+            placeholder="correo@ejemplo.com"
+            [class.input-error]="isInvalid(formMedico, 'correo')"
+            [class.input-ok]="isValid(formMedico, 'correo')"
+            (input)="validateOnInput(formMedico, 'correo')" />
+          <span class="error-msg" *ngIf="isInvalid(formMedico, 'correo')">
+            {{ getError(formMedico, 'correo') }}
+          </span>
+        </div>
+
+        <div class="field">
+          <label>Contraseña*</label>
+          <input
+            type="password"
+            formControlName="contrasena"
+            placeholder="Mínimo 6 caracteres"
+            [class.input-error]="isInvalid(formMedico, 'contrasena')"
+            [class.input-ok]="isValid(formMedico, 'contrasena')"
+            (input)="validateOnInput(formMedico, 'contrasena')" />
+          <span class="error-msg" *ngIf="isInvalid(formMedico, 'contrasena')">
+            {{ getError(formMedico, 'contrasena') }}
+          </span>
+        </div>
+
+        <div class="field">
+          <label>Especialidad*</label>
+          <select
+            formControlName="especialidad"
+            [class.input-error]="isInvalid(formMedico, 'especialidad')"
+            [class.input-ok]="isValid(formMedico, 'especialidad')"
+            (change)="validateOnInput(formMedico, 'especialidad')">
+            <option value disabled>Seleccione especialidad</option>
+            <option *ngFor="let esp of especialidadesValidas" [value]="esp">
+              {{ esp }}
+            </option>
+          </select>
+          <span class="error-msg" *ngIf="isInvalid(formMedico, 'especialidad')">
+            {{ getError(formMedico, 'especialidad') }}
+          </span>
+        </div>
+
+      </div>
+
+      <!-- BOTÓN -->
+      <div class="form-actions full-width">
+        <button
+          class="btn-registrar"
+          type="submit"
+          [disabled]="isLoading()">
+          {{ isLoading() ? 'Registrando...' : 'Registrar Médico' }}
+        </button>
+      </div>
+
+    </form>
+
+  </div>
+
+</div>
+```

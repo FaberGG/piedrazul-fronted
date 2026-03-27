@@ -1,0 +1,156 @@
+/* === RESET & BASE === */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 32px 40px;
+  min-height: 420px;
+  background-image: url('/assets/images/fondo.png');
+  background-size: cover;
+  background-position: center;
+}
+
+/* === FORM CARD === */
+.form-card {
+  background: rgba(255, 255, 255, 0.97);
+  border-radius: 12px;
+  padding: 24px 28px;
+  width: 100%;
+  max-width: 480px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
+}
+
+.form-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.form-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+/* === FORM GRID === */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px 20px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.field.full-width {
+  grid-column: 1 / -1;
+}
+
+.field label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.field input {
+  padding: 9px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 13px;
+  color: #374151;
+  background: #ffffff;
+  transition: border-color 0.2s;
+  outline: none;
+}
+
+.field input::placeholder {
+  color: #94a3b8;
+}
+
+.field input:focus {
+  border-color: #0069AE;
+  box-shadow: 0 0 0 3px rgba(0, 105, 174, 0.1);
+}
+
+/* === ACTIONS === */
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 18px;
+}
+
+.btn-registrar {
+  background: #0ea5e9;
+  color: #ffffff;
+  border: none;
+  padding: 10px 22px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.btn-registrar:hover {
+  background: #0069AE;
+  transform: translateY(-1px);
+}
+
+.btn-registrar:active {
+  transform: translateY(0);
+}
+
+/* === VALIDACIONES === */
+.field input.input-error {
+  border-color: #ef4444;
+  background-color: #fff5f5;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.12);
+}
+
+.field input.input-error:focus {
+  border-color: #dc2626;
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.18);
+}
+
+.field input.input-ok {
+  border-color: #22c55e;
+  background-color: #f0fdf4;
+}
+
+.error-msg {
+  display: block;
+  font-size: 11.5px;
+  color: #dc2626;
+  margin-top: 3px;
+  font-weight: 500;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* === ERROR BANNER === */
+.error-banner {
+  background: #fee2e2;
+  border: 1px solid #fca5a5;
+  color: #b91c1c;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 12px;
+  margin-bottom: 16px;
+}

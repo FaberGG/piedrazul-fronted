@@ -18,31 +18,33 @@ interface MenuItem {
   styleUrl: './sidebar.component.css'
 })
 export class SidebarComponent {
-  private readonly authService = inject(AuthService);
 
+  private readonly authService = inject(AuthService);
   private readonly items: MenuItem[] = [
     {
-      label: 'Agendar cita',
-      path: '/agenda',
-      iconClass: 'fa-regular fa-calendar-plus',
+      label: 'Ver Agenda',
+      path: '/agenda/listar',
+      iconClass: 'fa-solid fa-list-check',
       allowedRoles: [ROLES.ADMIN, ROLES.AGENDADOR, ROLES.MEDICO]
     },
     {
-      label: 'Configuracion',
-      path: '/configuracion',
-      iconClass: 'fa-solid fa-sliders',
-      allowedRoles: [ROLES.ADMIN]
+      label: 'Nueva Cita',
+      path: '/agenda/nueva-cita',
+      iconClass: 'fa-solid fa-circle-plus',
+      allowedRoles: [ROLES.ADMIN, ROLES.AGENDADOR, ROLES.MEDICO] // Quizá el médico solo deba ver, no agendar? Depende de tu regla de negocio
     }
   ];
 
   readonly utilityItems = [
     {
-      label: 'Ajustes',
-      iconClass: 'fa-solid fa-gear'
+      label: 'Configuración', // Centralizamos aquí la configuración de Admin
+      iconClass: 'fa-solid fa-gear',
+      path: '/admin/configuracion' // RUTA CORREGIDA
     },
     {
       label: 'Ayuda y soporte',
-      iconClass: 'fa-solid fa-circle-question'
+      iconClass: 'fa-solid fa-circle-info',
+      path: '/soporte'
     }
   ];
 

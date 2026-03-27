@@ -1,0 +1,187 @@
+<section class="register-page">
+  <header class="register-page__header">
+    <h1 class="register-page__brand">Piedra azul</h1>
+    <p class="register-page__tagline">Sistema de agendamiento de citas</p>
+  </header>
+
+  <div class="register-page__content">
+    <div class="register-page__title-bar">
+      <h2 class="register-page__title">Crear cuenta</h2>
+      <p class="register-page__subtitle">Regístrese como paciente para agendar
+        citas</p>
+    </div>
+
+    <div class="register-page__card">
+      <div class="register-page__section-header">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+          <circle cx="12" cy="7" r="4" />
+        </svg>
+        <span>Información del paciente</span>
+      </div>
+
+      <form [formGroup]="form" (ngSubmit)="submit()"
+        class="register-page__form">
+        <div class="register-page__grid">
+
+          <!-- Nombres -->
+          <div class="register-page__field">
+            <label for="nombres" class="register-page__label">Nombres *</label>
+            <input
+              id="nombres" type="text" formControlName="nombres"
+              class="register-page__input"
+              [class.register-page__input--error]="isInvalid('nombres')"
+              [class.register-page__input--success]="isValid('nombres') && !isInvalid('nombres')"
+              placeholder="Ingrese los nombres"
+              (input)="validateOnInput('nombres')" />
+            @if (isInvalid('nombres')) {
+            <p class="register-page__error">{{ getError('nombres') }}</p>
+            }
+          </div>
+
+          <!-- Documento -->
+          <div class="register-page__field">
+            <label for="documento" class="register-page__label">Número de
+              documento *</label>
+            <input
+              id="documento" type="text" formControlName="documento"
+              class="register-page__input"
+              [class.register-page__input--error]="isInvalid('documento')"
+              [class.register-page__input--success]="isValid('documento') && !isInvalid('documento')"
+              placeholder="Ingrese el número de documento"
+              maxlength="12"
+              (input)="validateOnInput('documento')" />
+            @if (isInvalid('documento')) {
+            <p class="register-page__error">{{ getError('documento') }}</p>
+            }
+          </div>
+
+          <!-- Apellido -->
+          <div class="register-page__field">
+            <label for="apellidos" class="register-page__label">Apellidos
+              *</label>
+            <input
+              id="apellidos" type="text" formControlName="apellidos"
+              class="register-page__input"
+              [class.register-page__input--error]="isInvalid('apellidos')"
+              [class.register-page__input--success]="isValid('apellidos') && !isInvalid('apellidos')"
+              placeholder="Ingrese los apellidos"
+              (input)="validateOnInput('apellidos')" />
+            @if (isInvalid('apellidos')) {
+            <p class="register-page__error">{{ getError('apellidos') }}</p>
+            }
+          </div>
+
+          <!-- Celular -->
+          <div class="register-page__field">
+            <label for="celular" class="register-page__label">Número de celular
+              *</label>
+            <input
+              id="celular" type="tel" formControlName="celular"
+              class="register-page__input"
+              [class.register-page__input--error]="isInvalid('celular')"
+              [class.register-page__input--success]="isValid('celular') && !isInvalid('celular')"
+              placeholder="Ingrese el número de celular"
+              maxlength="10"
+              (input)="validateOnInput('celular')" />
+            @if (isInvalid('celular')) {
+            <p class="register-page__error">{{ getError('celular') }}</p>
+            }
+          </div>
+
+          <!-- Contraseña -->
+          <div class="register-page__field">
+            <label for="password" class="register-page__label">Contraseña
+              *</label>
+            <input
+              id="password" type="password" formControlName="password"
+              class="register-page__input"
+              [class.register-page__input--error]="isInvalid('password')"
+              [class.register-page__input--success]="isValid('password') && !isInvalid('password')"
+              placeholder="Mínimo 6 caracteres"
+              (input)="validateOnInput('password')" />
+            @if (isInvalid('password')) {
+            <p class="register-page__error">{{ getError('password') }}</p>
+            }
+          </div>
+
+          <!-- Confirmar contraseña -->
+          <div class="register-page__field">
+            <label for="confirmPassword" class="register-page__label">Confirmar
+              contraseña *</label>
+            <input
+              id="confirmPassword" type="password"
+              formControlName="confirmPassword"
+              class="register-page__input"
+              [class.register-page__input--error]="isConfirmPasswordInvalid()"
+              [class.register-page__input--success]="isConfirmPasswordValid()"
+              placeholder="Repita la contraseña"
+              (input)="validateOnInput('confirmPassword')" />
+            @if (isConfirmPasswordInvalid()) {
+            <p class="register-page__error">{{ getConfirmPasswordError() }}</p>
+            }
+          </div>
+
+          <!-- Fecha de nacimiento -->
+          <div class="register-page__field">
+            <label for="fechaNacimiento" class="register-page__label">Fecha de
+              nacimiento</label>
+            <input
+              id="fechaNacimiento" type="date" formControlName="fechaNacimiento"
+              class="register-page__input" />
+          </div>
+
+          <!-- Correo -->
+          <div class="register-page__field">
+            <label for="correo" class="register-page__label">Correo Electrónico
+              *</label>
+            <input
+              id="correo" type="email" formControlName="correo"
+              class="register-page__input"
+              [class.register-page__input--error]="isInvalid('correo')"
+              [class.register-page__input--success]="isValid('correo') && !isInvalid('correo')"
+              placeholder="Ingrese el correo"
+              (input)="validateOnInput('correo')" />
+            @if (isInvalid('correo')) {
+            <p class="register-page__error">{{ getError('correo') }}</p>
+            }
+          </div>
+
+          <!-- Género -->
+          <div class="register-page__field">
+            <label for="genero" class="register-page__label">Género *</label>
+            <select
+              id="genero" formControlName="genero"
+              class="register-page__input register-page__select"
+              [class.register-page__input--error]="isInvalid('genero')"
+              [class.register-page__input--success]="isValid('genero') && !isInvalid('genero')"
+              (change)="validateOnInput('genero')">
+              <option value disabled selected>Seleccione el género</option>
+              <option value="masculino">Masculino</option>
+              <option value="femenino">Femenino</option>
+              <option value="otro">Otro</option>
+              <option value="prefiero_no_decir">Prefiero no decir</option>
+            </select>
+            @if (isInvalid('genero')) {
+            <p class="register-page__error">{{ getError('genero') }}</p>
+            }
+          </div>
+
+        </div>
+
+        @if (errorMessage()) {
+        <p class="register-page__error register-page__error--global">{{
+          errorMessage() }}</p>
+        }
+
+        <div class="register-page__actions">
+          <button type="submit" class="register-page__submit"
+            [disabled]="form.invalid || isLoading()">
+            {{ isLoading() ? 'Registrando...' : 'Registrarse' }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,67 @@
+.modal-confirmacion {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  background: color-mix(in srgb, var(--neutro-black) 25%, transparent);
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+}
+
+.modal-confirmacion__dialog {
+  width: min(30rem, 100%);
+  background: var(--neutro-white);
+  border-radius: var(--layout-radius);
+  border: 1px solid var(--neutro-gray-100);
+  padding: 1.1rem;
+  display: grid;
+  gap: 0.9rem;
+}
+
+.modal-confirmacion__title {
+  margin: 0;
+  color: var(--neutro-gray-700);
+  font-size: var(--font-size-base);
+}
+
+.modal-confirmacion__message {
+  margin: 0;
+  color: var(--neutro-gray-500);
+  font-size: var(--font-size-base);
+}
+
+.modal-confirmacion__details {
+  margin: 0;
+  padding-left: 1rem;
+  color: var(--neutro-gray-700);
+  font-size: var(--font-size-sm);
+  display: grid;
+  gap: 0.2rem;
+}
+
+.modal-confirmacion__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.6rem;
+}
+
+.modal-confirmacion__btn {
+  border-radius: var(--menu-item-radius);
+  font-size: var(--font-size-base);
+  padding: 0.5rem 0.8rem;
+  border: 1px solid transparent;
+  cursor: pointer;
+}
+
+.modal-confirmacion__btn--ghost {
+  border-color: var(--neutro-gray-200);
+  color: var(--neutro-gray-700);
+  background: var(--neutro-white);
+}
+
+.modal-confirmacion__btn--primary {
+  border-color: var(--blue-green-600);
+  color: var(--neutro-white);
+  background: var(--blue-green-600);
+}
+
