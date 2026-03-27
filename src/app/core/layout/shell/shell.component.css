@@ -26,6 +26,20 @@
   position: sticky;
   top: var(--layout-padding);
   z-index: 20;
+  border-radius: var(--layout-radius) var(--layout-radius) 0 0;
+  background: var(--neutro-white);
+  isolation: isolate;
+}
+
+.shell__topbar::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 100%;
+  height: var(--layout-padding);
+  background: var(--blue-green-200);
+  pointer-events: none;
 }
 
 .shell__main {
@@ -39,12 +53,12 @@
 
 @media (max-width: 960px) {
   .shell {
-	grid-template-columns: 1fr;
+    grid-template-columns: 1fr;
   }
 
   .shell__sidebar {
     position: static;
-	min-height: auto;
+    min-height: auto;
   }
 
   .shell__topbar {

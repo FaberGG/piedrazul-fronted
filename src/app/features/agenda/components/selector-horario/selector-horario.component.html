@@ -23,7 +23,7 @@
         <div class="selector-horario__datetime-row">
           <div class="selector-horario__datetime-item">
             <i class="fa-regular fa-calendar"></i>
-            <input type="date" formControlName="fecha" [disabled]="navegacionBloqueada()" />
+            <input type="date" formControlName="fecha" [attr.min]="fechaMinima()" [disabled]="navegacionBloqueada()" />
           </div>
           <div class="selector-horario__datetime-divider"></div>
           <div class="selector-horario__datetime-item">
@@ -114,7 +114,7 @@
           <button
             type="button"
             class="selector-horario__btn selector-horario__btn--day"
-            [disabled]="navegacionBloqueada()"
+            [disabled]="navegacionBloqueada() || !puedeNavegarDiaAnterior()"
             (click)="onNavegarDia(-1)"
           >
             <i class="fa-solid fa-caret-left"></i>

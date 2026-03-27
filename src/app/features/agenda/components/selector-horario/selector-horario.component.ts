@@ -160,6 +160,15 @@ export class SelectorHorarioComponent implements OnInit, OnChanges {
           return;
         }
 
+        const fechaAjustada = this.ajustarFechaNoSeleccionable(fecha);
+        if (fechaAjustada !== fecha) {
+          this.form.controls.fecha.setValue(fechaAjustada, { emitEvent: false });
+          this.ultimaFechaCargada.set(fechaAjustada);
+          this.mensajeOperacion.set('La fecha seleccionada no esta disponible para este medico. Se ajusto al siguiente dia habil.');
+          this.cargarAgenda(medicoId, fechaAjustada);
+          return;
+        }
+
         this.ultimaFechaCargada.set(fecha);
 
         this.cargarAgenda(medicoId, fecha);
@@ -264,8 +273,29 @@ export class SelectorHorarioComponent implements OnInit, OnChanges {
       return;
     }
 
+    if (offset === -1 && !this.puedeNavegarDiaAnterior()) {
+      return;
+    }
+
     const siguiente = this.getFechaDisponible(actual, offset);
+    if (siguiente === actual) {
+      return;
+    }
+
     this.form.controls.fecha.setValue(siguiente);
+  }
+
+  fechaMinima(): string {
+    return this.fechaHoy();
+  }
+
+  puedeNavegarDiaAnterior(): boolean {
+    const actual = this.form.controls.fecha.value;
+    if (!actual || this.navegacionBloqueada()) {
+      return false;
+    }
+
+    return this.getFechaDisponible(actual, -1) !== actual;
   }
 
   onSolicitarAutoAsignacion(): void {
@@ -391,7 +421,7 @@ export class SelectorHorarioComponent implements OnInit, OnChanges {
 
   puedeMostrarAbrirEspacioEnBloque(slot: SlotUI, bloqueIndex: number): boolean {
     return this.puedeMostrarAbrirEspacio(slot)
-      && !this.estaAntesDelPrimerLibre(slot)
+      && !this.esInmediatamenteAnteriorAlPrimerSeleccionable(slot)
       && !this.tieneHuecoAbiertoDespues(slot, bloqueIndex);
   }
 
@@ -426,6 +456,16 @@ export class SelectorHorarioComponent implements OnInit, OnChanges {
       )
       .subscribe((config) => {
         this.configuracionMedico.set(config);
+
+        const fechaActual = this.form.controls.fecha.value;
+        if (!fechaActual) {
+          return;
+        }
+
+        const fechaAjustada = this.ajustarFechaNoSeleccionable(fechaActual);
+        if (fechaAjustada !== fechaActual) {
+          this.form.controls.fecha.setValue(fechaAjustada);
+        }
       });
 
     this.agendaService
@@ -502,18 +542,48 @@ export class SelectorHorarioComponent implements OnInit, OnChanges {
   private getFechaDisponible(baseFecha: string, offset: -1 | 1): string {
     const diasAtencion = this.configuracionMedico()?.diasAtencion ?? [];
     const allowed = diasAtencion.map((dia) => this.dayNameToIndex(dia));
+    const hoy = this.fechaMinima();
 
     const date = new Date(`${baseFecha}T00:00:00`);
 
-    for (let i = 0; i < 8; i += 1) {
+    for (let i = 0; i < 14; i += 1) {
       date.setDate(date.getDate() + offset);
 
-      if (allowed.length === 0 || allowed.includes(date.getDay())) {
-        return this.toIsoDate(date);
+      const iso = this.toIsoDate(date);
+      if (offset === -1 && iso < hoy) {
+        break;
+      }
+
+      if (iso >= hoy && (allowed.length === 0 || allowed.includes(date.getDay()))) {
+        return iso;
       }
     }
 
-    return this.toIsoDate(date);
+    return baseFecha < hoy ? hoy : baseFecha;
+  }
+
+  private ajustarFechaNoSeleccionable(fechaIso: string): string {
+    const hoy = this.fechaHoy();
+    const fechaBase = fechaIso < hoy ? hoy : fechaIso;
+    const diasAtencion = this.configuracionMedico()?.diasAtencion ?? [];
+    const permitidos = diasAtencion
+      .map((dia) => this.dayNameToIndex(dia))
+      .filter((day) => day >= 0);
+
+    if (permitidos.length === 0) {
+      return fechaBase;
+    }
+
+    const fecha = new Date(`${fechaBase}T00:00:00`);
+    for (let i = 0; i < 14; i += 1) {
+      if (permitidos.includes(fecha.getDay())) {
+        return this.toIsoDate(fecha);
+      }
+
+      fecha.setDate(fecha.getDate() + 1);
+    }
+
+    return fechaBase;
   }
 
   private dayNameToIndex(dayName: string): number {
@@ -686,20 +756,24 @@ export class SelectorHorarioComponent implements OnInit, OnChanges {
     return bloque.slots.some((item) => item.isOpenedGap && item.sourceHoraReferencia === slot.hora24);
   }
 
-  private estaAntesDelPrimerLibre(slot: SlotUI): boolean {
-    const primerLibre = this.primerSlotDisponibleNormalizado() ?? this.buscarPrimerLibreEnAgenda();
-    if (!primerLibre) {
+  private esInmediatamenteAnteriorAlPrimerSeleccionable(slot: SlotUI): boolean {
+    const slotsPlanos = this.bloques().flatMap((bloque) => bloque.slots);
+    if (slotsPlanos.length < 2) {
       return false;
     }
 
-    return slot.hora24 < primerLibre;
+    const seleccionables = this.selectableSlotUids();
+    const indicePrimerSeleccionable = slotsPlanos.findIndex(
+      (item) => seleccionables.has(item.uid) && this.esSlotLibre(item) && !item.isOpenedGap
+    );
+
+    if (indicePrimerSeleccionable <= 0) {
+      return false;
+    }
+
+    return slotsPlanos[indicePrimerSeleccionable - 1]?.uid === slot.uid;
   }
 
-  private buscarPrimerLibreEnAgenda(): string | null {
-    const slots = this.bloques().flatMap((bloque) => bloque.slots);
-    const libre = slots.find((item) => this.esSlotLibre(item));
-    return libre?.hora24 ?? null;
-  }
 
   private calcularSlotsSeleccionables(bloques: BloqueUI[]): Set<string> {
     const seleccionables = new Set<string>();
