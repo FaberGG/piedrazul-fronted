@@ -24,7 +24,7 @@ export const agendaPatientRoutes: Routes = [
     component: AgendarAutonomoPageComponent,
     //canActivate: [roleGuard],
     data: {
-      //roles: [ROLES.PACIENTE],
+      roles: [ROLES.PACIENTE],
       sectionTitle: 'Agendamiento autonomo',
       sectionDescription: 'Programa tu cita en linea segun la disponibilidad de especialistas.'
     }

@@ -40,8 +40,8 @@ export const routes: Routes = [
   {
     path: 'paciente',
     component: PatientShellComponent,
-    //canActivate: [authGuard, roleGuard],
-    //data: { roles: [ROLES.PACIENTE] },
+    canActivate: [authGuard, roleGuard],
+    data: { roles: [ROLES.PACIENTE] },
     children: [
       {
         path: '',
