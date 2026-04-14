@@ -32,15 +32,38 @@ export class SidebarComponent {
       path: '/agenda/nueva-cita',
       iconClass: 'fa-solid fa-circle-plus',
       allowedRoles: [ROLES.ADMIN, ROLES.AGENDADOR, ROLES.MEDICO] // Quizá el médico solo deba ver, no agendar? Depende de tu regla de negocio
-    }
+    },
+     {
+      label: 'Configuracion global medicos',
+      path: '/configuracion/medicos',
+      iconClass: 'fa-solid fa-user-doctor',
+      allowedRoles: [ROLES.ADMIN, ROLES.AGENDADOR, ROLES.MEDICO] // Quizá el médico solo deba ver, no agendar? Depende de tu regla de negocio
+    },
+  
+      {
+      label: 'Registrar administrador',
+      path: '/admin/registrar',
+      iconClass: 'fa-solid fa-user-tie',
+      allowedRoles: [ROLES.ADMIN, ROLES.AGENDADOR, ROLES.MEDICO] // Quizá el médico solo deba ver, no agendar? Depende de tu regla de negocio
+    },
+
+    {
+      label: 'Registrar medico',
+      path: '/medico/registrar',
+      iconClass: 'fa-solid fa-user-doctor',
+      allowedRoles: [ROLES.ADMIN, ROLES.AGENDADOR, ROLES.MEDICO] // Quizá el médico solo deba ver, no agendar? Depende de tu regla de negocio
+    },
+
   ];
 
   readonly utilityItems = [
+    /*
     {
       label: 'Configuración', // Centralizamos aquí la configuración de Admin
       iconClass: 'fa-solid fa-gear',
       path: '/admin/configuracion' // RUTA CORREGIDA
     },
+    */
     {
       label: 'Ayuda y soporte',
       iconClass: 'fa-solid fa-circle-info',

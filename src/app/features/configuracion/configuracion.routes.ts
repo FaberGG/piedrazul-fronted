@@ -6,8 +6,13 @@ import { ConfiguracionGlobalPageComponent } from './pages/configuracion-global-p
 import { ConfiguracionMedicoPageComponent } from './pages/configuracion-medico-page/configuracion-medico-page.component';
 
 export const configuracionRoutes: Routes = [
-  {
+{
     path: '',
+    pathMatch: 'full',
+    redirectTo: 'medicos'
+  },
+  {
+    path: 'medicos',
     component: ConfiguracionMedicoPageComponent,
     canActivate: [roleGuard],
     data: {

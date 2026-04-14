@@ -37,6 +37,23 @@ export const routes: Routes = [
         path: 'agenda',
         loadChildren: () =>
           import('./features/agenda/agenda.routes').then((m) => m.agendaStaffRoutes)
+      },
+          {
+        path: 'configuracion',
+        loadChildren: () =>
+          import('./features/configuracion/configuracion.routes').then((m) => m.configuracionRoutes)
+      },
+      {
+        path: 'medico/registrar',
+        loadComponent: () =>
+          import('./features/auth/pages/register-medico-page/register-medico-page.component')
+            .then(m => m.RegistrarMedicoPageComponent)
+      },
+      {
+        path: 'admin/registrar',
+        loadComponent: () =>
+          import('./features/auth/pages/register-admin-page/register-admin-page.component')
+            .then(m => m.RegisterAdminPageComponent)
       }
     ]
   },
