@@ -48,7 +48,7 @@ export class AuthService {
   private backendUrl = 'http://localhost:8080/api/v1/auth';
   private keycloakUrl = 'http://localhost:8180/realms/piedra-azul/protocol/openid-connect/token';
   private clientId = 'piedrazul-backend';
-  private clientSecret = 'S5BTwSG8FJnxdOzbHYZfChn2p7jQYBCr';
+  private clientSecret = 'aExogrb55E5lYtM7HeiFXFfj1kZJDW8m';
 
   constructor(private http: HttpClient) {}
 

@@ -28,7 +28,7 @@ export class AuthService {
 
   private readonly keycloakUrl = `${environment.keycloakUrl}/realms/piedra-azul/protocol/openid-connect/token`;
   private readonly clientId = 'piedrazul-backend';
-  private readonly clientSecret = 'S5BTwSG8FJnxdOzbHYZfChn2p7jQYBCr';
+  private readonly clientSecret = 'aExogrb55E5lYtM7HeiFXFfj1kZJDW8m';
 
   private readonly currentUserState = signal<User | null>(this.userFromStoredToken());
 
