@@ -6,7 +6,6 @@
   align-items: center;
   padding: 32px 40px;
   min-height: 420px;
-  background-image: url('/assets/images/fondo.png');
   background-size: cover;
   background-position: center;
 }

@@ -9,6 +9,7 @@ import {
   ValidationErrors
 } from '@angular/forms';
 import { AuthService } from '../../../auth/services/auth.service';
+import { RegisterMedicoRequest } from '../../../auth/models/auth.models';
 
 @Component({
   selector: 'app-registrar-medico-page',
@@ -62,19 +63,17 @@ export class RegistrarMedicoPageComponent {
 
     const formValue = this.formMedico.value;
 
-  
-    const payload = {
+
+    const payload: RegisterMedicoRequest = {
       nombres: formValue.nombres,
       apellidos: formValue.apellidos,
-      genero: formValue.genero,
       tipo: formValue.tipo,
-      correo: formValue.correo,
-      password: formValue.contrasena, 
+      password: formValue.contrasena,
       especialidad: formValue.especialidad,
       username: formValue.correo
     };
 
-    console.log('Payload enviado:', payload); 
+    console.log('Payload enviado:', payload);
 
     this.authService.registerMedico(payload).subscribe({
       next: () => {

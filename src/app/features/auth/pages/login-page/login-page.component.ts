@@ -38,15 +38,19 @@ export class LoginPageComponent {
         const target = this.authService.getHomeRouteForRole(this.authService.getCurrentRole());
         void this.router.navigateByUrl(target);
       },
-      error: () => {
+      error: (err) => {
         this.isLoading.set(false);
+        console.error('Error login:', err);
         this.errorMessage.set('Credenciales invalidas. Intenta nuevamente.');
       }
+      
     });
   }
 
-  // 👉 Método para ir al registro
+  //  Método para ir al registro
   goToRegister(): void {
     this.router.navigate(['/register']);
   }
+
+  
 }
