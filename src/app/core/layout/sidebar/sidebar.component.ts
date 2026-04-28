@@ -31,28 +31,34 @@ export class SidebarComponent {
       label: 'Nueva Cita',
       path: '/agenda/nueva-cita',
       iconClass: 'fa-solid fa-circle-plus',
-      allowedRoles: [ROLES.ADMIN, ROLES.AGENDADOR, ROLES.MEDICO] // Quizá el médico solo deba ver, no agendar? Depende de tu regla de negocio
+      allowedRoles: [ROLES.AGENDADOR, ROLES.MEDICO]
     },
      {
       label: 'Configuracion global medicos',
       path: '/configuracion/medicos',
       iconClass: 'fa-solid fa-user-doctor',
-      allowedRoles: [ROLES.ADMIN, ROLES.AGENDADOR, ROLES.MEDICO] // Quizá el médico solo deba ver, no agendar? Depende de tu regla de negocio
+      allowedRoles: [ROLES.ADMIN]
     },
-  
+
       {
       label: 'Registrar administrador',
       path: '/admin/registrar',
       iconClass: 'fa-solid fa-user-tie',
-      allowedRoles: [ROLES.ADMIN, ROLES.AGENDADOR, ROLES.MEDICO] // Quizá el médico solo deba ver, no agendar? Depende de tu regla de negocio
+      allowedRoles: [ROLES.ADMIN]
     },
 
     {
       label: 'Registrar medico',
       path: '/medico/registrar',
       iconClass: 'fa-solid fa-user-doctor',
-      allowedRoles: [ROLES.ADMIN, ROLES.AGENDADOR, ROLES.MEDICO] // Quizá el médico solo deba ver, no agendar? Depende de tu regla de negocio
+      allowedRoles: [ROLES.ADMIN]
     },
+    {
+      label: 'Configuracion global',
+      path: '/configuracion/global',
+      iconClass: 'fa-solid fa-gear',
+      allowedRoles: [ROLES.ADMIN]
+    }
 
   ];
 
@@ -85,4 +91,3 @@ export class SidebarComponent {
     this.authService.logout();
   }
 }
-

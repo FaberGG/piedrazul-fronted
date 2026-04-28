@@ -27,7 +27,7 @@ export const agendaStaffRoutes: Routes = [
     component: NuevaCitaPageComponent,
     canActivate: [roleGuard],
     data: {
-      roles: [ROLES.ADMIN, ROLES.AGENDADOR, ROLES.MEDICO],
+      roles: [ROLES.AGENDADOR, ROLES.MEDICO],
       sectionTitle: 'Agendar Cita',
       sectionDescription: 'Registra una nueva cita con datos del paciente y horario disponible.'
     }

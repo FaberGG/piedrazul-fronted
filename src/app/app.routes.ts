@@ -8,7 +8,6 @@ import { ShellComponent } from './core/layout/shell/shell.component';
 import { ROLES } from './shared/constants/roles';
 import { LoginPageComponent } from './features/auth/pages/login-page/login-page.component';
 import { RegisterPageComponent } from './features/auth/pages/register-page/register-page.component';
-import { AdminPageComponent } from './features/auth/pages/admin-page/admin-page.component';
 
 export const routes: Routes = [
   {
@@ -58,34 +57,7 @@ export const routes: Routes = [
     ]
   },
 
-  // 2. Ruta de Administración (Estructura de la rama Right)
-  {
-    path: 'admin',
-    component: AdminPageComponent,
-    canActivate: [authGuard, roleGuard],
-    data: { roles: [ROLES.ADMIN] },
-    children: [
-      {
-        path: 'configuracion',
-        loadChildren: () =>
-          import('./features/configuracion/configuracion.routes').then((m) => m.configuracionRoutes)
-      },
-      {
-        path: 'medico/registrar',
-        loadComponent: () =>
-          import('./features/auth/pages/register-medico-page/register-medico-page.component')
-            .then(m => m.RegistrarMedicoPageComponent)
-      },
-      {
-        path: 'admin/registrar',
-        loadComponent: () =>
-          import('./features/auth/pages/register-admin-page/register-admin-page.component')
-            .then(m => m.RegisterAdminPageComponent)
-      }
-    ]
-  },
-
-  // 3. Ruta de Paciente
+  // 2. Ruta de Paciente
   {
     path: 'paciente',
     component: PatientShellComponent,
