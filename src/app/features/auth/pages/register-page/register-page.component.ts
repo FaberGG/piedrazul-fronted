@@ -2,7 +2,8 @@ import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { PacienteService } from '../../../pacientes/services/pacientes-service';
+import { AuthService } from '../../services/auth.service';
+import { RegisterPacienteRequest } from '../../models/auth.models';
 
 @Component({
   selector: 'app-register-page',
@@ -20,7 +21,7 @@ export class RegisterPageComponent {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private pacienteService: PacienteService
+    private authService: AuthService
   ) {
     this.form = this.fb.group({
       nombres: ['', [Validators.required, Validators.minLength(2), Validators.pattern(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/)]],
@@ -31,14 +32,8 @@ export class RegisterPageComponent {
       confirmPassword: ['', Validators.required],
       fechaNacimiento: [''],
       correo: ['', [Validators.required, Validators.email]],
-      genero: ['', Validators.required],
-      username: [''] // se llenará con el correo
+      genero: ['', Validators.required]
     }, { validators: this.passwordsMatchValidator });
-
-    // sincronizar username con correo
-    this.form.get('correo')?.valueChanges.subscribe(value => {
-      this.form.get('username')?.setValue(value, { emitEvent: false });
-    });
   }
 
   passwordsMatchValidator(form: FormGroup) {
@@ -121,21 +116,19 @@ export class RegisterPageComponent {
   this.isLoading.set(true);
   this.errorMessage.set('');
 
-  const request = {
-    username: this.form.value.username,        // se llena con el correo
+  const request: RegisterPacienteRequest = {
     password: this.form.value.password,
     documento: this.form.value.documento,
     nombres: this.form.value.nombres,
-    apellidos: this.form.value.apellidos,      // plural
+    apellidos: this.form.value.apellidos,
     celular: this.form.value.celular,
     genero: this.form.value.genero,
     fechaNacimiento: this.form.value.fechaNacimiento,
     correo: this.form.value.correo
   };
 
-  this.pacienteService.registrarPaciente(request).subscribe({
-    next: (resp: any) => {
-      console.log('Paciente registrado en backend:', resp);
+  this.authService.registerPaciente(request).subscribe({
+    next: () => {
       this.isLoading.set(false);
       this.router.navigate(['/login']);
     },

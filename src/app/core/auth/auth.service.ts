@@ -26,9 +26,8 @@ export class AuthService {
   private readonly router = inject(Router);
   private readonly tokenService = inject(TokenService);
 
-  private readonly keycloakUrl = `${environment.keycloakUrl}/realms/piedra-azul/protocol/openid-connect/token`;
-  private readonly clientId = 'piedrazul-backend';
-  private readonly clientSecret = 'aExogrb55E5lYtM7HeiFXFfj1kZJDW8m';
+  private readonly keycloakUrl = `${environment.keycloak.url}/realms/${environment.keycloak.realm}/protocol/openid-connect/token`;
+  private readonly clientId = environment.keycloak.clientId;
 
   private readonly currentUserState = signal<User | null>(this.userFromStoredToken());
 
@@ -39,9 +38,9 @@ export class AuthService {
     const body = new HttpParams()
       .set('grant_type', 'password')
       .set('client_id', this.clientId)
-      .set('client_secret', this.clientSecret)
       .set('username', credentials.username)
-      .set('password', credentials.password);
+      .set('password', credentials.password)
+      .set('scope', 'openid profile email roles');
 
     return this.http.post<KeycloakTokenResponse>(this.keycloakUrl, body.toString(), { headers }).pipe(
       tap(response => {
@@ -74,6 +73,7 @@ export class AuthService {
       case ROLES.PACIENTE:
         return '/paciente/agendar';
       case ROLES.ADMIN:
+        return '/agenda/listar';
       case ROLES.AGENDADOR:
       case ROLES.MEDICO:
         return '/agenda';
@@ -89,16 +89,39 @@ export class AuthService {
 
   private userFromToken(token: string | null): User {
     const payload = this.tokenService.getPayload(token);
-    const roles: string[] = (payload as any)?.realm_access?.roles ?? [];
-
-    const rol = roles.find(r => ['ADMIN', 'MEDICO', 'PACIENTE', 'AGENDADOR'].includes(r)) ?? '';
+    const normalizedRoles = this.getNormalizedRoles(payload);
+    const rol = this.pickRole(normalizedRoles);
 
     return {
       id: Number(payload?.id ?? 0),
       username: String(payload?.['preferred_username'] ?? payload?.sub ?? ''),
-      nombreCompleto: String(payload?.['name']?? payload?.['preferred_username'] ?? ''),
+      nombreCompleto: String(payload?.['name'] ?? payload?.['preferred_username'] ?? ''),
       rol
     };
+  }
+
+  private getNormalizedRoles(payload: unknown): string[] {
+    const tokenPayload = payload as any;
+    const roleSet = new Set<string>();
+
+    const directRoles: string[] = tokenPayload?.roles ?? [];
+    const realmRoles: string[] = tokenPayload?.realm_access?.roles ?? [];
+    const clientRoles: string[] = tokenPayload?.resource_access?.[this.clientId]?.roles ?? [];
+
+    [...directRoles, ...realmRoles, ...clientRoles].forEach(role => {
+      if (!role) return;
+      roleSet.add(String(role).toUpperCase().replace(/^ROLE_/, ''));
+    });
+
+    return Array.from(roleSet);
+  }
+
+  private pickRole(normalizedRoles: string[]): Role {
+    if (normalizedRoles.includes(ROLES.ADMIN)) return ROLES.ADMIN;
+    if (normalizedRoles.includes(ROLES.MEDICO)) return ROLES.MEDICO;
+    if (normalizedRoles.includes(ROLES.AGENDADOR)) return ROLES.AGENDADOR;
+    if (normalizedRoles.includes(ROLES.PACIENTE)) return ROLES.PACIENTE;
+    return '' as Role;
   }
 
   private isKnownRole(role: string | undefined): role is Role {
