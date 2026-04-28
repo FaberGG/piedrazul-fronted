@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, DestroyRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, computed, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { catchError, of, tap } from 'rxjs';
+import { Subscription, catchError, of, tap } from 'rxjs';
 
 import { ModalConfirmacionComponent } from '../../../../shared/components/modal-confirmacion/modal-confirmacion.component';
 import { AgendaDinamicaBloque, AgendaDinamicaResponse, AgendaDinamicaSlot } from '../../models/agenda-dinamica.model';
@@ -16,6 +16,7 @@ import { DisponibilidadGlobal } from '../../models/disponibilidad.model';
 import { MedicoAgenda } from '../../models/medico-agenda.model';
 import { MedicoConfiguracion } from '../../models/medico-configuracion.model';
 import { AgendaManualService } from '../../services/agenda-manual.service';
+import { AgendaSse, AgendaStreamEvent } from '../../services/agenda-sse';
 import { MedicosAgendaService } from '../../services/medicos-agenda.service';
 
 interface SlotUI extends AgendaDinamicaSlot {
@@ -48,7 +49,9 @@ export class SelectorHorarioComponent implements OnInit, OnChanges {
   private readonly fb = inject(FormBuilder);
   private readonly destroyRef = inject(DestroyRef);
   private readonly agendaService = inject(AgendaManualService);
+  private readonly agendaSse = inject(AgendaSse);
   private readonly medicosService = inject(MedicosAgendaService);
+  private sseSubscription: Subscription | null = null;
 
   @Input() paciente: PacienteFormulario | null = null;
   @Input() pacienteValido = false;
@@ -128,6 +131,7 @@ export class SelectorHorarioComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.cargarMedicos();
+    this.destroyRef.onDestroy(() => this.detenerAgendaSse());
 
     this.form.controls.medicoId.valueChanges
       .pipe(takeUntilDestroyed(this.destroyRef))
@@ -137,6 +141,7 @@ export class SelectorHorarioComponent implements OnInit, OnChanges {
         this.mensajeOperacion.set('');
 
         if (!medicoId) {
+          this.detenerAgendaSse();
           this.agenda.set(null);
           this.bloques.set([]);
           this.configuracionMedico.set(null);
@@ -166,12 +171,14 @@ export class SelectorHorarioComponent implements OnInit, OnChanges {
           this.ultimaFechaCargada.set(fechaAjustada);
           this.mensajeOperacion.set('La fecha seleccionada no esta disponible para este medico. Se ajusto al siguiente dia habil.');
           this.cargarAgenda(medicoId, fechaAjustada);
+          this.conectarAgendaSse(medicoId, fechaAjustada);
           return;
         }
 
         this.ultimaFechaCargada.set(fecha);
 
         this.cargarAgenda(medicoId, fecha);
+        this.conectarAgendaSse(medicoId, fecha);
       });
   }
 
@@ -718,6 +725,8 @@ export class SelectorHorarioComponent implements OnInit, OnChanges {
   }
 
   private restablecerEstadoInicial(clearMessage = true): void {
+    this.detenerAgendaSse();
+
     this.form.reset({
       medicoId: null,
       fecha: '',
@@ -841,6 +850,49 @@ export class SelectorHorarioComponent implements OnInit, OnChanges {
     }
 
     return false;
+  }
+
+  private conectarAgendaSse(medicoId: number, fecha: string): void {
+    this.detenerAgendaSse();
+
+    this.sseSubscription = this.agendaSse
+      .connect({ medicoId, fecha })
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (event) => this.manejarEventoAgenda(event),
+        error: () => {
+          this.mensajeOperacion.set('Se perdio la conexion en tiempo real. Se mantendra la carga manual de agenda.');
+        }
+      });
+  }
+
+  private manejarEventoAgenda(event: AgendaStreamEvent): void {
+    if (event.type === 'agenda-snapshot') {
+      this.actualizarAgenda(event.data);
+      return;
+    }
+
+    if (event.type !== 'agenda-updated') {
+      return;
+    }
+
+    const medicoId = this.form.controls.medicoId.value;
+    const fecha = this.form.controls.fecha.value;
+    if (!medicoId || !fecha) {
+      return;
+    }
+
+    if (event.data.medicoId !== medicoId || event.data.fecha !== fecha) {
+      return;
+    }
+
+    this.cargarAgenda(medicoId, fecha);
+  }
+
+  private detenerAgendaSse(): void {
+    this.sseSubscription?.unsubscribe();
+    this.sseSubscription = null;
+    this.agendaSse.disconnect();
   }
 }
 
