@@ -199,17 +199,56 @@
   color: #1b3a5c;
   margin: 0;
 }
+
+/* EXPORTAR CONTROLS */
+.lc-export-controls {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+}
+.lc-export-controls__field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.lc-export-controls__field .lc-field__label {
+  font-size: 0.75rem;
+  color: #6b7280;
+}
+.lc-export-controls__select {
+  height: 34px;
+  width: 160px;
+  padding: 0 10px;
+  font-size: 0.82rem;
+  border-radius: 20px;
+  border: 1.5px solid #00bcd4;
+  color: #1b3a5c;
+  background: #fff;
+  outline: none;
+  font-family: inherit;
+}
+.lc-export-controls__select:focus {
+  box-shadow: 0 0 0 3px rgba(0,188,212,0.12);
+}
+
 .btn-exportar {
+  height: 34px;
   background: #00bcd4;
   color: #fff;
   border: none;
   border-radius: 20px;
-  padding: 6px 16px;
+  padding: 0 16px;
   font-size: 0.82rem;
   font-weight: 600;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
 }
-.btn-exportar:hover { background: #0097a7; }
+.btn-exportar:hover:not(:disabled) { background: #0097a7; }
+.btn-exportar:disabled { background: #b2ebf2; cursor: not-allowed; }
+
 .lc-table-wrap { overflow-x: auto; }
 .lc-table {
   width: 100%;

@@ -10,6 +10,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AgendaService } from '../../services/agenda.service';
 import { MedicosService } from '../../services/medicos.service';
+import { ReporteService } from '../../../reportes/services/report.service';
 import { AgendaModel, CitaModel, EstadoCita } from '../../models/cita.model';
 import { MedicoModel } from '../../models/medico.model';
 
@@ -23,16 +24,20 @@ import { MedicoModel } from '../../models/medico.model';
 })
 export class ListaCitasPageComponent implements OnInit {
 
-  private readonly agendaService  = inject(AgendaService);
+  private readonly agendaService = inject(AgendaService);
   private readonly medicosService = inject(MedicosService);
+  private readonly reporteService = inject(ReporteService);
 
-  medicos              = signal<MedicoModel[]>([]);
-  agenda               = signal<AgendaModel | null>(null);
-  cargando             = signal(false);
-  errorMensaje         = signal('');
-  agendaCargada        = signal(false);
+  medicos = signal<MedicoModel[]>([]);
+  agenda = signal<AgendaModel | null>(null);
+  cargando = signal(false);
+  descargando = signal(false);
+  errorMensaje = signal('');
+  agendaCargada = signal(false);
   medicoSeleccionadoId = signal<number | null>(null);
-  fechaSeleccionada    = signal<string>('');
+  fechaSeleccionada = signal<string>('');
+  formatosDisponibles = signal<string[]>([]);
+  formatoSeleccionado = signal<string>('');
 
   puedesBuscar = computed(() =>
     !!this.medicoSeleccionadoId() && !!this.fechaSeleccionada() && !this.cargando()
@@ -41,18 +46,27 @@ export class ListaCitasPageComponent implements OnInit {
   ngOnInit(): void {
     this.fechaSeleccionada.set(new Date().toISOString().split('T')[0]);
     this.cargarMedicos();
+    this.cargarFormatos();
   }
 
   cargarMedicos(): void {
     this.medicosService.listarActivos().subscribe({
-      next:  (data) => this.medicos.set(data),
-      error: ()     => this.errorMensaje.set('No se pudo cargar la lista de médicos.')
+      next: (data) => this.medicos.set(data),
+      error: () => this.errorMensaje.set('No se pudo cargar la lista de médicos.')
     });
+  }
+
+  cargarFormatos(): void {
+    this.reporteService.getExportFormatos().subscribe({
+      next: (data) => this.formatosDisponibles.set(data),
+      error: () => this.errorMensaje.set('No se pudo cargar la lista de formatos.')
+
+    })
   }
 
   buscarCitas(): void {
     const medicoId = this.medicoSeleccionadoId();
-    const fecha    = this.fechaSeleccionada();
+    const fecha = this.fechaSeleccionada();
     if (!medicoId || !fecha) {
       this.errorMensaje.set('Selecciona un médico y una fecha.');
       return;
@@ -91,9 +105,9 @@ export class ListaCitasPageComponent implements OnInit {
   getEstadoClass(estado: EstadoCita): string {
     const map: Record<EstadoCita, string> = {
       PROGRAMADA: 'estado--programada',
-      ATENDIDA:   'estado--atendida',
-      CANCELADA:  'estado--cancelada',
-      PENDIENTE:  'estado--pendiente'
+      ATENDIDA: 'estado--atendida',
+      CANCELADA: 'estado--cancelada',
+      PENDIENTE: 'estado--pendiente'
     };
     return map[estado] ?? 'estado--default';
   }
@@ -110,7 +124,40 @@ export class ListaCitasPageComponent implements OnInit {
     const hIni12 = h > 12 ? h - 12 : h;
     const hFin12 = hFin > 12 ? hFin - 12 : hFin;
     const sufijo = h < 12 ? 'AM' : 'PM';
-    return `${hIni12}:${m.toString().padStart(2,'0')} - ${hFin12}:${mFin} ${sufijo}`;
+    return `${hIni12}:${m.toString().padStart(2, '0')} - ${hFin12}:${mFin} ${sufijo}`;
+  }
+
+  exportFormat(): void {
+    const medicoId = this.medicoSeleccionadoId();
+    const fecha = this.fechaSeleccionada();
+    const formatoSelec = this.formatoSeleccionado();
+
+    if (!medicoId || !fecha) {
+      this.errorMensaje.set('Selecciona un médico y una fecha.');
+      return;
+    }
+    if (!formatoSelec) {
+      this.errorMensaje.set('Selecciona un formato de descarga.')
+      return;
+    }
+    this.descargando.set(true);
+    this.errorMensaje.set('');
+
+    this.reporteService.exportarAgendaDiaria(medicoId, fecha, formatoSelec).subscribe({
+      next: (blob) => {
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `agenda_${fecha}_medico_${medicoId}.${formatoSelec.toLowerCase()}`;
+        a.click();
+        URL.revokeObjectURL(url);
+        this.descargando.set(false);
+      },
+      error: () => {
+        this.descargando.set(false);
+        this.errorMensaje.set('Error al descargar el archivo. Intenta de nuevo.');
+      }
+    });
   }
 
   trackByCita(_: number, cita: CitaModel): number { return cita.id; }
