@@ -1,22 +1,115 @@
+.patient-shell {
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  background: var(--blue-green-200);
+  padding: var(--layout-padding);
+  gap: var(--layout-gap);
+}
+
+/* ── Header ── */
 .patient-shell__header {
+  background: var(--color-surface);
+  border-radius: var(--layout-radius) var(--layout-radius) 0 0;
+  padding: 0.75rem 1.5rem;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 0 1.5rem;
+  justify-content: space-between;
+  gap: 1rem;
 }
 
-.btn-logout {
-  background: transparent;
-  border: 1.5px solid var(--neutro-gray-400);
-  color: var(--neutro-gray-600);
-  border-radius: 8px;
-  padding: 0.4rem 1rem;
+/* ── Brand mark ── */
+.patient-shell__brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.patient-shell__logo-mark {
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 0.625rem;
+  background: var(--color-primary);
+  color: var(--color-surface);
+  font-weight: 700;
+  font-size: 0.8rem;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.patient-shell__brand-name {
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-text);
+  line-height: 1.25;
+}
+
+.patient-shell__brand-sub {
+  display: block;
+  font-size: 0.72rem;
+  color: var(--color-text-muted);
+  line-height: 1.25;
+}
+
+/* ── Profile + logout ── */
+.patient-shell__profile {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.patient-shell__user-name {
   font-size: 0.875rem;
-  cursor: pointer;
-  transition: all 0.15s;
+  font-weight: 500;
+  color: var(--color-text-secondary);
 }
 
-.btn-logout:hover {
-  border-color: var(--neutro-gray-600);
-  color: var(--neutro-gray-700);
+.patient-shell__logout {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: none;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--menu-item-radius);
+  padding: 0.4rem 0.875rem;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+}
+
+.patient-shell__logout:hover {
+  border-color: var(--color-error-border);
+  background: var(--color-error-bg);
+  color: var(--color-error);
+}
+
+/* ── Content area ── */
+.patient-shell__content {
+  background: var(--blue-green-50);
+  border-radius: 0 0 var(--layout-radius) var(--layout-radius);
+  padding: 2rem 2.5rem;
+  min-height: calc(100vh - 8rem);
+}
+
+@media (max-width: 720px) {
+  .patient-shell {
+    padding: 0.5rem;
+  }
+
+  .patient-shell__header {
+    border-radius: var(--radius-card) var(--radius-card) 0 0;
+    padding: 0.75rem 1rem;
+  }
+
+  .patient-shell__user-name {
+    display: none;
+  }
+
+  .patient-shell__content {
+    padding: 1.25rem 1rem;
+  }
 }

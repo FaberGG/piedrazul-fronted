@@ -1,4 +1,4 @@
-import { Component, inject, signal, OnInit } from '@angular/core';
+import { Component, inject, signal, computed, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AgendaService } from '../../services/agenda.service';
@@ -17,6 +17,18 @@ export class AgendarAutonomoPageComponent implements OnInit {
   medicos = signal<MedicoResumen[]>([]);
   franjas = signal<string[]>([]);
   citaConfirmada = signal<CitaResponse | null>(null);
+
+  filtroEspecialidad = signal<string>('');
+
+  readonly especialidades = computed(() =>
+    [...new Set(this.medicos().map(m => m.especialidad).filter(Boolean))].sort()
+  );
+
+  readonly medicosFiltrados = computed(() => {
+    const filtro = this.filtroEspecialidad().trim().toLowerCase();
+    if (!filtro) return this.medicos();
+    return this.medicos().filter(m => m.especialidad.toLowerCase().includes(filtro));
+  });
 
   medicoSeleccionado = signal<number | null>(null);
   fechaSeleccionada = signal<string>('');
@@ -44,6 +56,18 @@ export class AgendarAutonomoPageComponent implements OnInit {
         this.cargandoMedicos.set(false);
       }
     });
+  }
+
+  onFiltroEspecialidadChange(): void {
+    const seleccionado = this.medicoSeleccionado();
+    if (seleccionado !== null) {
+      const sigueVisible = this.medicosFiltrados().some(m => m.id === seleccionado);
+      if (!sigueVisible) {
+        this.medicoSeleccionado.set(null);
+        this.franjas.set([]);
+        this.horaSeleccionada.set('');
+      }
+    }
   }
 
   onMedicoOFechaChange(): void {

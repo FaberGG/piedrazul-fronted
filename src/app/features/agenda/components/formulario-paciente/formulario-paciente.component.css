@@ -118,7 +118,7 @@
 }
 
 .info-paciente__required {
-  color: var(--blue-green-600);
+  color: var(--color-error);
 }
 
 .info-paciente__select-wrapper {
@@ -137,11 +137,11 @@
 }
 
 .info-paciente__select-wrapper--invalid {
-  border-color: var(--blue-green-600);
+  border-color: var(--color-error);
 }
 
 .info-paciente__select-wrapper--invalid:focus-within {
-  box-shadow: 0 0 0 3px var(--blue-green-100);
+  box-shadow: var(--shadow-focus-error);
 }
 
 .info-paciente__select-icon {
@@ -173,7 +173,7 @@
 }
 
 .info-paciente__error {
-  color: var(--blue-green-600);
+  color: var(--color-error);
   font-size: var(--font-size-sm);
 }
 

@@ -10,7 +10,7 @@
 }
 
 .input-compartido__required {
-  color: var(--blue-green-600);
+  color: var(--color-error);
 }
 
 .input-compartido__control {
@@ -29,11 +29,11 @@
 }
 
 .input-compartido__control--invalid {
-  border-color: var(--blue-green-600);
+  border-color: var(--color-error);
 }
 
 .input-compartido__control--invalid:focus-within {
-  box-shadow: 0 0 0 3px var(--blue-green-100);
+  box-shadow: var(--shadow-focus-error);
 }
 
 .input-compartido__icon {
@@ -104,12 +104,12 @@
 }
 
 .input-compartido__hint {
-  color: var(--blue-green-600);
+  color: var(--color-text-secondary);
   font-size: var(--font-size-sm);
 }
 
 .input-compartido__error {
-  color: var(--blue-green-600);
+  color: var(--color-error);
   font-size: var(--font-size-sm);
 }
 

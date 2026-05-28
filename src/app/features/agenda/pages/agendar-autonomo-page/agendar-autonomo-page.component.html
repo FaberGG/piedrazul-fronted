@@ -1,70 +1,166 @@
-<div class="page-wrapper">
-  <h2>Agendar mi cita</h2>
+<div class="agendar-page">
 
-  <div *ngIf="error()" class="alert-error">{{ error() }}</div>
-
-  <div *ngIf="citaConfirmada()" class="alert-success">
-    <h5>¡Cita agendada exitosamente!</h5>
-    <p><strong>Médico:</strong> {{ citaConfirmada()?.medicoNombre }}</p>
-    <p><strong>Especialidad:</strong> {{ citaConfirmada()?.especialidad }}</p>
-    <p><strong>Fecha:</strong> {{ citaConfirmada()?.fecha }}</p>
-    <p><strong>Hora:</strong> {{ citaConfirmada()?.hora }}</p>
-    <p><strong>Estado:</strong> {{ citaConfirmada()?.estado }}</p>
+  <!-- Page title -->
+  <div class="agendar-page__header">
+    <h1 class="agendar-page__title">Agendar mi cita</h1>
+    <p class="agendar-page__subtitle">Selecciona especialidad, médico, fecha y horario</p>
   </div>
 
-  <div *ngIf="!citaConfirmada()" class="card">
+  <!-- Error alert -->
+  @if (error()) {
+    <div class="agendar-page__alert-error">{{ error() }}</div>
+  }
 
-    <div class="form-group">
-      <label class="form-label">Médico / Terapista</label>
-      <select class="form-control"
-              [disabled]="cargandoMedicos()"
-              (change)="onMedicoOFechaChange()"
-              [(ngModel)]="medicoSeleccionado">
-        <option [value]="null">Selecciona un médico</option>
-        <option *ngFor="let m of medicos()" [value]="m.id">
-          {{ m.nombresCompletos }} — {{ m.especialidad }}
-        </option>
-      </select>
-    </div>
-
-    <div class="form-group">
-      <label class="form-label">Fecha</label>
-      <input type="date"
-             class="form-control"
-             (change)="onMedicoOFechaChange()"
-             [(ngModel)]="fechaSeleccionada" />
-    </div>
-
-    <div class="form-group">
-      <label class="form-label">Horario disponible</label>
-      <div *ngIf="cargandoFranjas()" class="text-muted">Cargando horarios...</div>
-      <div *ngIf="!cargandoFranjas() && franjas().length === 0 && fechaSeleccionada()" class="text-muted">
-        No hay horarios disponibles para esta fecha
+  <!-- Confirmation screen -->
+  @if (citaConfirmada(); as cita) {
+    <div class="agendar-page__card agendar-page__card--success">
+      <div class="agendar-page__success-icon">
+        <i class="fa-solid fa-circle-check" aria-hidden="true"></i>
       </div>
-      <div class="franjas-grid">
-        <button *ngFor="let franja of franjas()"
-                class="franja-btn"
-                [class.selected]="horaSeleccionada() === franja"
-                (click)="horaSeleccionada.set(franja)">
-          {{ franja }}
+      <h2 class="agendar-page__success-title">¡Cita agendada exitosamente!</h2>
+      <div class="agendar-page__success-details">
+        <div class="agendar-page__detail-row">
+          <span class="agendar-page__detail-label">Médico</span>
+          <span class="agendar-page__detail-value">{{ cita.medicoNombre }}</span>
+        </div>
+        <div class="agendar-page__detail-row">
+          <span class="agendar-page__detail-label">Especialidad</span>
+          <span class="agendar-page__detail-value">{{ cita.especialidad }}</span>
+        </div>
+        <div class="agendar-page__detail-row">
+          <span class="agendar-page__detail-label">Fecha</span>
+          <span class="agendar-page__detail-value">{{ cita.fecha }}</span>
+        </div>
+        <div class="agendar-page__detail-row">
+          <span class="agendar-page__detail-label">Hora</span>
+          <span class="agendar-page__detail-value">{{ cita.hora }}</span>
+        </div>
+        <div class="agendar-page__detail-row">
+          <span class="agendar-page__detail-label">Estado</span>
+          <span class="agendar-page__detail-value">{{ cita.estado }}</span>
+        </div>
+      </div>
+    </div>
+  }
+
+  <!-- Booking form -->
+  @if (!citaConfirmada()) {
+    <div class="agendar-page__card">
+
+      <!-- Section: Médico -->
+      <section class="agendar-page__section">
+        <header class="agendar-page__section-head">
+          <i class="fa-solid fa-stethoscope agendar-page__section-icon" aria-hidden="true"></i>
+          <span>Médico</span>
+        </header>
+
+        <div class="agendar-page__field">
+          <label class="agendar-page__label">Filtrar por especialidad</label>
+          <input type="text"
+                 class="agendar-page__control"
+                 placeholder="Ej: Medicina general, Fisioterapia…"
+                 list="especialidades-list"
+                 [(ngModel)]="filtroEspecialidad"
+                 (ngModelChange)="onFiltroEspecialidadChange()" />
+          <datalist id="especialidades-list">
+            @for (e of especialidades(); track e) {
+              <option [value]="e"></option>
+            }
+          </datalist>
+        </div>
+
+        <div class="agendar-page__field">
+          <label class="agendar-page__label">Seleccionar médico / terapista</label>
+          <select class="agendar-page__control"
+                  [disabled]="cargandoMedicos()"
+                  (change)="onMedicoOFechaChange()"
+                  [(ngModel)]="medicoSeleccionado">
+            <option [value]="null">
+              {{ cargandoMedicos() ? 'Cargando médicos…' : 'Selecciona un médico' }}
+            </option>
+            @for (m of medicosFiltrados(); track m.id) {
+              <option [value]="m.id">{{ m.nombresCompletos }} — {{ m.especialidad }}</option>
+            }
+          </select>
+          @if (filtroEspecialidad() && medicosFiltrados().length === 0) {
+            <span class="agendar-page__hint">No hay médicos con esa especialidad</span>
+          }
+        </div>
+      </section>
+
+      <div class="agendar-page__divider"></div>
+
+      <!-- Section: Fecha y horario -->
+      <section class="agendar-page__section">
+        <header class="agendar-page__section-head">
+          <i class="fa-solid fa-calendar-days agendar-page__section-icon" aria-hidden="true"></i>
+          <span>Fecha y horario</span>
+        </header>
+
+        <div class="agendar-page__field">
+          <label class="agendar-page__label">Fecha</label>
+          <input type="date"
+                 class="agendar-page__control"
+                 (change)="onMedicoOFechaChange()"
+                 [(ngModel)]="fechaSeleccionada" />
+        </div>
+
+        <div class="agendar-page__field">
+          <label class="agendar-page__label">Horario disponible</label>
+          @if (cargandoFranjas()) {
+            <p class="agendar-page__hint">Cargando horarios…</p>
+          }
+          @if (!cargandoFranjas() && franjas().length === 0 && fechaSeleccionada()) {
+            <p class="agendar-page__hint">No hay horarios disponibles para esta fecha</p>
+          }
+          <div class="agendar-page__franjas">
+            @for (franja of franjas(); track franja) {
+              <button type="button"
+                      class="agendar-page__franja"
+                      [class.agendar-page__franja--selected]="horaSeleccionada() === franja"
+                      (click)="horaSeleccionada.set(franja)">
+                {{ franja }}
+              </button>
+            }
+          </div>
+        </div>
+      </section>
+
+      <div class="agendar-page__divider"></div>
+
+      <!-- Section: Observaciones -->
+      <section class="agendar-page__section">
+        <header class="agendar-page__section-head">
+          <i class="fa-solid fa-note-sticky agendar-page__section-icon" aria-hidden="true"></i>
+          <span>Observaciones <span class="agendar-page__optional">(opcional)</span></span>
+        </header>
+
+        <div class="agendar-page__field">
+          <textarea class="agendar-page__control"
+                    rows="3"
+                    placeholder="Escribe aquí cualquier información relevante…"
+                    [(ngModel)]="observaciones">
+          </textarea>
+        </div>
+      </section>
+
+      <!-- Submit -->
+      <div class="agendar-page__actions">
+        <button class="agendar-page__submit"
+                type="button"
+                [disabled]="enviando() || !medicoSeleccionado() || !fechaSeleccionada() || !horaSeleccionada()"
+                (click)="agendar()">
+          @if (enviando()) {
+            <span class="agendar-page__spinner"></span>
+            Agendando…
+          } @else {
+            <i class="fa-solid fa-calendar-check" aria-hidden="true"></i>
+            Confirmar cita
+          }
         </button>
       </div>
+
     </div>
+  }
 
-    <div class="form-group">
-      <label class="form-label">Observaciones <span class="opcional">(opcional)</span></label>
-      <textarea class="form-control"
-                rows="3"
-                placeholder="Escribe aquí cualquier información relevante..."
-                [(ngModel)]="observaciones">
-      </textarea>
-    </div>
-
-    <button class="btn-confirmar"
-            [disabled]="enviando() || !medicoSeleccionado() || !fechaSeleccionada() || !horaSeleccionada()"
-            (click)="agendar()">
-      {{ enviando() ? 'Agendando...' : 'Confirmar cita' }}
-    </button>
-
-  </div>
 </div>

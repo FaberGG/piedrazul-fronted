@@ -1,8 +1,26 @@
 <div class="patient-shell">
   <header class="patient-shell__header">
-    <span>Piedrazul - Portal Paciente</span>
-    <button class="btn-logout" (click)="logout()">Cerrar sesión</button>
+    <div class="patient-shell__brand">
+      <div class="patient-shell__logo-mark">PZ</div>
+      <div>
+        <span class="patient-shell__brand-name">Piedrazul</span>
+        <span class="patient-shell__brand-sub">Portal Paciente</span>
+      </div>
+    </div>
+
+    <div class="patient-shell__profile">
+      @if (authService.currentUser(); as user) {
+        <span class="patient-shell__user-name">
+          {{ user.nombreCompleto || user.username }}
+        </span>
+      }
+      <button type="button" class="patient-shell__logout" (click)="authService.logout()">
+        <i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i>
+        Cerrar sesión
+      </button>
+    </div>
   </header>
+
   <main class="patient-shell__content">
     <router-outlet />
   </main>
