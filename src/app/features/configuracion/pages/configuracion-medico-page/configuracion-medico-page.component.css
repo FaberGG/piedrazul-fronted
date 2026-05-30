@@ -1,4 +1,4 @@
-/* ── Layout dos columnas ── */
+/* ── Two-column layout ── */
 .config-layout {
   display: flex;
   gap: 0;
@@ -6,36 +6,36 @@
   overflow: hidden;
 }
 
-/* ── Panel izquierdo ── */
+/* ── Left panel — doctor list ── */
 .medicos-panel {
   width: 300px;
   min-width: 260px;
-  border-right: 1px solid #e2e8f0;
+  border-right: 1px solid var(--color-border-subtle);
   display: flex;
   flex-direction: column;
-  background: #f8fafc;
+  background: var(--color-surface-raised);
   overflow-y: auto;
 }
 
 .panel-header {
-  padding: 1.4rem 1.2rem 1rem;
-  border-bottom: 1px solid #e2e8f0;
+  padding: 1.25rem 1.25rem 1rem;
+  border-bottom: 1px solid var(--color-border-subtle);
 }
 
 .panel-title {
   font-size: 1rem;
   font-weight: 700;
-  color: #1e293b;
+  color: var(--color-text);
   margin: 0 0 4px;
 }
 
 .panel-sub {
   font-size: 0.78rem;
-  color: #64748b;
+  color: var(--color-text-secondary);
   margin: 0;
 }
 
-/* ── Lista médicos ── */
+/* ── Doctor list ── */
 .medico-list {
   list-style: none;
   margin: 0;
@@ -46,26 +46,26 @@
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  padding: 0.75rem 1.2rem;
+  padding: 0.75rem 1.25rem;
   cursor: pointer;
   transition: background 0.15s;
   border-left: 3px solid transparent;
 }
 
 .medico-item:hover {
-  background: #eff6ff;
+  background: var(--color-primary-light);
 }
 
 .medico-item.selected {
-  background: #eff6ff;
-  border-left-color: #2563eb;
+  background: var(--color-primary-light);
+  border-left-color: var(--color-primary-dark);
 }
 
 .medico-avatar {
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background: #2563eb;
+  background: var(--color-primary-dark);
   color: #fff;
   font-weight: 700;
   font-size: 1rem;
@@ -86,7 +86,7 @@
 .medico-nombre {
   font-size: 0.87rem;
   font-weight: 600;
-  color: #1e293b;
+  color: var(--color-text);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -94,25 +94,25 @@
 
 .medico-esp {
   font-size: 0.75rem;
-  color: #64748b;
+  color: var(--color-text-secondary);
 }
 
 .medico-badge {
   font-size: 0.7rem;
   padding: 2px 8px;
-  border-radius: 99px;
-  background: #f1f5f9;
-  color: #94a3b8;
+  border-radius: var(--radius-full);
+  background: var(--color-border-subtle);
+  color: var(--color-text-muted);
   font-weight: 600;
   flex-shrink: 0;
 }
 
 .medico-badge.activo {
-  background: #dcfce7;
-  color: #15803d;
+  background: var(--color-success-bg);
+  color: var(--color-success);
 }
 
-/* ── Panel derecho ── */
+/* ── Right panel — config form ── */
 .config-panel {
   flex: 1;
   overflow-y: auto;
@@ -127,7 +127,7 @@
   justify-content: center;
   height: 100%;
   gap: 1rem;
-  color: #94a3b8;
+  color: var(--color-text-muted);
   font-size: 0.9rem;
   text-align: center;
 }
@@ -145,30 +145,30 @@
 }
 
 .config-title {
-  font-size: 1.15rem;
+  font-size: 1.1rem;
   font-weight: 700;
-  color: #1e293b;
+  color: var(--color-text);
   margin: 0 0 4px;
 }
 
 .config-sub {
   font-size: 0.85rem;
-  color: #64748b;
+  color: var(--color-text-secondary);
   margin: 0;
 }
 
 .badge-estado {
-  font-size: 0.78rem;
+  font-size: 0.75rem;
   padding: 4px 12px;
-  border-radius: 99px;
-  background: #f1f5f9;
-  color: #94a3b8;
+  border-radius: var(--radius-full);
+  background: var(--color-border-subtle);
+  color: var(--color-text-muted);
   font-weight: 600;
 }
 
 .badge-estado.activo {
-  background: #dcfce7;
-  color: #15803d;
+  background: var(--color-success-bg);
+  color: var(--color-success);
 }
 
 /* ── Form ── */
@@ -184,9 +184,9 @@
 }
 
 .field-label {
-  font-size: 0.82rem;
+  font-size: 0.78rem;
   font-weight: 600;
-  color: #374151;
+  color: var(--color-text);
   text-transform: uppercase;
   letter-spacing: 0.04em;
 }
@@ -202,24 +202,25 @@
 
 .input {
   padding: 0.55rem 0.85rem;
-  border: 1.5px solid #cbd5e1;
-  border-radius: 8px;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-btn);
   font-size: 0.9rem;
-  color: #1e293b;
+  color: var(--color-text);
   outline: none;
-  transition: border-color 0.2s;
-  background: #fff;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  background: var(--color-surface);
 }
 
 .input:focus {
-  border-color: #2563eb;
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-focus);
 }
 
 .input.input-error {
-  border-color: #ef4444;
+  border-color: var(--color-error);
 }
 
-/* ── Días grid ── */
+/* ── Day buttons ── */
 .dias-grid {
   display: flex;
   flex-wrap: wrap;
@@ -228,29 +229,29 @@
 
 .dia-btn {
   padding: 0.45rem 0.9rem;
-  border-radius: 8px;
-  border: 1.5px solid #cbd5e1;
-  background: #f8fafc;
+  border-radius: var(--radius-btn);
+  border: 1.5px solid var(--color-border);
+  background: var(--color-surface-raised);
   font-size: 0.85rem;
   font-weight: 600;
-  color: #475569;
+  color: var(--color-text-secondary);
   cursor: pointer;
   transition: all 0.15s;
 }
 
 .dia-btn:hover {
-  border-color: #2563eb;
-  color: #2563eb;
-  background: #eff6ff;
+  border-color: var(--color-primary-dark);
+  color: var(--color-primary-dark);
+  background: var(--color-primary-light);
 }
 
 .dia-btn.selected {
-  background: #2563eb;
-  border-color: #2563eb;
+  background: var(--color-primary-dark);
+  border-color: var(--color-primary-dark);
   color: #fff;
 }
 
-/* ── Intervalos grid ── */
+/* ── Interval buttons ── */
 .intervalos-grid {
   display: flex;
   flex-wrap: wrap;
@@ -259,25 +260,25 @@
 
 .intervalo-btn {
   padding: 0.45rem 1rem;
-  border-radius: 8px;
-  border: 1.5px solid #cbd5e1;
-  background: #f8fafc;
+  border-radius: var(--radius-btn);
+  border: 1.5px solid var(--color-border);
+  background: var(--color-surface-raised);
   font-size: 0.85rem;
   font-weight: 600;
-  color: #475569;
+  color: var(--color-text-secondary);
   cursor: pointer;
   transition: all 0.15s;
 }
 
 .intervalo-btn:hover {
-  border-color: #2563eb;
-  color: #2563eb;
-  background: #eff6ff;
+  border-color: var(--color-primary-dark);
+  color: var(--color-primary-dark);
+  background: var(--color-primary-light);
 }
 
 .intervalo-btn.selected {
-  background: #2563eb;
-  border-color: #2563eb;
+  background: var(--color-primary-dark);
+  border-color: var(--color-primary-dark);
   color: #fff;
 }
 
@@ -285,20 +286,20 @@
 .readonly-badge {
   display: inline-block;
   padding: 0.45rem 1rem;
-  background: #f1f5f9;
-  border-radius: 8px;
+  background: var(--color-border-subtle);
+  border-radius: var(--radius-btn);
   font-size: 0.9rem;
   font-weight: 600;
-  color: #475569;
+  color: var(--color-text-secondary);
 }
 
 /* ── Buttons ── */
 .btn-primary {
   padding: 0.6rem 1.6rem;
-  background: #2563eb;
+  background: var(--color-primary-dark);
   color: #fff;
   border: none;
-  border-radius: 8px;
+  border-radius: var(--radius-btn);
   font-size: 0.9rem;
   font-weight: 600;
   cursor: pointer;
@@ -306,7 +307,7 @@
 }
 
 .btn-primary:hover:not(:disabled) {
-  background: #1d4ed8;
+  background: var(--color-primary-darker);
 }
 
 .btn-primary:disabled {
@@ -320,36 +321,35 @@
   margin-top: 1.4rem;
 }
 
-/* ── Alerts ── */
+/* ── Feedback ── */
 .alert {
   padding: 0.6rem 1rem;
-  border-radius: 8px;
+  border-radius: var(--radius-btn);
   font-size: 0.85rem;
   margin-bottom: 1.2rem;
 }
 
 .alert-error {
-  background: #fef2f2;
-  color: #b91c1c;
-  border: 1px solid #fecaca;
+  background: var(--color-error-bg);
+  color: var(--color-error);
+  border: 1px solid var(--color-error-border);
 }
 
 .alert-success {
-  background: #f0fdf4;
-  color: #15803d;
-  border: 1px solid #bbf7d0;
+  background: var(--color-success-bg);
+  color: var(--color-success);
+  border: 1px solid var(--color-success-border);
 }
 
-/* ── Misc ── */
 .error-msg {
   font-size: 0.78rem;
-  color: #ef4444;
+  color: var(--color-error);
 }
 
 .loading-msg {
   padding: 1.2rem;
   font-size: 0.85rem;
-  color: #94a3b8;
+  color: var(--color-text-muted);
   text-align: center;
 }
 
@@ -363,6 +363,6 @@
 .empty-msg {
   padding: 1rem 1.2rem;
   font-size: 0.85rem;
-  color: #94a3b8;
+  color: var(--color-text-muted);
   text-align: center;
 }

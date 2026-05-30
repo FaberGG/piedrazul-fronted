@@ -8,22 +8,15 @@
   --font-size-topbar-user-name: 0.875rem;
   --font-size-topbar-user-email: 0.75rem;
 
-  --font-size-base-mobile: 1rem;
-  --font-size-sm-mobile: 0.875rem;
-  --font-size-topbar-title-mobile: 1.5rem;
-  --font-size-topbar-description-mobile: 1rem;
-  --font-size-topbar-user-name-mobile: 1rem;
-  --font-size-topbar-user-email-mobile: 0.875rem;
-
-  --blue-green-50: #E6F4F9;
-  --blue-green-100: #C8EAF2;
-  --blue-green-200: #99DAE9;
-  --blue-green-300: #68CBE1;
-  --blue-green-400: #35BFDC;
-  --blue-green-500: #00B4D8;
-  --blue-green-600: #0069AE;
-  --blue-green-700: #002E7F;
-  --blue-green-800: #00084D;
+  --blue-green-50: #e6f4f9;
+  --blue-green-100: #c8eaf2;
+  --blue-green-200: #99dae9;
+  --blue-green-300: #68cbe1;
+  --blue-green-400: #35bfdc;
+  --blue-green-500: #00b4d8;
+  --blue-green-600: #0069ae;
+  --blue-green-700: #002e7f;
+  --blue-green-800: #00084d;
   --blue-green-900: #000017;
   --neutro-white: #F9FAFA;
   --neutro-gray-100: #E8EDED;
@@ -42,6 +35,48 @@
   --layout-shell-gap: 0rem;
   --layout-radius: 0px;
   --menu-item-radius: 10px;
+
+
+  /* ── Semantic color aliases ── */
+  --color-primary:        var(--blue-green-500);
+  --color-primary-dark:   var(--blue-green-600);
+  --color-primary-darker: var(--blue-green-700);
+  --color-primary-light:  var(--blue-green-50);
+  --color-primary-subtle: var(--blue-green-100);
+
+  --color-surface:        var(--neutro-white);
+  --color-surface-raised: #f8fafc;
+  --color-border:         var(--neutro-gray-200);
+  --color-border-subtle:  var(--neutro-gray-100);
+
+  --color-text:           var(--neutro-gray-700);
+  --color-text-secondary: var(--neutro-gray-500);
+  --color-text-muted:     var(--neutro-gray-400);
+
+  --color-error:          #b91c1c;
+  --color-error-bg:       #fef2f2;
+  --color-error-border:   #fecaca;
+  --color-success:        #15803d;
+  --color-success-bg:     #f0fdf4;
+  --color-success-border: #bbf7d0;
+  --color-warning:        #b45309;
+  --color-warning-bg:     #fffbeb;
+  --color-warning-border: #fed7aa;
+
+  /* ── Shadows ── */
+  --shadow-sm:          0 1px 4px rgba(0, 0, 0, 0.06);
+  --shadow-md:          0 2px 16px rgba(0, 0, 0, 0.08);
+  --shadow-focus:       0 0 0 3px var(--blue-green-50);
+  --shadow-focus-error: 0 0 0 3px rgba(185, 28, 28, 0.12);
+
+  /* ── Radius scale ── */
+  --radius-xs:   4px;
+  --radius-sm:   6px;
+  --radius-btn:  8px;
+  --radius-card: 12px;
+  --radius-full: 9999px;
+  /* --menu-item-radius: 10px — inputs, tags, small containers */
+  /* --layout-radius:    20px — large shell containers           */
 }
 
 * {
@@ -58,7 +93,7 @@ body {
 
 body {
   background: var(--blue-green-200);
-  color: var(--neutro-gray-700);
+  color: var(--color-text);
 }
 
 button,
