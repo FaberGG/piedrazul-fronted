@@ -16,22 +16,11 @@
   gap: 0.75rem;
   padding: 0.25rem;
 }
-
-.sidebar__logo-mark {
-  width: 2.5rem;
-  height: 2.5rem;
-  border-radius: 0.75rem;
-  background: var(--blue-green-500);
-  color: var(--neutro-white);
-  font-weight: 700;
-  display: grid;
-  place-items: center;
+.sidebar__logo-img{
+  margin-bottom: 1rem;
+  width: 200px;
 }
 
-.sidebar__title {
-  margin: 0;
-  font-size: var(--font-size-base);
-}
 
 .sidebar__subtitle {
   margin: 0.15rem 0 0;
@@ -52,6 +41,7 @@
   background: var(--neutro-white);
   color: var(--neutro-gray-400);
   font: inherit;
+  font-weight: 500;
   text-align: left;
   display: inline-flex;
   align-items: center;
@@ -73,17 +63,17 @@
 }
 
 .sidebar__link--active {
-  background: var(--blue-green-600);
+  background: var(--blue-green-500);
   color: var(--neutro-white);
 }
 
 .sidebar__link:hover {
-  background: var(--blue-green-50);
+  background: var(--neutro-gray-100);
   color: var(--neutro-gray-700);
 }
 
 .sidebar__link--active:hover {
-  background: var(--blue-green-600);
+  background: var(--blue-green-500);
   color: var(--neutro-white);
 }
 
@@ -109,3 +99,28 @@
   color: var(--neutro-gray-400);
 }
 
+@media (max-width: 960px) {
+  /* Start hidden off-canvas */
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    transform: translateX(-110%);
+    transition: transform 220ms ease;
+    width: min(80%, 280px);
+    height: 100vh;
+    padding-top: 2rem;
+    z-index: 30;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  }
+
+  /* When host receives the sidebar--open class (applied from shell) reveal */
+  :host(.sidebar--open) .sidebar {
+    transform: translateX(0);
+  }
+
+  /* Hide footer utilities (ayuda, cerrar sesion) on collapsed / small screens */
+  .sidebar__footer {
+    display: none;
+  }
+}

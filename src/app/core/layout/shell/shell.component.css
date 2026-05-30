@@ -3,8 +3,8 @@
   padding: var(--layout-padding);
   display: grid;
   grid-template-columns: clamp(250px, 22vw, 320px) 1fr;
-  gap: var(--layout-gap);
-  background: var(--blue-green-200);
+  gap: var(--layout-shell-gap);
+  background: var(--blue-green-100);
 }
 
 .shell__sidebar {
@@ -23,8 +23,7 @@
 
 .shell__topbar {
   display: block;
-  position: sticky;
-  top: var(--layout-padding);
+  position: static; /* no longer sticky */
   z-index: 20;
   border-radius: var(--layout-radius) var(--layout-radius) 0 0;
   background: var(--neutro-white);
@@ -47,7 +46,7 @@
   background: var(--blue-green-50);
   color: var(--neutro-gray-700);
   /*padding: clamp(0.75rem, 2vw, 1.25rem);*/
-  padding: 30px 40px;
+  padding: 1rem 2rem;
   min-height: calc(100vh - 12rem);
 }
 

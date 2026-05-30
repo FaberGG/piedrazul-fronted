@@ -1,0 +1,897 @@
+{
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\angular.json": {
+    "mtime": 1774584416.9166956,
+    "ast_hash": "70b6a7a9e0a40366595a0c0d231ddaca",
+    "semantic_hash": "70b6a7a9e0a40366595a0c0d231ddaca"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\package.json": {
+    "mtime": 1777343653.1565309,
+    "ast_hash": "59e4eaa15da876754569db0c0f4997e8",
+    "semantic_hash": "59e4eaa15da876754569db0c0f4997e8"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\tsconfig.app.json": {
+    "mtime": 1774239445.6330886,
+    "ast_hash": "f0ed6c81d0a374939052cff4567f713f",
+    "semantic_hash": "f0ed6c81d0a374939052cff4567f713f"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\tsconfig.json": {
+    "mtime": 1774239445.6301725,
+    "ast_hash": "46e70ba7bf6d021351390882a69f0ba9",
+    "semantic_hash": "46e70ba7bf6d021351390882a69f0ba9"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\tsconfig.spec.json": {
+    "mtime": 1774239445.634095,
+    "ast_hash": "bd7d8d4dcf7261c37c6a35a892af2f35",
+    "semantic_hash": "bd7d8d4dcf7261c37c6a35a892af2f35"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\.vscode\\extensions.json": {
+    "mtime": 1774239445.634095,
+    "ast_hash": "66fd9e60d4633b6099fe02e06a7075ea",
+    "semantic_hash": "66fd9e60d4633b6099fe02e06a7075ea"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\.vscode\\launch.json": {
+    "mtime": 1774239445.635601,
+    "ast_hash": "430386a2f03e9d559664c196344c121b",
+    "semantic_hash": "430386a2f03e9d559664c196344c121b"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\.vscode\\mcp.json": {
+    "mtime": 1774239445.6366093,
+    "ast_hash": "a73020575e74990ecd722ccc5122bb0c",
+    "semantic_hash": "a73020575e74990ecd722ccc5122bb0c"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\.vscode\\tasks.json": {
+    "mtime": 1774239445.6376138,
+    "ast_hash": "cb7ed9a56930402d9059ea5a9773d60e",
+    "semantic_hash": "cb7ed9a56930402d9059ea5a9773d60e"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\main.ts": {
+    "mtime": 1774239445.6396084,
+    "ast_hash": "1289536d6d8f94242a4ffc598d094633",
+    "semantic_hash": "1289536d6d8f94242a4ffc598d094633"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\app.config.ts": {
+    "mtime": 1774285870.313309,
+    "ast_hash": "84b0deb4bee8ef9da6c28e14e3eb75ca",
+    "semantic_hash": "84b0deb4bee8ef9da6c28e14e3eb75ca"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\app.routes.ts": {
+    "mtime": 1777343957.559299,
+    "ast_hash": "d18559411e4c2ffe07bedffeb1a33b09",
+    "semantic_hash": "d18559411e4c2ffe07bedffeb1a33b09"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\app.spec.ts": {
+    "mtime": 1774243086.7520387,
+    "ast_hash": "cb236856567744859e36705056f41463",
+    "semantic_hash": "cb236856567744859e36705056f41463"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\app.ts": {
+    "mtime": 1774243079.2629237,
+    "ast_hash": "442d41d4c41e95f5f50b0e9048d4868b",
+    "semantic_hash": "442d41d4c41e95f5f50b0e9048d4868b"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\core\\auth\\auth.service.ts": {
+    "mtime": 1777343957.5602965,
+    "ast_hash": "98ca8675cda7ecf31f1bf00ba76be2ab",
+    "semantic_hash": "98ca8675cda7ecf31f1bf00ba76be2ab"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\core\\guards\\auth.guard.ts": {
+    "mtime": 1774285870.3166647,
+    "ast_hash": "b7338ba0a70fa5c1c88ad6d3a1b31c68",
+    "semantic_hash": "b7338ba0a70fa5c1c88ad6d3a1b31c68"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\core\\guards\\no-auth.guard.ts": {
+    "mtime": 1774285870.317667,
+    "ast_hash": "d3b06503fd0af6d0af7a5d5f6f6f6d6a",
+    "semantic_hash": "d3b06503fd0af6d0af7a5d5f6f6f6d6a"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\core\\guards\\role.guard.ts": {
+    "mtime": 1774285870.3186712,
+    "ast_hash": "b354cd4585f683b744484d8c7a54c134",
+    "semantic_hash": "b354cd4585f683b744484d8c7a54c134"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\core\\interceptors\\error.interceptor.ts": {
+    "mtime": 1774285870.319664,
+    "ast_hash": "39a9e0d1154a7bf349a7eabae3f34e4b",
+    "semantic_hash": "39a9e0d1154a7bf349a7eabae3f34e4b"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\core\\interceptors\\jwt.interceptor.ts": {
+    "mtime": 1774584416.920207,
+    "ast_hash": "a8041a872659c35b72952505b650903f",
+    "semantic_hash": "a8041a872659c35b72952505b650903f"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\core\\layout\\patient-shell\\patient-shell.component.ts": {
+    "mtime": 1777343568.3411627,
+    "ast_hash": "f5603e0492b72b66fa2b6b71a2332ede",
+    "semantic_hash": "f5603e0492b72b66fa2b6b71a2332ede"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\core\\layout\\shell\\shell.component.ts": {
+    "mtime": 1774286200.3602252,
+    "ast_hash": "a3439876fbb7db303084c92f62d33ca4",
+    "semantic_hash": "a3439876fbb7db303084c92f62d33ca4"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\core\\layout\\sidebar\\sidebar.component.ts": {
+    "mtime": 1777343957.5618043,
+    "ast_hash": "8d7c403a30cf4d65111445e6ee29c468",
+    "semantic_hash": "8d7c403a30cf4d65111445e6ee29c468"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\core\\layout\\topbar\\topbar.component.ts": {
+    "mtime": 1774584416.925218,
+    "ast_hash": "61ed9fae5339bf2a23737d02f55e6920",
+    "semantic_hash": "61ed9fae5339bf2a23737d02f55e6920"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\core\\models\\api-response.model.ts": {
+    "mtime": 1774285870.3276653,
+    "ast_hash": "e89c13bf0a4f9c50895b4bac9c880dc2",
+    "semantic_hash": "e89c13bf0a4f9c50895b4bac9c880dc2"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\core\\models\\pagination.model.ts": {
+    "mtime": 1774285870.3286648,
+    "ast_hash": "06017f49464b4f8ea6784a3ad3e596c2",
+    "semantic_hash": "06017f49464b4f8ea6784a3ad3e596c2"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\core\\models\\user.model.ts": {
+    "mtime": 1774285870.3296654,
+    "ast_hash": "7aa83172af6ca7f0a0887654aec60656",
+    "semantic_hash": "7aa83172af6ca7f0a0887654aec60656"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\agenda\\agenda.routes.ts": {
+    "mtime": 1777343957.5628111,
+    "ast_hash": "cedd61bd9bdc050a2483b73f76b14467",
+    "semantic_hash": "cedd61bd9bdc050a2483b73f76b14467"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\agenda\\components\\formulario-paciente\\formulario-paciente.component.ts": {
+    "mtime": 1774584416.9287329,
+    "ast_hash": "970852f936cdbb9243f64030fbe245a3",
+    "semantic_hash": "970852f936cdbb9243f64030fbe245a3"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\agenda\\components\\selector-horario\\selector-horario.component.ts": {
+    "mtime": 1777343653.1575317,
+    "ast_hash": "10a168efebdb6df81b4c1e075c811fde",
+    "semantic_hash": "10a168efebdb6df81b4c1e075c811fde"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\agenda\\models\\agenda-dinamica.model.ts": {
+    "mtime": 1774584416.9327662,
+    "ast_hash": "6070aaca4cde7d26c2d7f2d2c588aa66",
+    "semantic_hash": "6070aaca4cde7d26c2d7f2d2c588aa66"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\agenda\\models\\agenda-updated-event.model.ts": {
+    "mtime": 1777343653.1585388,
+    "ast_hash": "67e54a750e5b9d5ced6b45be2b822816",
+    "semantic_hash": "67e54a750e5b9d5ced6b45be2b822816"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\agenda\\models\\agenda.models.ts": {
+    "mtime": 1775759119.3096657,
+    "ast_hash": "e1f90685de3d892925d3b92dbe68ae07",
+    "semantic_hash": "e1f90685de3d892925d3b92dbe68ae07"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\agenda\\models\\cita-manual.model.ts": {
+    "mtime": 1774584416.9327662,
+    "ast_hash": "08582fc9737987b2a8cb2fd8d102b013",
+    "semantic_hash": "08582fc9737987b2a8cb2fd8d102b013"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\agenda\\models\\cita.model.ts": {
+    "mtime": 1774588643.7112617,
+    "ast_hash": "8949eaccceb598687d0ed3ecea7b62b9",
+    "semantic_hash": "8949eaccceb598687d0ed3ecea7b62b9"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\agenda\\models\\disponibilidad.model.ts": {
+    "mtime": 1774584416.9337668,
+    "ast_hash": "9114b93fd1902e16b96279437d5e88f4",
+    "semantic_hash": "9114b93fd1902e16b96279437d5e88f4"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\agenda\\models\\medico-agenda.model.ts": {
+    "mtime": 1774584416.9347665,
+    "ast_hash": "48fa6849aa0752f916bc2a6243d854df",
+    "semantic_hash": "48fa6849aa0752f916bc2a6243d854df"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\agenda\\models\\medico-configuracion.model.ts": {
+    "mtime": 1774584416.9357655,
+    "ast_hash": "8dc5c8e2b75ded1efa8d16cef3afc6f8",
+    "semantic_hash": "8dc5c8e2b75ded1efa8d16cef3afc6f8"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\agenda\\models\\medico.model.ts": {
+    "mtime": 1774588643.7122645,
+    "ast_hash": "c942bdf40220083c5940050026cec193",
+    "semantic_hash": "c942bdf40220083c5940050026cec193"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\agenda\\models\\paciente-busqueda.model.ts": {
+    "mtime": 1774584416.9357655,
+    "ast_hash": "ff228d9a161cd36256f0b66c5eed7965",
+    "semantic_hash": "ff228d9a161cd36256f0b66c5eed7965"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\agenda\\models\\paciente-detalle.model.ts": {
+    "mtime": 1774584416.9367673,
+    "ast_hash": "57620d468370b42f2d502ff9f1966661",
+    "semantic_hash": "57620d468370b42f2d502ff9f1966661"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\agenda\\pages\\agendar-autonomo-page\\agendar-autonomo-page.component.ts": {
+    "mtime": 1775759119.3126857,
+    "ast_hash": "ee7b3ab38e313bd95de441afd165959d",
+    "semantic_hash": "ee7b3ab38e313bd95de441afd165959d"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\agenda\\pages\\lista-citas-page\\lista-citas-page.component.ts": {
+    "mtime": 1779979805.926691,
+    "ast_hash": "bd2a13d20233da73c42a71ff21985f35",
+    "semantic_hash": "bd2a13d20233da73c42a71ff21985f35"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\agenda\\pages\\nueva-cita-page\\nueva-cita-page.component.ts": {
+    "mtime": 1774584416.9409497,
+    "ast_hash": "af751bd33c1c76a928b4b75acc45ce5e",
+    "semantic_hash": "af751bd33c1c76a928b4b75acc45ce5e"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\agenda\\services\\agenda-manual.service.ts": {
+    "mtime": 1774584416.9419491,
+    "ast_hash": "01b9b4317d1300c61035ecde52b75e65",
+    "semantic_hash": "01b9b4317d1300c61035ecde52b75e65"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\agenda\\services\\agenda-sse.ts": {
+    "mtime": 1777343653.1585388,
+    "ast_hash": "9a475dc475e6f3249523c1f20b84c0f6",
+    "semantic_hash": "9a475dc475e6f3249523c1f20b84c0f6"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\agenda\\services\\agenda.service.ts": {
+    "mtime": 1775759119.3136928,
+    "ast_hash": "ebd68608c69f558413638dac9bcfbd84",
+    "semantic_hash": "ebd68608c69f558413638dac9bcfbd84"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\agenda\\services\\medicos-agenda.service.ts": {
+    "mtime": 1774584416.942948,
+    "ast_hash": "07dd5f364a48a6c254525e7e913ea5c3",
+    "semantic_hash": "07dd5f364a48a6c254525e7e913ea5c3"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\agenda\\services\\medicos.service.ts": {
+    "mtime": 1774588643.716262,
+    "ast_hash": "fc98243c4503a807562baa7335d3ad17",
+    "semantic_hash": "fc98243c4503a807562baa7335d3ad17"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\agenda\\services\\pacientes-agenda.service.ts": {
+    "mtime": 1774584416.9439502,
+    "ast_hash": "08047b9e04bb509db9148007a2bffc8c",
+    "semantic_hash": "08047b9e04bb509db9148007a2bffc8c"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\auth\\models\\auth.models.ts": {
+    "mtime": 1777343957.5638106,
+    "ast_hash": "c61572568ff6b3f294c4210e4994a3cc",
+    "semantic_hash": "c61572568ff6b3f294c4210e4994a3cc"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\auth\\pages\\login-page\\login-page.component.ts": {
+    "mtime": 1777343957.564832,
+    "ast_hash": "4860fd409d99ab6c7d5a49893e78c582",
+    "semantic_hash": "4860fd409d99ab6c7d5a49893e78c582"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\auth\\pages\\register-admin-page\\register-admin-page.component.spec.ts": {
+    "mtime": 1774584416.9528027,
+    "ast_hash": "08f5e5a4d854d29972387850f3b13f42",
+    "semantic_hash": "08f5e5a4d854d29972387850f3b13f42"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\auth\\pages\\register-admin-page\\register-admin-page.component.ts": {
+    "mtime": 1774584416.9538107,
+    "ast_hash": "b5561836ccbd1d574614d91c5798352b",
+    "semantic_hash": "b5561836ccbd1d574614d91c5798352b"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\auth\\pages\\register-medico-page\\register-medico-page.component.spec.ts": {
+    "mtime": 1774584416.956813,
+    "ast_hash": "45791be9865fe165959186a0cb381a61",
+    "semantic_hash": "45791be9865fe165959186a0cb381a61"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\auth\\pages\\register-medico-page\\register-medico-page.component.ts": {
+    "mtime": 1777343957.5690656,
+    "ast_hash": "da5d8dbac86fafc21147dd422e9d690a",
+    "semantic_hash": "da5d8dbac86fafc21147dd422e9d690a"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\auth\\pages\\register-page\\register-page.component.spec.ts": {
+    "mtime": 1774584416.9588192,
+    "ast_hash": "6d451700b94d07e89588955ced9562ca",
+    "semantic_hash": "6d451700b94d07e89588955ced9562ca"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\auth\\pages\\register-page\\register-page.component.ts": {
+    "mtime": 1777343957.5700693,
+    "ast_hash": "70b367373e53703f556414681cf32404",
+    "semantic_hash": "70b367373e53703f556414681cf32404"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\auth\\services\\auth.service.ts": {
+    "mtime": 1777343957.5710654,
+    "ast_hash": "1d3d994b097f0ac55551a1cf80613f6a",
+    "semantic_hash": "1d3d994b097f0ac55551a1cf80613f6a"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\configuracion\\configuracion.routes.ts": {
+    "mtime": 1777343957.5720656,
+    "ast_hash": "45dc6fd670a8af301ac4ad5e264294ef",
+    "semantic_hash": "45dc6fd670a8af301ac4ad5e264294ef"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\configuracion\\pages\\configuracion-global-page\\configuracion-global-page.component.ts": {
+    "mtime": 1774584416.9653387,
+    "ast_hash": "dd26b6dcc60c80f3248acc827b19daa5",
+    "semantic_hash": "dd26b6dcc60c80f3248acc827b19daa5"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\configuracion\\pages\\configuracion-medico-page\\configuracion-medico-page.component.ts": {
+    "mtime": 1774584416.9673612,
+    "ast_hash": "a7380e098bf6d364d77c9fc3fb25f2de",
+    "semantic_hash": "a7380e098bf6d364d77c9fc3fb25f2de"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\configuracion\\services\\configuracion-agenda.service.ts": {
+    "mtime": 1774584416.9698799,
+    "ast_hash": "186fd1812b55a0b3075eb39f838a6634",
+    "semantic_hash": "186fd1812b55a0b3075eb39f838a6634"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\configuracion\\services\\Medico.service.ts": {
+    "mtime": 1774584416.9688685,
+    "ast_hash": "cfc02436e1f498662a8fe41eb9de889f",
+    "semantic_hash": "cfc02436e1f498662a8fe41eb9de889f"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\pacientes\\models\\crear-paciente.dto.ts": {
+    "mtime": 1774584416.9709215,
+    "ast_hash": "e5bfccc4fef6957e40aa121224a4ba99",
+    "semantic_hash": "e5bfccc4fef6957e40aa121224a4ba99"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\pacientes\\models\\paciente.model.ts": {
+    "mtime": 1774584416.9709215,
+    "ast_hash": "c44bc02c339c63b4e132d8d147b00418",
+    "semantic_hash": "c44bc02c339c63b4e132d8d147b00418"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\pacientes\\services\\pacientes-service.ts": {
+    "mtime": 1774584416.9719303,
+    "ast_hash": "02df4b75caaa2c743793ee17e7217840",
+    "semantic_hash": "02df4b75caaa2c743793ee17e7217840"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\reportes\\services\\report.service.ts": {
+    "mtime": 1779979805.9286945,
+    "ast_hash": "e7d7924ad12edfed2261ca4651b51085",
+    "semantic_hash": "e7d7924ad12edfed2261ca4651b51085"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\shared\\components\\input-compartido\\input-compartido.component.ts": {
+    "mtime": 1774584416.9749353,
+    "ast_hash": "6987cc6dfa66922b32554cc874ec6828",
+    "semantic_hash": "6987cc6dfa66922b32554cc874ec6828"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\shared\\components\\modal-confirmacion\\modal-confirmacion.component.ts": {
+    "mtime": 1774584416.976932,
+    "ast_hash": "8356dc0aabec114d7b5b2280a49320e3",
+    "semantic_hash": "8356dc0aabec114d7b5b2280a49320e3"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\shared\\constants\\dias-semana.ts": {
+    "mtime": 1774285870.3396635,
+    "ast_hash": "8feda98e7bb803d29af5cfd20c7d23a6",
+    "semantic_hash": "8feda98e7bb803d29af5cfd20c7d23a6"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\shared\\constants\\especialidades.ts": {
+    "mtime": 1774285870.3406692,
+    "ast_hash": "a91cdb9b4c28c8486007fc56fa3c0f6c",
+    "semantic_hash": "a91cdb9b4c28c8486007fc56fa3c0f6c"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\shared\\constants\\roles.ts": {
+    "mtime": 1774285870.341664,
+    "ast_hash": "c2b935c43d70d52b7c90ecf4f62d3713",
+    "semantic_hash": "c2b935c43d70d52b7c90ecf4f62d3713"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\environments\\environment.prod.ts": {
+    "mtime": 1777343957.5725877,
+    "ast_hash": "af997408e1b7d54a763ff01c73780417",
+    "semantic_hash": "af997408e1b7d54a763ff01c73780417"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\environments\\environment.ts": {
+    "mtime": 1777343957.5735939,
+    "ast_hash": "68c163ca5ca8d8efcae6441e3f958b2a",
+    "semantic_hash": "68c163ca5ca8d8efcae6441e3f958b2a"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\01-endpoints-implementados.md": {
+    "mtime": 1774238280.776703,
+    "ast_hash": "d9c7264226b37046973839e825f987ff",
+    "semantic_hash": "d9c7264226b37046973839e825f987ff"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\04-manejo-errores-frontend.md": {
+    "mtime": 1774584416.9166956,
+    "ast_hash": "e2b756a1183196321f86d9e6575782e2",
+    "semantic_hash": "e2b756a1183196321f86d9e6575782e2"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\ARCHITECTURE.md": {
+    "mtime": 1774239662.7865357,
+    "ast_hash": "8edf8e7a1493a2292640c35504619d2d",
+    "semantic_hash": "8edf8e7a1493a2292640c35504619d2d"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\guia-estandares-ui.md": {
+    "mtime": 1774386594.0108328,
+    "ast_hash": "498187661f726b23658ca260f38ad803",
+    "semantic_hash": "498187661f726b23658ca260f38ad803"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\guia-implementacion-sprint1.md": {
+    "mtime": 1774242412.9903746,
+    "ast_hash": "5db5001b923de16055719bf76b6a80bc",
+    "semantic_hash": "5db5001b923de16055719bf76b6a80bc"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\README.md": {
+    "mtime": 1774386601.8197713,
+    "ast_hash": "4770b2beba0b0a328b8943d9fddebdbf",
+    "semantic_hash": "4770b2beba0b0a328b8943d9fddebdbf"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\index.html": {
+    "mtime": 1774385039.7211294,
+    "ast_hash": "fc6565e30146247cfd8757cae908d540",
+    "semantic_hash": "fc6565e30146247cfd8757cae908d540"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\README.md": {
+    "mtime": 1774242326.354344,
+    "ast_hash": "dbea7e598f4ee297327bc9a9a377ed53",
+    "semantic_hash": "dbea7e598f4ee297327bc9a9a377ed53"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\app.html": {
+    "mtime": 1774243083.0799453,
+    "ast_hash": "ca8227d75de4e8e15bf204e2cd477251",
+    "semantic_hash": "ca8227d75de4e8e15bf204e2cd477251"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\README.md": {
+    "mtime": 1774242326.3508227,
+    "ast_hash": "d74e40c5750586157c7e45d75410d416",
+    "semantic_hash": "d74e40c5750586157c7e45d75410d416"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\core\\README.md": {
+    "mtime": 1774242326.3301597,
+    "ast_hash": "ab5c361a5bc4f8d364249057df175863",
+    "semantic_hash": "ab5c361a5bc4f8d364249057df175863"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\core\\layout\\patient-shell\\patient-shell.component.html": {
+    "mtime": 1777343568.3401234,
+    "ast_hash": "b66a57ba641011ecf05b1400d463121b",
+    "semantic_hash": "b66a57ba641011ecf05b1400d463121b"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\core\\layout\\shell\\shell.component.html": {
+    "mtime": 1774384266.2938497,
+    "ast_hash": "08824ae6e304f666b248975e80024677",
+    "semantic_hash": "08824ae6e304f666b248975e80024677"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\core\\layout\\sidebar\\sidebar.component.html": {
+    "mtime": 1779982156.5291715,
+    "ast_hash": "9bb799d5d9e7b23fe55b9eee4daef75e",
+    "semantic_hash": "9bb799d5d9e7b23fe55b9eee4daef75e"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\core\\layout\\topbar\\topbar.component.html": {
+    "mtime": 1776645935.7515714,
+    "ast_hash": "0310f1e6f4f048c35a5866aa49617061",
+    "semantic_hash": "0310f1e6f4f048c35a5866aa49617061"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\core\\utils\\README.md": {
+    "mtime": 1774242326.3311615,
+    "ast_hash": "30b135daf51c86e7e66731d1a7831743",
+    "semantic_hash": "30b135daf51c86e7e66731d1a7831743"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\README.md": {
+    "mtime": 1774242326.3467586,
+    "ast_hash": "a728e82169b7d964747ec08a10964423",
+    "semantic_hash": "a728e82169b7d964747ec08a10964423"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\agenda\\components\\README.md": {
+    "mtime": 1774242326.3322299,
+    "ast_hash": "2dbe23c1f46edc64237a6a1c17dce037",
+    "semantic_hash": "2dbe23c1f46edc64237a6a1c17dce037"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\agenda\\components\\asistente-agendamiento\\README.md": {
+    "mtime": 1774242326.3311615,
+    "ast_hash": "722d0794ff82b610787bf63d44b1d0c1",
+    "semantic_hash": "722d0794ff82b610787bf63d44b1d0c1"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\agenda\\components\\buscador-citas\\README.md": {
+    "mtime": 1774242326.331683,
+    "ast_hash": "4ae8ff280fec1f86fbd074b3b3c89ebf",
+    "semantic_hash": "4ae8ff280fec1f86fbd074b3b3c89ebf"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\agenda\\components\\formulario-paciente\\formulario-paciente.component.html": {
+    "mtime": 1774584416.927719,
+    "ast_hash": "c2de015dfb973b21e1b017b963df06cf",
+    "semantic_hash": "c2de015dfb973b21e1b017b963df06cf"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\agenda\\components\\formulario-paciente\\README.md": {
+    "mtime": 1774242326.331683,
+    "ast_hash": "b64f37d44ee4ba5d2c69e5c0540888ff",
+    "semantic_hash": "b64f37d44ee4ba5d2c69e5c0540888ff"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\agenda\\components\\selector-horario\\README.md": {
+    "mtime": 1774242326.3322299,
+    "ast_hash": "f54b9f5608b1479f144d4fc514f14f27",
+    "semantic_hash": "f54b9f5608b1479f144d4fc514f14f27"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\agenda\\components\\selector-horario\\selector-horario.component.html": {
+    "mtime": 1774584416.9307644,
+    "ast_hash": "04822b6a2dd557ee38d943fd6af4f784",
+    "semantic_hash": "04822b6a2dd557ee38d943fd6af4f784"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\agenda\\components\\tabla-citas\\README.md": {
+    "mtime": 1774242326.3322299,
+    "ast_hash": "cea300cd4e8af641a02dbc30fa771f8b",
+    "semantic_hash": "cea300cd4e8af641a02dbc30fa771f8b"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\agenda\\models\\README.md": {
+    "mtime": 1774242326.3332355,
+    "ast_hash": "a43bf63be902bc95ec1a0606afd60b0e",
+    "semantic_hash": "a43bf63be902bc95ec1a0606afd60b0e"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\agenda\\pages\\README.md": {
+    "mtime": 1774242326.3342357,
+    "ast_hash": "97b56c65fa154f0fdb5fb86049d93209",
+    "semantic_hash": "97b56c65fa154f0fdb5fb86049d93209"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\agenda\\pages\\agendar-autonomo-page\\agendar-autonomo-page.component.html": {
+    "mtime": 1775759119.3111708,
+    "ast_hash": "3c04f023b42f947243e68e9fa286758c",
+    "semantic_hash": "3c04f023b42f947243e68e9fa286758c"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\agenda\\pages\\lista-citas-page\\lista-citas-page.component.html": {
+    "mtime": 1779979805.9256918,
+    "ast_hash": "c300ae3c8cb0fe800ec3592452d522a3",
+    "semantic_hash": "c300ae3c8cb0fe800ec3592452d522a3"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\agenda\\pages\\nueva-cita-page\\nueva-cita-page.component.html": {
+    "mtime": 1774584416.9409497,
+    "ast_hash": "eb140f83fa4b2a05e2c38bbf32b0ed10",
+    "semantic_hash": "eb140f83fa4b2a05e2c38bbf32b0ed10"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\agenda\\pages\\nueva-cita-page\\README.md": {
+    "mtime": 1774242326.3342357,
+    "ast_hash": "8b74608ce5af25c3c84e7acb429e941b",
+    "semantic_hash": "8b74608ce5af25c3c84e7acb429e941b"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\agenda\\pages\\reagendar-page\\README.md": {
+    "mtime": 1774242326.3342357,
+    "ast_hash": "b36ea512c448d7888ed4b59d8d7514a6",
+    "semantic_hash": "b36ea512c448d7888ed4b59d8d7514a6"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\agenda\\services\\README.md": {
+    "mtime": 1774242326.3352356,
+    "ast_hash": "3b4b5a950986bbbccd994416984f63f9",
+    "semantic_hash": "3b4b5a950986bbbccd994416984f63f9"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\agenda\\store\\README.md": {
+    "mtime": 1774242326.3352356,
+    "ast_hash": "423335d6e564a0d37f46f58163219e62",
+    "semantic_hash": "423335d6e564a0d37f46f58163219e62"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\auditoria\\README.md": {
+    "mtime": 1774242326.337236,
+    "ast_hash": "d64380554d44406c0601e7778aad7151",
+    "semantic_hash": "d64380554d44406c0601e7778aad7151"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\auditoria\\components\\README.md": {
+    "mtime": 1774242326.3352356,
+    "ast_hash": "0b668efd8764e5a48479b49f8a911039",
+    "semantic_hash": "0b668efd8764e5a48479b49f8a911039"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\auditoria\\models\\README.md": {
+    "mtime": 1774242326.3362362,
+    "ast_hash": "514f3c8b5f36d87e76543815179fd27c",
+    "semantic_hash": "514f3c8b5f36d87e76543815179fd27c"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\auditoria\\pages\\README.md": {
+    "mtime": 1774242326.3362362,
+    "ast_hash": "a84b818c2c07787e293bdb571231a640",
+    "semantic_hash": "a84b818c2c07787e293bdb571231a640"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\auditoria\\pages\\auditoria-page\\README.md": {
+    "mtime": 1774242326.3362362,
+    "ast_hash": "fbb7d2c76d19d9114d5e88e64cc0831b",
+    "semantic_hash": "fbb7d2c76d19d9114d5e88e64cc0831b"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\auditoria\\services\\README.md": {
+    "mtime": 1774242326.337236,
+    "ast_hash": "9d703f7886286aa4799b4f2a0186abb7",
+    "semantic_hash": "9d703f7886286aa4799b4f2a0186abb7"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\auditoria\\store\\README.md": {
+    "mtime": 1774242326.337236,
+    "ast_hash": "e643e073ab6db10407aff6f41dffdd96",
+    "semantic_hash": "e643e073ab6db10407aff6f41dffdd96"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\auth\\pages\\login-page\\login-page.component.html": {
+    "mtime": 1774584416.9489493,
+    "ast_hash": "a4fc4330cce8a03f81c324d1b3e7cf89",
+    "semantic_hash": "a4fc4330cce8a03f81c324d1b3e7cf89"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\auth\\pages\\register-admin-page\\register-admin-page.component.html": {
+    "mtime": 1774584416.9512908,
+    "ast_hash": "288f4b1bd6c8b7ed6960212173f98a1b",
+    "semantic_hash": "288f4b1bd6c8b7ed6960212173f98a1b"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\auth\\pages\\register-medico-page\\register-medico-page.component.html": {
+    "mtime": 1774584416.9548144,
+    "ast_hash": "a849e2e4fe3b507830f64b1a744668f6",
+    "semantic_hash": "a849e2e4fe3b507830f64b1a744668f6"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\auth\\pages\\register-page\\register-page.component.html": {
+    "mtime": 1774584416.9588192,
+    "ast_hash": "a6138baeee92b444d3134f160bd8efef",
+    "semantic_hash": "a6138baeee92b444d3134f160bd8efef"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\configuracion\\README.md": {
+    "mtime": 1774242326.3392375,
+    "ast_hash": "dddd418b3cbef217951e0998630c026b",
+    "semantic_hash": "dddd418b3cbef217951e0998630c026b"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\configuracion\\components\\README.md": {
+    "mtime": 1774242326.337236,
+    "ast_hash": "b318cb44b6c9199fceecd532566e39c4",
+    "semantic_hash": "b318cb44b6c9199fceecd532566e39c4"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\configuracion\\models\\README.md": {
+    "mtime": 1774242326.3382404,
+    "ast_hash": "4d08f07489811a3ae692b5dc3fc5cbee",
+    "semantic_hash": "4d08f07489811a3ae692b5dc3fc5cbee"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\configuracion\\pages\\README.md": {
+    "mtime": 1774242326.3392375,
+    "ast_hash": "e7c1c5c0dc3293ac42b50234730584a0",
+    "semantic_hash": "e7c1c5c0dc3293ac42b50234730584a0"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\configuracion\\pages\\configuracion-global-page\\configuracion-global-page.component.html": {
+    "mtime": 1774584416.9643354,
+    "ast_hash": "3e6e07c91e01d6b84f2b8a58fbf500f2",
+    "semantic_hash": "3e6e07c91e01d6b84f2b8a58fbf500f2"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\configuracion\\pages\\configuracion-medico-page\\configuracion-medico-page.component.html": {
+    "mtime": 1774584416.9673612,
+    "ast_hash": "2d8f91694a1839553b4a7dfc1fbf273e",
+    "semantic_hash": "2d8f91694a1839553b4a7dfc1fbf273e"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\configuracion\\services\\README.md": {
+    "mtime": 1774242326.3392375,
+    "ast_hash": "81c43580ee2907a47bcfcedb5c90d264",
+    "semantic_hash": "81c43580ee2907a47bcfcedb5c90d264"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\configuracion\\store\\README.md": {
+    "mtime": 1774242326.340237,
+    "ast_hash": "60fc48e1e5f50dd73ef9255d15f08fa3",
+    "semantic_hash": "60fc48e1e5f50dd73ef9255d15f08fa3"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\historia-clinica\\README.md": {
+    "mtime": 1774242326.3427536,
+    "ast_hash": "f7f4c7b6fe5f94897848352b7f2d54e6",
+    "semantic_hash": "f7f4c7b6fe5f94897848352b7f2d54e6"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\historia-clinica\\components\\README.md": {
+    "mtime": 1774242326.340237,
+    "ast_hash": "df5eb67a553385f9f1dfa0d8e81a7769",
+    "semantic_hash": "df5eb67a553385f9f1dfa0d8e81a7769"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\historia-clinica\\components\\formulario-control\\README.md": {
+    "mtime": 1774242326.340237,
+    "ast_hash": "6b0728d47e0fc4417081bb30be16e106",
+    "semantic_hash": "6b0728d47e0fc4417081bb30be16e106"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\historia-clinica\\components\\lista-controles\\README.md": {
+    "mtime": 1774242326.340237,
+    "ast_hash": "63c0b2aa699b18af4477034c1490ba35",
+    "semantic_hash": "63c0b2aa699b18af4477034c1490ba35"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\historia-clinica\\models\\README.md": {
+    "mtime": 1774242326.3417454,
+    "ast_hash": "d32fbbe727ffb81fb190359facff14e3",
+    "semantic_hash": "d32fbbe727ffb81fb190359facff14e3"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\historia-clinica\\pages\\README.md": {
+    "mtime": 1774242326.3417454,
+    "ast_hash": "291c20f6af49f7d166431978eff8e985",
+    "semantic_hash": "291c20f6af49f7d166431978eff8e985"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\historia-clinica\\pages\\historia-clinica-page\\README.md": {
+    "mtime": 1774242326.3417454,
+    "ast_hash": "31346f8f9ffbac7a061696852b3b391b",
+    "semantic_hash": "31346f8f9ffbac7a061696852b3b391b"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\historia-clinica\\services\\README.md": {
+    "mtime": 1774242326.3427536,
+    "ast_hash": "9a4ee9bad1631da377722c08fc101f31",
+    "semantic_hash": "9a4ee9bad1631da377722c08fc101f31"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\historia-clinica\\store\\README.md": {
+    "mtime": 1774242326.3427536,
+    "ast_hash": "b90a67c50c1b691ee6696469bfe44069",
+    "semantic_hash": "b90a67c50c1b691ee6696469bfe44069"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\medicos\\README.md": {
+    "mtime": 1774242326.344759,
+    "ast_hash": "aef07d4465b95ff0d61643143b9beddc",
+    "semantic_hash": "aef07d4465b95ff0d61643143b9beddc"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\medicos\\components\\README.md": {
+    "mtime": 1774242326.3427536,
+    "ast_hash": "25debc04530e7137894dc4468a577b6c",
+    "semantic_hash": "25debc04530e7137894dc4468a577b6c"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\medicos\\models\\README.md": {
+    "mtime": 1774242326.343752,
+    "ast_hash": "5180432e41115a346d90d69257d3bf4e",
+    "semantic_hash": "5180432e41115a346d90d69257d3bf4e"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\medicos\\pages\\README.md": {
+    "mtime": 1774242326.344759,
+    "ast_hash": "e13e8ca96b56f785e4290d88fe5c3c8e",
+    "semantic_hash": "e13e8ca96b56f785e4290d88fe5c3c8e"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\medicos\\pages\\detalle-medico-page\\README.md": {
+    "mtime": 1774242326.343752,
+    "ast_hash": "ebfcb60dacf48e13d56e419c32c9c2ce",
+    "semantic_hash": "ebfcb60dacf48e13d56e419c32c9c2ce"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\medicos\\pages\\lista-medicos-page\\README.md": {
+    "mtime": 1774242326.343752,
+    "ast_hash": "41448f3726131b51d8edec37171881fa",
+    "semantic_hash": "41448f3726131b51d8edec37171881fa"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\medicos\\services\\README.md": {
+    "mtime": 1774242326.344759,
+    "ast_hash": "09d71cafbc8f2db99402284980df3653",
+    "semantic_hash": "09d71cafbc8f2db99402284980df3653"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\medicos\\store\\README.md": {
+    "mtime": 1774242326.3457587,
+    "ast_hash": "ea0cac930122ca9f786861cb35d8a3e9",
+    "semantic_hash": "ea0cac930122ca9f786861cb35d8a3e9"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\pacientes\\README.md": {
+    "mtime": 1774242326.3467586,
+    "ast_hash": "fc92ff7f8f9abb454f3a6dce676d34af",
+    "semantic_hash": "fc92ff7f8f9abb454f3a6dce676d34af"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\pacientes\\components\\README.md": {
+    "mtime": 1774242326.3457587,
+    "ast_hash": "6f66e8655f74f97025f065b9b6f0ea92",
+    "semantic_hash": "6f66e8655f74f97025f065b9b6f0ea92"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\pacientes\\models\\README.md": {
+    "mtime": 1774242326.3457587,
+    "ast_hash": "bc2fa4b3000d849a66e3eeaf2f48b41a",
+    "semantic_hash": "bc2fa4b3000d849a66e3eeaf2f48b41a"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\pacientes\\pages\\README.md": {
+    "mtime": 1774242326.3467586,
+    "ast_hash": "ddf625e8ffe4667d060f5bc17a95e2ff",
+    "semantic_hash": "ddf625e8ffe4667d060f5bc17a95e2ff"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\pacientes\\pages\\buscar-paciente-page\\README.md": {
+    "mtime": 1774242326.3457587,
+    "ast_hash": "bb3011b8a023a80a99d5e1e501a309ce",
+    "semantic_hash": "bb3011b8a023a80a99d5e1e501a309ce"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\pacientes\\services\\README.md": {
+    "mtime": 1774242326.3467586,
+    "ast_hash": "5ceb1b99aea548a8ef6491caea029c6a",
+    "semantic_hash": "5ceb1b99aea548a8ef6491caea029c6a"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\pacientes\\store\\README.md": {
+    "mtime": 1774242326.3467586,
+    "ast_hash": "eb86898327718d151f9a15d08b374116",
+    "semantic_hash": "eb86898327718d151f9a15d08b374116"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\reportes\\README.md": {
+    "mtime": 1774242326.349824,
+    "ast_hash": "a6d5df96f650014e4c4bd965c20c352d",
+    "semantic_hash": "a6d5df96f650014e4c4bd965c20c352d"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\reportes\\components\\README.md": {
+    "mtime": 1774242326.3488157,
+    "ast_hash": "0ace6c4eb6a0370b9a8a1814b6a502a4",
+    "semantic_hash": "0ace6c4eb6a0370b9a8a1814b6a502a4"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\reportes\\components\\grafica-citas-mes\\README.md": {
+    "mtime": 1774242326.3467586,
+    "ast_hash": "9fb641ba3fbf91a04297e64ca743f4aa",
+    "semantic_hash": "9fb641ba3fbf91a04297e64ca743f4aa"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\reportes\\components\\grafica-especialidad\\README.md": {
+    "mtime": 1774242326.3482654,
+    "ast_hash": "26d5a707a2c27ad031ea7e365b5d2cdc",
+    "semantic_hash": "26d5a707a2c27ad031ea7e365b5d2cdc"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\reportes\\components\\grafica-por-medico\\README.md": {
+    "mtime": 1774242326.3482654,
+    "ast_hash": "a4cf660382026eb5bad2697b820b6e86",
+    "semantic_hash": "a4cf660382026eb5bad2697b820b6e86"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\reportes\\models\\README.md": {
+    "mtime": 1774242326.3488157,
+    "ast_hash": "da7c95ea8cb5e8c80fcc1dfdfa9a2ebb",
+    "semantic_hash": "da7c95ea8cb5e8c80fcc1dfdfa9a2ebb"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\reportes\\pages\\README.md": {
+    "mtime": 1774242326.3488157,
+    "ast_hash": "84325028da9c5401d4e6c920a87906b0",
+    "semantic_hash": "84325028da9c5401d4e6c920a87906b0"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\reportes\\pages\\reportes-page\\README.md": {
+    "mtime": 1774242326.349824,
+    "ast_hash": "517077c6eb2cbb0c040f2617fca796a6",
+    "semantic_hash": "517077c6eb2cbb0c040f2617fca796a6"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\reportes\\services\\README.md": {
+    "mtime": 1774242326.349824,
+    "ast_hash": "eb2e5b5935c616314ed373964e181cb0",
+    "semantic_hash": "eb2e5b5935c616314ed373964e181cb0"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\features\\reportes\\store\\README.md": {
+    "mtime": 1774242326.349824,
+    "ast_hash": "8313ddae3585f2aa45f9fe118f696a7e",
+    "semantic_hash": "8313ddae3585f2aa45f9fe118f696a7e"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\shared\\README.md": {
+    "mtime": 1774242326.3533378,
+    "ast_hash": "9ecdd86f5a85af6839732ec8662efbb5",
+    "semantic_hash": "9ecdd86f5a85af6839732ec8662efbb5"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\shared\\components\\README.md": {
+    "mtime": 1774242326.3518224,
+    "ast_hash": "83eedcfd3d70bc6493aaf98d809bee21",
+    "semantic_hash": "83eedcfd3d70bc6493aaf98d809bee21"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\shared\\components\\badge-estado\\README.md": {
+    "mtime": 1774242326.3508227,
+    "ast_hash": "f485637a14472e84c2058d99004055bc",
+    "semantic_hash": "f485637a14472e84c2058d99004055bc"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\shared\\components\\empty-state\\README.md": {
+    "mtime": 1774242326.3508227,
+    "ast_hash": "7e5fe6c498423cb4dfb36e43ac5654ba",
+    "semantic_hash": "7e5fe6c498423cb4dfb36e43ac5654ba"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\shared\\components\\input-compartido\\input-compartido.component.html": {
+    "mtime": 1774584416.9739304,
+    "ast_hash": "ca963a92f046e2ff4101a4473fae2b9b",
+    "semantic_hash": "ca963a92f046e2ff4101a4473fae2b9b"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\shared\\components\\modal-confirmacion\\modal-confirmacion.component.html": {
+    "mtime": 1774584416.976932,
+    "ast_hash": "c9e72dd5523533a0de1ad0a615792177",
+    "semantic_hash": "c9e72dd5523533a0de1ad0a615792177"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\shared\\components\\modal-confirmacion\\README.md": {
+    "mtime": 1774242326.3518224,
+    "ast_hash": "79820bf3e5a99b22b5d12f37d8c53c42",
+    "semantic_hash": "79820bf3e5a99b22b5d12f37d8c53c42"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\shared\\components\\tabla-datos\\README.md": {
+    "mtime": 1774242326.352329,
+    "ast_hash": "1e55b538c7e87604ce48c81e3517f271",
+    "semantic_hash": "1e55b538c7e87604ce48c81e3517f271"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\shared\\constants\\README.md": {
+    "mtime": 1774285870.3386624,
+    "ast_hash": "d7e108305cb06579c7db938d2fe49e48",
+    "semantic_hash": "d7e108305cb06579c7db938d2fe49e48"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\shared\\directives\\README.md": {
+    "mtime": 1774242326.352329,
+    "ast_hash": "1fdb808216869bf05d9bf5ecfcdd5f5d",
+    "semantic_hash": "1fdb808216869bf05d9bf5ecfcdd5f5d"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\shared\\pipes\\README.md": {
+    "mtime": 1774242326.352329,
+    "ast_hash": "0956be40b5f822fb983814ced25f571a",
+    "semantic_hash": "0956be40b5f822fb983814ced25f571a"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\shared\\ui\\README.md": {
+    "mtime": 1774242326.3533378,
+    "ast_hash": "fec62e844f44545a70efa6d3d5b38e03",
+    "semantic_hash": "fec62e844f44545a70efa6d3d5b38e03"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\app\\shared\\validators\\README.md": {
+    "mtime": 1774242326.3533378,
+    "ast_hash": "6f1a7567cf9b7eaf24defceadf482a65",
+    "semantic_hash": "6f1a7567cf9b7eaf24defceadf482a65"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\environments\\README.md": {
+    "mtime": 1774242326.354344,
+    "ast_hash": "22d2c82f7e4c4668da033923c8fa2410",
+    "semantic_hash": "22d2c82f7e4c4668da033923c8fa2410"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\styles\\README.md": {
+    "mtime": 1774242326.3553443,
+    "ast_hash": "a20b5735e448ccbcb21cde286d184ff8",
+    "semantic_hash": "a20b5735e448ccbcb21cde286d184ff8"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\assets\\branding\\logo\\piedrazul-logo.svg": {
+    "mtime": 1779981881.0351386,
+    "ast_hash": "b7fc84426bf1dc21df84b60c82363715",
+    "semantic_hash": "b7fc84426bf1dc21df84b60c82363715"
+  },
+  "C:\\Users\\jhonn\\OneDrive\\Almacen\\Repositorios\\Proyecto-Software-III\\piedrazul-fronted\\src\\assets\\images\\fondo.png": {
+    "mtime": 1774584416.9864688,
+    "ast_hash": "3db3d524cf55cbb2f47ad2ffa99dd9b3",
+    "semantic_hash": "3db3d524cf55cbb2f47ad2ffa99dd9b3"
+  }
+}

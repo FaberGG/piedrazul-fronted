@@ -1,5 +1,6 @@
+import { CommonModule } from '@angular/common';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { Component, HostListener, OnInit, computed, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal, HostListener, ElementRef, EventEmitter, Output } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter, startWith } from 'rxjs';
 
@@ -7,18 +8,20 @@ import { AuthService } from '../../auth/auth.service';
 
 @Component({
   selector: 'app-topbar',
+  imports: [CommonModule],
   templateUrl: './topbar.component.html',
   styleUrl: './topbar.component.css'
 })
-export class TopbarComponent implements OnInit {
-  private static readonly COMPACT_SCROLL_IN = 42;
-  private static readonly COMPACT_SCROLL_OUT = 12;
+export class TopbarComponent {
 
-  readonly isCompact = signal(false);
+  @Output() readonly toggleSidebar = new EventEmitter<void>();
 
   readonly authService = inject(AuthService);
   private readonly router = inject(Router);
   private readonly activatedRoute = inject(ActivatedRoute);
+  private readonly elementRef = inject(ElementRef);
+
+  readonly isMenuOpen = signal(false);
 
   private readonly navigationTick = toSignal(
     this.router.events.pipe(
@@ -53,33 +56,34 @@ export class TopbarComponent implements OnInit {
       .join('');
   });
 
-  ngOnInit(): void {
-    this.syncCompactState(window.scrollY);
+  readonly userEmail = computed(() => {
+    return this.authService.currentUser()?.username ?? '';
+  });
+
+  toggleMenu(): void {
+    this.isMenuOpen.update(open => !open);
   }
 
-  @HostListener('window:scroll')
-  onWindowScroll(): void {
-    this.syncCompactState(window.scrollY);
+  emitToggleSidebar(): void {
+    this.toggleSidebar.emit();
   }
 
-  @HostListener('window:resize')
-  onWindowResize(): void {
-    this.syncCompactState(window.scrollY);
+  closeMenu(): void {
+    this.isMenuOpen.set(false);
   }
 
-  private syncCompactState(scrollTop: number): void {
-    const compactNow = this.isCompact();
+  handleLogout(): void {
+    this.closeMenu();
+    this.authService.logout();
+  }
 
-    if (!compactNow && scrollTop >= TopbarComponent.COMPACT_SCROLL_IN) {
-      this.isCompact.set(true);
-      return;
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent): void {
+    const target = event.target as HTMLElement;
+    if (this.isMenuOpen() && !this.elementRef.nativeElement.contains(target)) {
+      this.closeMenu();
     }
-
-    if (compactNow && scrollTop <= TopbarComponent.COMPACT_SCROLL_OUT) {
-      this.isCompact.set(false);
-    }
   }
-
 
   private getLeafRoute(route: ActivatedRoute): ActivatedRoute {
     let current = route;

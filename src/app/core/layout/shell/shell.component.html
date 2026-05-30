@@ -1,7 +1,7 @@
 <div class="shell">
-  <app-sidebar class="shell__sidebar" />
+  <app-sidebar class="shell__sidebar" [class.sidebar--open]="isSidebarOpen()" />
   <div class="shell__content">
-    <app-topbar class="shell__topbar" />
+    <app-topbar class="shell__topbar" (toggleSidebar)="toggleSidebar()" />
     <main class="shell__main">
       <router-outlet />
     </main>
