@@ -1,4 +1,4 @@
-import { Component, computed, inject } from '@angular/core';
+import { Component, computed, EventEmitter, inject, Input, Output } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
 import { AuthService } from '../../auth/auth.service';
@@ -18,6 +18,12 @@ interface MenuItem {
   styleUrl: './sidebar.component.css'
 })
 export class SidebarComponent {
+
+  @Input() collapsed = false;
+  @Output() readonly toggleSidebar = new EventEmitter<void>();
+
+  readonly horizontalLogo = 'assets/branding/logo/piedrazul-logo.svg';
+  readonly verticalLogo = 'assets/branding/logo/piedrazul-logo-vertical.svg';
 
   private readonly authService = inject(AuthService);
   private readonly items: MenuItem[] = [
@@ -85,6 +91,10 @@ export class SidebarComponent {
 
     return this.items.filter((item) => item.allowedRoles.includes(role));
   });
+
+  emitToggleSidebar(): void {
+    this.toggleSidebar.emit();
+  }
 
 
   logout(): void {

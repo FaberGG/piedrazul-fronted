@@ -1,7 +1,20 @@
 <aside class="sidebar">
   <div class="sidebar__logo">
-    <img src="assets/branding/logo/piedrazul-logo.svg" alt="Logo de la aplicación" class="sidebar__logo-img" />
-    </div>
+    <img
+      [src]="collapsed ? verticalLogo : horizontalLogo"
+      alt="Logo de la aplicación"
+      class="sidebar__logo-img"
+    />
+    <button
+      type="button"
+      class="sidebar__collapse-toggle"
+      (click)="emitToggleSidebar()"
+      [attr.aria-label]="collapsed ? 'Expandir sidebar' : 'Colapsar sidebar'"
+      [attr.aria-expanded]="!collapsed"
+    >
+      <i [class]="collapsed ? 'fa-solid fa-angles-right' : 'fa-solid fa-angles-left'" aria-hidden="true"></i>
+    </button>
+  </div>
 
   <nav class="sidebar__nav" aria-label="Menu principal">
     @for (item of visibleItems(); track item.path) {
@@ -18,14 +31,11 @@
   </nav>
 
   <div class="sidebar__footer" aria-label="Menu secundario">
-   @for (item of utilityItems; track item.label) {
-  <a
-    [routerLink]="item.path"
-    class="sidebar__link sidebar__link--utility"
-  >
-    <i [class]="item.iconClass + ' sidebar__icon'" aria-hidden="true"></i>
-    <span>{{ item.label }}</span>
-  </a>
+    @for (item of utilityItems; track item.label) {
+      <a [routerLink]="item.path" class="sidebar__link sidebar__link--utility">
+        <i [class]="item.iconClass + ' sidebar__icon'" aria-hidden="true"></i>
+        <span>{{ item.label }}</span>
+      </a>
     }
 
     <button type="button" class="sidebar__link sidebar__link--button" (click)="logout()">

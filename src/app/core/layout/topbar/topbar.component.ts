@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { Component, computed, inject, signal, HostListener, ElementRef, EventEmitter, Output } from '@angular/core';
+import { Component, computed, ElementRef, HostListener, inject, signal } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter, startWith } from 'rxjs';
 
@@ -13,8 +13,6 @@ import { AuthService } from '../../auth/auth.service';
   styleUrl: './topbar.component.css'
 })
 export class TopbarComponent {
-
-  @Output() readonly toggleSidebar = new EventEmitter<void>();
 
   readonly authService = inject(AuthService);
   private readonly router = inject(Router);
@@ -64,9 +62,6 @@ export class TopbarComponent {
     this.isMenuOpen.update(open => !open);
   }
 
-  emitToggleSidebar(): void {
-    this.toggleSidebar.emit();
-  }
 
   closeMenu(): void {
     this.isMenuOpen.set(false);
