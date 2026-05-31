@@ -109,6 +109,7 @@
             <th>ESPECIALIDAD</th>
             <th>ESTADO</th>
             <th>OBSERVACIÓN</th>
+            <th>ACCIONES</th>
           </tr>
         </thead>
         <tbody>
@@ -124,6 +125,11 @@
               </span>
             </td>
             <td class="lc-table__obs">{{ cita.observaciones || '' }}</td>
+            <td>
+              @if (cita.estado === 'ATENDIDA') {
+                <button class="btn-reagendar" (click)="reagendarCita(cita.id)">Reagendar</button>
+              }
+            </td>
           </tr>
           }
         </tbody>

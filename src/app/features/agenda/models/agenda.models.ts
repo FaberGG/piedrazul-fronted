@@ -24,3 +24,23 @@ export interface CitaResponse {
   hora: string;
   estado: string;
 }
+
+export interface ReagendarCitaRequest {
+  nuevaFecha: string;
+  nuevaHora: string;
+  motivo: string;
+  medicoNuevoId?: number;
+}
+
+export interface HistorialCambiosCitaResponse {
+  id: number;
+  fechaAnterior: string;
+  horaAnterior: string;
+  medicoAnteriorId: number;
+  fechaNueva: string;
+  horaNueva: string;
+  medicoNuevoId: number;
+  motivo: string;
+  modificadoPor: string;
+  creadoEn: string;
+}
