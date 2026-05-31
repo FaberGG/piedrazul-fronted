@@ -6,6 +6,7 @@ import { catchError, debounceTime, distinctUntilChanged, filter, of, switchMap, 
 
 import { InputCompartidoComponent } from '../../../../shared/components/input-compartido/input-compartido.component';
 import { PacienteFormulario } from '../../models/cita-manual.model';
+import { normalizarNombre } from '../../../../shared/utils/nombre-normalizer';
 import { GeneroPaciente, PacienteDetalle } from '../../models/paciente-detalle.model';
 import { PacienteBusqueda } from '../../models/paciente-busqueda.model';
 import { PacientesAgendaService } from '../../services/pacientes-agenda.service';
@@ -387,6 +388,14 @@ export class FormularioPacienteComponent implements OnChanges {
 
   private normalizarDigitos(value: string): string {
     return value.replace(/\D+/g, '');
+  }
+
+  normalizarNombreAlSalir(campo: 'nombres' | 'apellidos'): void {
+    const control = this.form.controls[campo];
+    const valorNormalizado = normalizarNombre(control.value);
+    if (valorNormalizado !== control.value) {
+      control.setValue(valorNormalizado, { emitEvent: true });
+    }
   }
 }
 

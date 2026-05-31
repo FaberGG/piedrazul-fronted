@@ -4,6 +4,7 @@ import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angula
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { RegisterPacienteRequest } from '../../models/auth.models';
+import { normalizarNombre } from '../../../../shared/utils/nombre-normalizer';
 
 @Component({
   selector: 'app-register-page',
@@ -119,8 +120,8 @@ export class RegisterPageComponent {
   const request: RegisterPacienteRequest = {
     password: this.form.value.password,
     documento: this.form.value.documento,
-    nombres: this.form.value.nombres,
-    apellidos: this.form.value.apellidos,
+    nombres: normalizarNombre(this.form.value.nombres),
+    apellidos: normalizarNombre(this.form.value.apellidos),
     celular: this.form.value.celular,
     genero: this.form.value.genero,
     fechaNacimiento: this.form.value.fechaNacimiento,
