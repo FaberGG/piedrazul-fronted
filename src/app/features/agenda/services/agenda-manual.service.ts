@@ -9,6 +9,7 @@ import {
   CrearCitaManualRequest,
   CrearCitaPrioridadRequest
 } from '../models/cita-manual.model';
+import { HistorialCambiosCitaResponse, ReagendarCitaRequest } from '../models/agenda.models';
 import { DisponibilidadGlobal } from '../models/disponibilidad.model';
 
 @Injectable({ providedIn: 'root' })
@@ -37,6 +38,14 @@ export class AgendaManualService {
 
   abrirEspacioPrioritario(payload: CrearCitaPrioridadRequest): Observable<CitaManualResponse> {
     return this.http.post<CitaManualResponse>(`${environment.apiUrl}/citas/prioridad`, payload);
+  }
+
+  reagendarCita(citaId: number, request: ReagendarCitaRequest): Observable<CitaManualResponse> {
+    return this.http.patch<CitaManualResponse>(`${environment.apiUrl}/citas/${citaId}/reagendar`, request);
+  }
+
+  obtenerHistorialCita(citaId: number): Observable<HistorialCambiosCitaResponse[]> {
+    return this.http.get<HistorialCambiosCitaResponse[]>(`${environment.apiUrl}/citas/${citaId}/historial`);
   }
 }
 

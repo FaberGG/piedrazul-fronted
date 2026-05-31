@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AgendaService } from '../../services/agenda.service';
 import { MedicosService } from '../../services/medicos.service';
 import { ReporteService } from '../../../reportes/services/report.service';
@@ -27,6 +28,7 @@ export class ListaCitasPageComponent implements OnInit {
   private readonly agendaService = inject(AgendaService);
   private readonly medicosService = inject(MedicosService);
   private readonly reporteService = inject(ReporteService);
+  private readonly router = inject(Router);
 
   medicos = signal<MedicoModel[]>([]);
   agenda = signal<AgendaModel | null>(null);
@@ -158,6 +160,10 @@ export class ListaCitasPageComponent implements OnInit {
         this.errorMensaje.set('Error al descargar el archivo. Intenta de nuevo.');
       }
     });
+  }
+
+  reagendarCita(citaId: number): void {
+    this.router.navigate(['/agenda/reagendar', citaId]);
   }
 
   trackByCita(_: number, cita: CitaModel): number { return cita.id; }

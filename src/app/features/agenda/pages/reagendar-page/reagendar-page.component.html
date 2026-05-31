@@ -1,0 +1,131 @@
+<div class="rp-wrapper">
+
+  <div class="rp-header">
+    <button class="rp-back" type="button" (click)="volver()">← Volver</button>
+    <h1 class="rp-title">Reagendar cita</h1>
+    <p class="rp-subtitle">Selecciona nueva fecha y horario para la cita de seguimiento</p>
+  </div>
+
+  @if (error()) {
+    <div class="rp-alert">{{ error() }}</div>
+  }
+
+  <!-- Confirmación exitosa -->
+  @if (citaReagendada(); as cita) {
+    <div class="rp-card rp-card--success">
+      <p class="rp-success-title">Cita reagendada exitosamente</p>
+      <div class="rp-detail-row"><span>Médico</span><span>{{ cita.medicoNombre }}</span></div>
+      <div class="rp-detail-row"><span>Nueva fecha</span><span>{{ formatFecha(cita.fecha) }}</span></div>
+      <div class="rp-detail-row"><span>Nueva hora</span><span>{{ formatHora(cita.hora) }}</span></div>
+      <div class="rp-detail-row"><span>Estado</span><span>{{ cita.estado }}</span></div>
+    </div>
+  }
+
+  <!-- Formulario -->
+  @if (!citaReagendada()) {
+    <div class="rp-card" [formGroup]="form">
+
+      <!-- Médico -->
+      <section class="rp-section">
+        <h2 class="rp-section-title">Médico / Terapista <span class="rp-required">*</span></h2>
+        <select class="rp-control" formControlName="medicoId"
+                [class.rp-control--error]="isInvalid('medicoId')"
+                (change)="onMedicoOFechaChange()">
+          <option [value]="null">Selecciona un médico o terapista</option>
+          @for (m of medicos(); track m.id) {
+            <option [value]="m.id">{{ m.nombresCompletos }} — {{ m.especialidad }}</option>
+          }
+        </select>
+        @if (isInvalid('medicoId')) {
+          <span class="rp-error-msg">Selecciona un médico o terapista.</span>
+        }
+      </section>
+
+      <!-- Fecha -->
+      <section class="rp-section">
+        <h2 class="rp-section-title">Nueva fecha <span class="rp-required">*</span></h2>
+        <input type="date" class="rp-control" formControlName="fecha"
+               [class.rp-control--error]="isInvalid('fecha')"
+               placeholder="AAAA-MM-DD"
+               (change)="onMedicoOFechaChange()" />
+        @if (isInvalid('fecha')) {
+          <span class="rp-error-msg">Selecciona una fecha.</span>
+        }
+      </section>
+
+      <!-- Franjas -->
+      <section class="rp-section">
+        <h2 class="rp-section-title">Horario disponible <span class="rp-required">*</span></h2>
+        @if (cargandoFranjas()) {
+          <p class="rp-hint">Cargando horarios…</p>
+        }
+        @if (!cargandoFranjas() && franjasDisponibles().length === 0 && form.value.fecha) {
+          <p class="rp-hint">No hay horarios disponibles para esta fecha.</p>
+        }
+        <div class="rp-franjas">
+          @for (franja of franjasDisponibles(); track franja) {
+            <button type="button" class="rp-franja"
+                    [class.rp-franja--selected]="form.value.hora === franja"
+                    (click)="seleccionarFranja(franja)">
+              {{ formatHora(franja) }}
+            </button>
+          }
+        </div>
+        @if (isInvalid('hora') && franjasDisponibles().length > 0) {
+          <span class="rp-error-msg">Selecciona un horario disponible.</span>
+        }
+      </section>
+
+      <!-- Motivo -->
+      <section class="rp-section">
+        <h2 class="rp-section-title">Motivo del reagendamiento <span class="rp-required">*</span></h2>
+        <textarea class="rp-control rp-textarea" formControlName="motivo" rows="3"
+                  [class.rp-control--error]="isInvalid('motivo')"
+                  placeholder="Describe el motivo del reagendamiento (ej: seguimiento post-consulta, control periódico)…"></textarea>
+        @if (isInvalid('motivo')) {
+          <span class="rp-error-msg">El motivo es obligatorio y debe tener al menos 5 caracteres.</span>
+        }
+      </section>
+
+      <div class="rp-actions">
+        <button type="button" class="rp-btn rp-btn--secondary" (click)="volver()">Cancelar</button>
+        <button type="button" class="rp-btn rp-btn--primary"
+                [disabled]="enviando()"
+                (click)="reagendar()">
+          @if (enviando()) { <span class="rp-spinner"></span> Reagendando… }
+          @else { Confirmar reagendamiento }
+        </button>
+      </div>
+
+    </div>
+  }
+
+  <!-- Historial de cambios -->
+  @if (historial().length > 0) {
+    <div class="rp-card">
+      <h2 class="rp-section-title">Historial de reagendamientos</h2>
+      <div class="rp-historial">
+        @for (h of historial(); track h.id) {
+          <div class="rp-historial-item">
+            <div class="rp-historial-row">
+              <span class="rp-historial-label">Fecha anterior</span>
+              <span>{{ formatFecha(h.fechaAnterior) }} {{ formatHora(h.horaAnterior) }}</span>
+            </div>
+            <div class="rp-historial-row">
+              <span class="rp-historial-label">Nueva fecha</span>
+              <span>{{ formatFecha(h.fechaNueva) }} {{ formatHora(h.horaNueva) }}</span>
+            </div>
+            <div class="rp-historial-row">
+              <span class="rp-historial-label">Motivo</span>
+              <span>{{ h.motivo }}</span>
+            </div>
+            <div class="rp-historial-row rp-historial-row--meta">
+              <span>{{ h.creadoEn | date:'dd/MM/yyyy HH:mm' }}</span>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  }
+
+</div>

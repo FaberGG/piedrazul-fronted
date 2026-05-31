@@ -4,7 +4,8 @@ import { roleGuard } from '../../core/guards/role.guard';
 import { ROLES } from '../../shared/constants/roles';
 import { AgendarAutonomoPageComponent } from './pages/agendar-autonomo-page/agendar-autonomo-page.component';
 import { ListaCitasPageComponent } from './pages/lista-citas-page/lista-citas-page.component';
-import { NuevaCitaPageComponent } from './pages/nueva-cita-page/nueva-cita-page.component'; // Importar de Right
+import { NuevaCitaPageComponent } from './pages/nueva-cita-page/nueva-cita-page.component';
+import { ReagendarPageComponent } from './pages/reagendar-page/reagendar-page.component';
 
 export const agendaStaffRoutes: Routes = [
   {
@@ -30,6 +31,16 @@ export const agendaStaffRoutes: Routes = [
       roles: [ROLES.AGENDADOR, ROLES.MEDICO],
       sectionTitle: 'Agendar Cita',
       sectionDescription: 'Registra una nueva cita con datos del paciente y horario disponible.'
+    }
+  },
+  {
+    path: 'reagendar/:citaId',
+    component: ReagendarPageComponent,
+    canActivate: [roleGuard],
+    data: {
+      roles: [ROLES.AGENDADOR, ROLES.MEDICO, ROLES.TERAPISTA, ROLES.ADMIN],
+      sectionTitle: 'Reagendar Cita',
+      sectionDescription: 'Programa una cita de seguimiento para una cita ya atendida.'
     }
   }
 ];
