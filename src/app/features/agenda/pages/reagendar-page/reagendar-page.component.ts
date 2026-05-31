@@ -8,6 +8,7 @@ import { AgendaService } from '../../services/agenda.service';
 import { MedicosService } from '../../services/medicos.service';
 import { CitaManualResponse } from '../../models/cita-manual.model';
 import { HistorialCambiosCitaResponse, ReagendarCitaRequest } from '../../models/agenda.models';
+import { CitaDetalleModel } from '../../models/cita.model';
 import { MedicoModel } from '../../models/medico.model';
 
 @Component({
@@ -26,6 +27,7 @@ export class ReagendarPageComponent implements OnInit {
   private readonly medicosService = inject(MedicosService);
 
   citaId = signal<number | null>(null);
+  citaDetalle = signal<CitaDetalleModel | null>(null);
   medicos = signal<MedicoModel[]>([]);
   franjasDisponibles = signal<string[]>([]);
   citaReagendada = signal<CitaManualResponse | null>(null);
@@ -49,6 +51,10 @@ export class ReagendarPageComponent implements OnInit {
     this.medicosService.listarActivos().subscribe({
       next: (data) => this.medicos.set(data),
       error: () => this.error.set('No se pudo cargar la lista de médicos.')
+    });
+    this.agendaManualService.obtenerDetalleCita(id).subscribe({
+      next: (d) => this.citaDetalle.set(d),
+      error: () => {}
     });
     this.agendaManualService.obtenerHistorialCita(id).subscribe({
       next: (h) => this.historial.set(h),

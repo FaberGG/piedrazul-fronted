@@ -116,6 +116,32 @@
       }
     }
 
+    <!-- Historial de reagendamientos -->
+    @if (historial().length > 0) {
+      <section class="dp-section">
+        <h3 class="dp-section-title">Historial de reagendamientos</h3>
+        @for (h of historial(); track h.id) {
+          <div class="dp-historial-item">
+            <div class="dp-row">
+              <span class="dp-label">Anterior</span>
+              <span>{{ formatFecha(h.fechaAnterior) }} {{ formatHora(h.horaAnterior) }}</span>
+            </div>
+            <div class="dp-row">
+              <span class="dp-label">Nuevo</span>
+              <span>{{ formatFecha(h.fechaNueva) }} {{ formatHora(h.horaNueva) }}</span>
+            </div>
+            <div class="dp-row">
+              <span class="dp-label">Motivo</span>
+              <span>{{ h.motivo }}</span>
+            </div>
+            <div class="dp-row dp-row--meta">
+              <span>{{ h.creadoEn | date:'dd/MM/yyyy HH:mm' }}</span>
+            </div>
+          </div>
+        }
+      </section>
+    }
+
     <!-- Modal de confirmación -->
     <app-modal-confirmacion
       [visible]="mostrarModal()"

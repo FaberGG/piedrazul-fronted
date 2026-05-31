@@ -6,6 +6,28 @@
     <p class="rp-subtitle">Selecciona nueva fecha y horario para la cita de seguimiento</p>
   </div>
 
+  <!-- Info del paciente y cita original -->
+  @if (citaDetalle(); as d) {
+    <div class="rp-card rp-card--info">
+      <h2 class="rp-section-title">Paciente</h2>
+      <div class="rp-info-row"><span class="rp-info-name">{{ d.pacienteNombre }}</span></div>
+      <div class="rp-info-row">
+        <span class="rp-info-label">Documento</span>
+        <span>{{ d.pacienteDocumento }}</span>
+      </div>
+      @if (d.pacienteCelular) {
+        <div class="rp-info-row">
+          <span class="rp-info-label">Celular</span>
+          <span>{{ d.pacienteCelular }}</span>
+        </div>
+      }
+      <div class="rp-info-row rp-info-row--cita">
+        <span class="rp-info-label">Cita original</span>
+        <span>{{ formatFecha(d.fecha) }} · {{ formatHora(d.hora) }} · {{ d.estado }}</span>
+      </div>
+    </div>
+  }
+
   @if (error()) {
     <div class="rp-alert">{{ error() }}</div>
   }

@@ -18,6 +18,7 @@ import { AuthService } from '../../../../core/auth/auth.service';
 import { ModalConfirmacionComponent } from '../../../../shared/components/modal-confirmacion/modal-confirmacion.component';
 import { CitaDetalleModel, ActualizarCitaRequest } from '../../models/cita.model';
 import { CitaManualResponse } from '../../models/cita-manual.model';
+import { HistorialCambiosCitaResponse } from '../../models/agenda.models';
 
 @Component({
   selector: 'app-detalle-cita-panel',
@@ -36,6 +37,7 @@ export class DetalleCitaPanelComponent implements OnChanges {
   private readonly router = inject(Router);
 
   detalle = signal<CitaDetalleModel | null>(null);
+  historial = signal<HistorialCambiosCitaResponse[]>([]);
   cargando = signal(false);
   guardando = signal(false);
   error = signal<string | null>(null);
@@ -60,7 +62,7 @@ export class DetalleCitaPanelComponent implements OnChanges {
 
   estadosValidos = computed(() => {
     const estado = this.detalle()?.estado;
-    if (estado === 'PROGRAMADA' || estado === 'CONFIRMADA') {
+    if (estado === 'PROGRAMADA') {
       return ['ATENDIDA', 'CANCELADA'];
     }
     return [];
@@ -75,10 +77,10 @@ export class DetalleCitaPanelComponent implements OnChanges {
   private cargarDetalle(): void {
     this.cargando.set(true);
     this.error.set(null);
+    this.historial.set([]);
     this.service.obtenerDetalleCita(this.citaId!).subscribe({
       next: (d) => {
         this.detalle.set(d);
-        // Pre-fill editable fields
         const [nombres, ...apellidosParts] = (d.pacienteNombre ?? '').split(' ');
         this.pacienteNombres.set(nombres ?? '');
         this.pacienteApellidos.set(apellidosParts.join(' '));
@@ -88,6 +90,11 @@ export class DetalleCitaPanelComponent implements OnChanges {
         this.nuevasObservaciones.set(d.observaciones ?? '');
         this.nuevoEstado.set('');
         this.cargando.set(false);
+        // Load historial after detail (secondary, non-blocking)
+        this.service.obtenerHistorialCita(this.citaId!).subscribe({
+          next: (h) => this.historial.set(h),
+          error: () => {}
+        });
       },
       error: () => {
         this.error.set('No se pudo cargar el detalle de la cita.');
