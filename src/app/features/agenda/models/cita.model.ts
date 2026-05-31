@@ -1,4 +1,4 @@
-export type EstadoCita = 'PROGRAMADA' | 'ATENDIDA' | 'CANCELADA' | 'PENDIENTE';
+export type EstadoCita = 'PROGRAMADA' | 'ATENDIDA' | 'CANCELADA';
 
 export interface CitaModel {
   id: number;

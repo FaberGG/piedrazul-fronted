@@ -9,6 +9,11 @@
 
 .rp-card { background: var(--color-surface, #fff); border-radius: 12px; box-shadow: 0 1px 4px rgba(0,0,0,.08); padding: 1.5rem; display: flex; flex-direction: column; gap: 1.25rem; }
 .rp-card--success { border-left: 4px solid var(--color-success, #38a169); }
+.rp-card--info { border-left: 4px solid var(--color-primary); gap: 0.4rem; }
+.rp-info-row { display: flex; justify-content: space-between; font-size: 0.875rem; padding: 0.15rem 0; }
+.rp-info-name { font-weight: 600; font-size: 1rem; }
+.rp-info-label { color: var(--color-text-secondary); font-weight: 500; }
+.rp-info-row--cita { margin-top: 0.4rem; padding-top: 0.4rem; border-top: 1px solid var(--color-border, #e2e8f0); }
 
 .rp-success-title { font-size: 1.1rem; font-weight: 600; color: var(--color-success, #38a169); margin: 0 0 0.5rem; }
 .rp-detail-row { display: flex; justify-content: space-between; font-size: 0.9rem; padding: 0.35rem 0; border-bottom: 1px solid var(--color-border, #e2e8f0); }

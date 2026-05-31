@@ -19,9 +19,9 @@
     <div class="lc-search-card__body">
       <div class="lc-field">
         <label class="lc-field__label">Médico / Terapista</label>
-        <select class="lc-field__control" [value]="medicoSeleccionadoId()"
+        <select class="lc-field__control" [value]="medicoSeleccionadoId() ?? ''"
           (change)="onMedicoChange($any($event.target).value)">
-          <option value="" disabled selected>Seleccione un médico</option>
+          <option value="" disabled>Seleccione un médico</option>
           @for (m of medicos(); track trackByMedico($index, m)) {
           <option [value]="m.id">{{ m.nombresCompletos }}</option>
           }
