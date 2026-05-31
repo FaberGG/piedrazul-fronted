@@ -12,13 +12,15 @@ import { Router } from '@angular/router';
 import { AgendaService } from '../../services/agenda.service';
 import { MedicosService } from '../../services/medicos.service';
 import { ReporteService } from '../../../reportes/services/report.service';
+import { AuthService } from '../../../../core/auth/auth.service';
 import { AgendaModel, CitaModel, EstadoCita } from '../../models/cita.model';
 import { MedicoModel } from '../../models/medico.model';
+import { DetalleCitaPanelComponent } from '../../components/detalle-cita-panel/detalle-cita-panel.component';
 
 @Component({
   selector: 'app-lista-citas-page',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, DetalleCitaPanelComponent],
   templateUrl: './lista-citas-page.component.html',
   styleUrl: './lista-citas-page.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -28,6 +30,7 @@ export class ListaCitasPageComponent implements OnInit {
   private readonly agendaService = inject(AgendaService);
   private readonly medicosService = inject(MedicosService);
   private readonly reporteService = inject(ReporteService);
+  private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
 
   medicos = signal<MedicoModel[]>([]);
@@ -40,6 +43,10 @@ export class ListaCitasPageComponent implements OnInit {
   fechaSeleccionada = signal<string>('');
   formatosDisponibles = signal<string[]>([]);
   formatoSeleccionado = signal<string>('');
+  citaSeleccionadaId = signal<number | null>(null);
+
+  rol = computed(() => this.authService.getCurrentRole());
+  puedeVerDetalle = computed(() => this.rol() === 'ADMIN' || this.rol() === 'MEDICO');
 
   puedesBuscar = computed(() =>
     !!this.medicoSeleccionadoId() && !!this.fechaSeleccionada() && !this.cargando()
@@ -62,8 +69,7 @@ export class ListaCitasPageComponent implements OnInit {
     this.reporteService.getExportFormatos().subscribe({
       next: (data) => this.formatosDisponibles.set(data),
       error: () => this.errorMensaje.set('No se pudo cargar la lista de formatos.')
-
-    })
+    });
   }
 
   buscarCitas(): void {
@@ -139,7 +145,7 @@ export class ListaCitasPageComponent implements OnInit {
       return;
     }
     if (!formatoSelec) {
-      this.errorMensaje.set('Selecciona un formato de descarga.')
+      this.errorMensaje.set('Selecciona un formato de descarga.');
       return;
     }
     this.descargando.set(true);
@@ -160,6 +166,15 @@ export class ListaCitasPageComponent implements OnInit {
         this.errorMensaje.set('Error al descargar el archivo. Intenta de nuevo.');
       }
     });
+  }
+
+  verDetalle(citaId: number): void {
+    this.citaSeleccionadaId.set(citaId);
+  }
+
+  onCitaActualizada(): void {
+    this.citaSeleccionadaId.set(null);
+    this.buscarCitas();
   }
 
   reagendarCita(citaId: number): void {

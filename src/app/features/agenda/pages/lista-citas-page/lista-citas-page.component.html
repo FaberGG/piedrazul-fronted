@@ -125,7 +125,10 @@
               </span>
             </td>
             <td class="lc-table__obs">{{ cita.observaciones || '' }}</td>
-            <td>
+            <td class="lc-table__actions">
+              @if (puedeVerDetalle()) {
+                <button class="btn-detalle" (click)="verDetalle(cita.id)">Ver detalle</button>
+              }
               @if (cita.estado === 'ATENDIDA') {
                 <button class="btn-reagendar" (click)="reagendarCita(cita.id)">Reagendar</button>
               }
@@ -147,3 +150,10 @@
   }
 
 </div>
+
+<!-- Panel lateral de detalle -->
+<app-detalle-cita-panel
+  [citaId]="citaSeleccionadaId()"
+  (cerrar)="citaSeleccionadaId.set(null)"
+  (actualizado)="onCitaActualizada()">
+</app-detalle-cita-panel>

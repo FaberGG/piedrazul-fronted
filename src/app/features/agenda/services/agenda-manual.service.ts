@@ -10,6 +10,7 @@ import {
   CrearCitaPrioridadRequest
 } from '../models/cita-manual.model';
 import { HistorialCambiosCitaResponse, ReagendarCitaRequest } from '../models/agenda.models';
+import { ActualizarCitaRequest, CitaDetalleModel } from '../models/cita.model';
 import { DisponibilidadGlobal } from '../models/disponibilidad.model';
 
 @Injectable({ providedIn: 'root' })
@@ -46,6 +47,14 @@ export class AgendaManualService {
 
   obtenerHistorialCita(citaId: number): Observable<HistorialCambiosCitaResponse[]> {
     return this.http.get<HistorialCambiosCitaResponse[]>(`${environment.apiUrl}/citas/${citaId}/historial`);
+  }
+
+  obtenerDetalleCita(citaId: number): Observable<CitaDetalleModel> {
+    return this.http.get<CitaDetalleModel>(`${environment.apiUrl}/citas/${citaId}`);
+  }
+
+  actualizarCita(citaId: number, request: ActualizarCitaRequest): Observable<CitaManualResponse> {
+    return this.http.patch<CitaManualResponse>(`${environment.apiUrl}/citas/${citaId}`, request);
   }
 }
 

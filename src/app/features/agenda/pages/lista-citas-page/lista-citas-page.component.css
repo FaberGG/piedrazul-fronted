@@ -1,3 +1,7 @@
+.btn-reagendar { padding: 0.3rem 0.7rem; font-size: 0.78rem; font-weight: 600; background: var(--color-primary); color: #fff; border: none; border-radius: 6px; cursor: pointer; }
+.btn-detalle { padding: 0.3rem 0.7rem; font-size: 0.78rem; font-weight: 600; background: transparent; color: var(--color-primary); border: 1px solid var(--color-primary); border-radius: 6px; cursor: pointer; margin-right: 0.4rem; }
+.lc-table__actions { white-space: nowrap; }
+
 .lc-wrapper {
   display: flex;
   flex-direction: column;
