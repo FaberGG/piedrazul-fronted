@@ -11,7 +11,6 @@ import { AuthService } from '../../auth/auth.service';
 })
 export class PatientShellComponent {
   readonly authService = inject(AuthService);
-}
 
   logout(): void {
     this.authService.logout();

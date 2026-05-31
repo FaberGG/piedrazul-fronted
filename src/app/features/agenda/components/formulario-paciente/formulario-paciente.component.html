@@ -58,6 +58,7 @@
         placeholder="Ingresa los nombres del paciente"
         [invalid]="esCampoInvalido('nombres')"
         [errorMessage]="getMensajeError('nombres')"
+        (blurred)="normalizarNombreAlSalir('nombres')"
       />
 
       <app-input-compartido
@@ -68,6 +69,7 @@
         placeholder="Ingresa los apellidos del paciente"
         [invalid]="esCampoInvalido('apellidos')"
         [errorMessage]="getMensajeError('apellidos')"
+        (blurred)="normalizarNombreAlSalir('apellidos')"
       />
     </div>
 

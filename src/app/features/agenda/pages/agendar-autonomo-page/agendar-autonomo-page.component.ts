@@ -40,6 +40,9 @@ export class AgendarAutonomoPageComponent implements OnInit {
   enviando = signal(false);
   error = signal<string | null>(null);
 
+  // Controla si el usuario ya intentó enviar el formulario (activa mensajes de error en campos vacíos)
+  submitted = signal(false);
+
   ngOnInit(): void {
     this.cargarMedicos();
   }
@@ -90,14 +93,13 @@ export class AgendarAutonomoPageComponent implements OnInit {
   }
 
   agendar(): void {
+    this.submitted.set(true);
+
     const medicoId = this.medicoSeleccionado();
     const fecha = this.fechaSeleccionada();
     const hora = this.horaSeleccionada();
 
-    if (!medicoId || !fecha || !hora) {
-      this.error.set('Completa todos los campos obligatorios');
-      return;
-    }
+    if (!medicoId || !fecha || !hora) return;
 
     this.enviando.set(true);
     this.error.set(null);

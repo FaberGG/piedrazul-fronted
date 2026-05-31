@@ -264,6 +264,24 @@
   text-align: right;
 }
 
+/* ── Validation ── */
+.agendar-page__required {
+  color: var(--color-danger, #e53e3e);
+  margin-left: 2px;
+}
+
+.agendar-page__control--error {
+  border-color: var(--color-danger, #e53e3e) !important;
+  outline-color: var(--color-danger, #e53e3e);
+}
+
+.agendar-page__error-msg {
+  display: block;
+  margin-top: 0.25rem;
+  font-size: 0.78rem;
+  color: var(--color-danger, #e53e3e);
+}
+
 /* ── Responsive ── */
 @media (max-width: 720px) {
   .agendar-page {

@@ -70,18 +70,24 @@
         </div>
 
         <div class="agendar-page__field">
-          <label class="agendar-page__label">Seleccionar médico / terapista</label>
+          <label class="agendar-page__label">
+            Seleccionar médico / terapista <span class="agendar-page__required" aria-hidden="true">*</span>
+          </label>
           <select class="agendar-page__control"
+                  [class.agendar-page__control--error]="submitted() && !medicoSeleccionado()"
                   [disabled]="cargandoMedicos()"
                   (change)="onMedicoOFechaChange()"
                   [(ngModel)]="medicoSeleccionado">
             <option [value]="null">
-              {{ cargandoMedicos() ? 'Cargando médicos…' : 'Selecciona un médico' }}
+              {{ cargandoMedicos() ? 'Cargando médicos…' : 'Selecciona un médico o terapista' }}
             </option>
             @for (m of medicosFiltrados(); track m.id) {
               <option [value]="m.id">{{ m.nombresCompletos }} — {{ m.especialidad }}</option>
             }
           </select>
+          @if (submitted() && !medicoSeleccionado()) {
+            <span class="agendar-page__error-msg">Selecciona un médico o terapista.</span>
+          }
           @if (filtroEspecialidad() && medicosFiltrados().length === 0) {
             <span class="agendar-page__hint">No hay médicos con esa especialidad</span>
           }
@@ -98,15 +104,24 @@
         </header>
 
         <div class="agendar-page__field">
-          <label class="agendar-page__label">Fecha</label>
+          <label class="agendar-page__label">
+            Fecha <span class="agendar-page__required" aria-hidden="true">*</span>
+          </label>
           <input type="date"
                  class="agendar-page__control"
+                 [class.agendar-page__control--error]="submitted() && !fechaSeleccionada()"
+                 placeholder="AAAA-MM-DD"
                  (change)="onMedicoOFechaChange()"
                  [(ngModel)]="fechaSeleccionada" />
+          @if (submitted() && !fechaSeleccionada()) {
+            <span class="agendar-page__error-msg">Selecciona una fecha.</span>
+          }
         </div>
 
         <div class="agendar-page__field">
-          <label class="agendar-page__label">Horario disponible</label>
+          <label class="agendar-page__label">
+            Horario disponible <span class="agendar-page__required" aria-hidden="true">*</span>
+          </label>
           @if (cargandoFranjas()) {
             <p class="agendar-page__hint">Cargando horarios…</p>
           }
@@ -123,6 +138,9 @@
               </button>
             }
           </div>
+          @if (submitted() && !horaSeleccionada() && franjas().length > 0) {
+            <span class="agendar-page__error-msg">Selecciona un horario disponible.</span>
+          }
         </div>
       </section>
 
@@ -138,7 +156,7 @@
         <div class="agendar-page__field">
           <textarea class="agendar-page__control"
                     rows="3"
-                    placeholder="Escribe aquí cualquier información relevante…"
+                    placeholder="Información adicional relevante para el profesional (ej: alergias, motivo de consulta)…"
                     [(ngModel)]="observaciones">
           </textarea>
         </div>

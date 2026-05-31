@@ -153,7 +153,7 @@ ng version
 Instalar Angular CLI globalmente si no está disponible:
 
 ```bash
-npm install -g @angular/cli@21.1
+pnpm add -g @angular/cli@21.1
 ```
 
 ---
@@ -166,7 +166,7 @@ git clone <url-del-repositorio>
 cd piedrazul-frontend
 
 # 2. Instalar dependencias
-npm install
+pnpm install
 ```
 
 ---
@@ -176,7 +176,7 @@ npm install
 Asegurarse de que el backend de Piedrazul esté corriendo en `http://localhost:8080` antes de iniciar el frontend.
 
 ```bash
-npm start
+pnpm start
 ```
 
 La aplicación estará disponible en `http://localhost:4200`.
@@ -188,7 +188,7 @@ El servidor de desarrollo incluye hot module replacement (HMR): los cambios en e
 ### Compilación para producción
 
 ```bash
-npm run build
+pnpm build
 ```
 
 Los artefactos compilados se generan en `dist/piedrazul-frontend/`. Estos archivos estáticos pueden ser servidos por cualquier servidor web (Nginx, Apache, Node.js).
@@ -199,16 +199,16 @@ Los artefactos compilados se generan en `dist/piedrazul-frontend/`. Estos archiv
 
 ```bash
 # Pruebas unitarias
-npm test
+pnpm test
 
 # Pruebas unitarias en modo watch (desarrollo)
-npm run test:watch
+pnpm test:watch
 
 # Pruebas end-to-end
-npm run e2e
+pnpm e2e
 
 # Cobertura de pruebas
-npm run test:coverage
+pnpm test:coverage
 ```
 
 ---
@@ -217,16 +217,16 @@ npm run test:coverage
 
 ```bash
 # Verificar reglas de ESLint
-npm run lint
+pnpm lint
 
 # Corregir errores de lint automáticamente
-npm run lint:fix
+pnpm lint:fix
 
 # Verificar formateo con Prettier
-npm run format:check
+pnpm format:check
 
 # Aplicar formateo con Prettier
-npm run format
+pnpm format
 ```
 
 ---
@@ -371,8 +371,8 @@ Antes de solicitar revisión, verificar que:
 
 - [ ] El código compila sin errores (`ng build`).
 - [ ] Las pruebas unitarias pasan (`npm test`).
-- [ ] No hay errores de lint (`npm run lint`).
-- [ ] El código está formateado con Prettier (`npm run format:check`).
+- [ ] No hay errores de lint (`pnpm lint`).
+- [ ] El código está formateado con Prettier (`pnpm format:check`).
 - [ ] Los commits siguen la convención de Conventional Commits.
 - [ ] El PR tiene un título descriptivo que referencia el RF o la tarea.
 - [ ] Si se agregó un nuevo feature, tiene su archivo `.routes.ts` y está registrado en `app.routes.ts` con lazy loading.
