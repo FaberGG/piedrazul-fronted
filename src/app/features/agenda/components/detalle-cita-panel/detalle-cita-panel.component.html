@@ -1,0 +1,131 @@
+@if (citaId !== null) {
+  <div class="dp-backdrop" (click)="cerrar.emit()"></div>
+
+  <aside class="dp-panel">
+
+    <!-- Header -->
+    <div class="dp-header">
+      <h2 class="dp-title">Detalle de cita</h2>
+      <button class="dp-close" type="button" (click)="cerrar.emit()">✕</button>
+    </div>
+
+    @if (cargando()) {
+      <div class="dp-loading">Cargando…</div>
+    }
+
+    @if (error()) {
+      <div class="dp-alert">{{ error() }}</div>
+    }
+
+    @if (!cargando() && detalle(); as d) {
+
+      <!-- Info de la cita (solo lectura) -->
+      <section class="dp-section">
+        <h3 class="dp-section-title">Información de la cita</h3>
+        <div class="dp-row"><span class="dp-label">Médico</span><span>{{ d.medicoNombre }}</span></div>
+        <div class="dp-row"><span class="dp-label">Especialidad</span><span>{{ d.especialidad }}</span></div>
+        <div class="dp-row"><span class="dp-label">Fecha</span><span>{{ formatFecha(d.fecha) }}</span></div>
+        <div class="dp-row"><span class="dp-label">Hora</span><span>{{ formatHora(d.hora) }}</span></div>
+        <div class="dp-row">
+          <span class="dp-label">Estado actual</span>
+          <span class="dp-estado" [class]="'dp-estado--' + d.estado.toLowerCase()">{{ d.estado }}</span>
+        </div>
+      </section>
+
+      <!-- Sección editable -->
+      @if (puedeEditar()) {
+        <!-- Datos del paciente -->
+        <section class="dp-section">
+          <h3 class="dp-section-title">Datos del paciente</h3>
+          <div class="dp-field">
+            <label class="dp-field-label">Nombres</label>
+            <input class="dp-control" type="text" [ngModel]="pacienteNombres()" (ngModelChange)="pacienteNombres.set($event)" />
+          </div>
+          <div class="dp-field">
+            <label class="dp-field-label">Apellidos</label>
+            <input class="dp-control" type="text" [ngModel]="pacienteApellidos()" (ngModelChange)="pacienteApellidos.set($event)" />
+          </div>
+          <div class="dp-field">
+            <label class="dp-field-label">Documento</label>
+            <input class="dp-control" type="text" [ngModel]="pacienteDocumento()" (ngModelChange)="pacienteDocumento.set($event)" />
+          </div>
+          <div class="dp-field">
+            <label class="dp-field-label">Celular</label>
+            <input class="dp-control" type="text" [ngModel]="pacienteCelular()" (ngModelChange)="pacienteCelular.set($event)" />
+          </div>
+          <div class="dp-field">
+            <label class="dp-field-label">Correo</label>
+            <input class="dp-control" type="email" [ngModel]="pacienteCorreo()" (ngModelChange)="pacienteCorreo.set($event)" />
+          </div>
+        </section>
+
+        <!-- Datos de la cita editables -->
+        <section class="dp-section">
+          <h3 class="dp-section-title">Actualizar cita</h3>
+
+          @if (estadosValidos().length > 0) {
+            <div class="dp-field">
+              <label class="dp-field-label">Cambiar estado</label>
+              <select class="dp-control" [ngModel]="nuevoEstado()" (ngModelChange)="nuevoEstado.set($event)">
+                <option value="">— Sin cambio —</option>
+                @for (e of estadosValidos(); track e) {
+                  <option [value]="e">{{ e }}</option>
+                }
+              </select>
+            </div>
+          }
+
+          <div class="dp-field">
+            <label class="dp-field-label">Observaciones</label>
+            <textarea class="dp-control dp-textarea" rows="3"
+              [ngModel]="nuevasObservaciones()" (ngModelChange)="nuevasObservaciones.set($event)"
+              placeholder="Observaciones sobre la cita…"></textarea>
+          </div>
+        </section>
+
+        <div class="dp-actions">
+          <button class="dp-btn dp-btn--secondary" type="button" (click)="cerrar.emit()">Cancelar</button>
+          <button class="dp-btn dp-btn--primary" type="button" [disabled]="guardando()" (click)="abrirModal()">
+            @if (guardando()) { Guardando… } @else { Guardar cambios }
+          </button>
+        </div>
+      }
+
+      <!-- Sección restringida para MEDICO en cita no-primera -->
+      @if (!puedeEditar() && rol() === 'MEDICO') {
+        <section class="dp-section">
+          <div class="dp-info-banner">
+            Solo puedes modificar la primera cita de un paciente.
+          </div>
+
+          <div class="dp-field dp-field--disabled">
+            <label class="dp-field-label">Datos del paciente</label>
+            <p class="dp-disabled-text">{{ d.pacienteNombre }} · {{ d.pacienteDocumento }}</p>
+          </div>
+          <div class="dp-field dp-field--disabled">
+            <label class="dp-field-label">Observaciones</label>
+            <p class="dp-disabled-text">{{ d.observaciones || '—' }}</p>
+          </div>
+
+          @if (d.estado === 'ATENDIDA') {
+            <button class="dp-btn dp-btn--reagendar" type="button" (click)="irAReagendar()">
+              Reagendar esta cita
+            </button>
+          }
+        </section>
+      }
+    }
+
+    <!-- Modal de confirmación -->
+    <app-modal-confirmacion
+      [visible]="mostrarModal()"
+      titulo="Confirmar cambios"
+      mensaje="¿Estás seguro de que deseas aplicar los cambios a esta cita?"
+      textoConfirmar="Sí, guardar"
+      textoCancelar="Cancelar"
+      (confirmar)="confirmarGuardar()"
+      (cancelar)="cancelarModal()">
+    </app-modal-confirmacion>
+
+  </aside>
+}

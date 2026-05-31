@@ -12,6 +12,22 @@ export interface CitaModel {
   observaciones?: string;
 }
 
+export interface CitaDetalleModel extends CitaModel {
+  pacienteCelular?: string;
+  pacienteCorreo?: string;
+  esPrimeraCita: boolean;
+}
+
+export interface ActualizarCitaRequest {
+  nuevoEstado?: string;
+  nuevasObservaciones?: string;
+  pacienteNombres?: string;
+  pacienteApellidos?: string;
+  pacienteDocumento?: string;
+  pacienteCelular?: string;
+  pacienteCorreo?: string;
+}
+
 export interface AgendaModel {
   medicoId: number;
   medicoNombre: string;
