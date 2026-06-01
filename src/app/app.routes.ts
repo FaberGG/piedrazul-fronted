@@ -53,6 +53,11 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./features/auth/pages/register-admin-page/register-admin-page.component')
             .then(m => m.RegisterAdminPageComponent)
+      },
+      {
+        path: 'auditoria',
+        loadChildren: () =>
+          import('./features/auditoria/auditoria.routes').then((m) => m.auditoriaRoutes)
       }
     ]
   },

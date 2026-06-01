@@ -64,6 +64,12 @@ export class SidebarComponent {
       path: '/configuracion/global',
       iconClass: 'fa-solid fa-gear',
       allowedRoles: [ROLES.ADMIN]
+    },
+    {
+      label: 'Auditoría',
+      path: '/auditoria',
+      iconClass: 'fa-solid fa-shield-halved',
+      allowedRoles: [ROLES.ADMIN]
     }
 
   ];
