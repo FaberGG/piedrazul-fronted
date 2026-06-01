@@ -1,0 +1,197 @@
+<div class="auditoria-page">
+
+  <!-- Encabezado -->
+  <div class="page-header">
+    <h1 class="page-title">
+      <i class="fa-solid fa-shield-halved"></i>
+      Registro de Auditoría
+    </h1>
+    <p class="page-subtitle">Historial de operaciones críticas realizadas en el sistema. Haz clic en una fila para ver el detalle completo.</p>
+  </div>
+
+  <!-- Filtros -->
+  <div class="filtros-card">
+    <div class="filtros-grid">
+
+      <div class="filtro-group">
+        <label class="filtro-label">Acción</label>
+        <select class="filtro-input" [ngModel]="filtroAccion()" (ngModelChange)="filtroAccion.set($event)">
+          <option value="">Todas</option>
+          @for (a of acciones; track a) {
+            <option [value]="a">{{ a }}</option>
+          }
+        </select>
+      </div>
+
+      <div class="filtro-group">
+        <label class="filtro-label">Entidad</label>
+        <input
+          class="filtro-input"
+          type="text"
+          placeholder="Ej: CITA"
+          [ngModel]="filtroEntidad()"
+          (ngModelChange)="filtroEntidad.set($event)"
+        />
+      </div>
+
+      <div class="filtro-group">
+        <label class="filtro-label">Desde</label>
+        <input
+          class="filtro-input"
+          type="date"
+          [ngModel]="filtroDesde()"
+          (ngModelChange)="filtroDesde.set($event)"
+        />
+      </div>
+
+      <div class="filtro-group">
+        <label class="filtro-label">Hasta</label>
+        <input
+          class="filtro-input"
+          type="date"
+          [ngModel]="filtroHasta()"
+          (ngModelChange)="filtroHasta.set($event)"
+        />
+      </div>
+
+    </div>
+
+    <div class="filtros-actions">
+      <button class="btn btn--secondary" (click)="limpiarFiltros()">
+        <i class="fa-solid fa-xmark"></i> Limpiar
+      </button>
+      <button class="btn btn--primary" (click)="buscar()">
+        <i class="fa-solid fa-magnifying-glass"></i> Buscar
+      </button>
+    </div>
+  </div>
+
+  <!-- Error -->
+  @if (error()) {
+    <div class="alert alert--error">
+      <i class="fa-solid fa-circle-exclamation"></i> {{ error() }}
+    </div>
+  }
+
+  <!-- Cargando -->
+  @if (cargando()) {
+    <div class="loading-state">
+      <span class="spinner"></span>
+      <span>Cargando registros...</span>
+    </div>
+  }
+
+  <!-- Tabla -->
+  @if (!cargando() && logs().length > 0) {
+    <div class="table-wrapper">
+      <table class="auditoria-table">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Fecha / Hora</th>
+            <th>Acción</th>
+            <th>Entidad</th>
+            <th>ID</th>
+            <th>Usuario</th>
+            <th>Detalles</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (log of logs(); track log.id) {
+
+            <!-- Fila principal -->
+            <tr class="row--clickable" [class.row--active]="isExpanded(log.id)" (click)="toggleExpand(log.id)">
+              <td class="cell--chevron">
+                <i class="fa-solid fa-chevron-right chevron" [class.chevron--expanded]="isExpanded(log.id)"></i>
+              </td>
+              <td class="cell--timestamp">{{ formatTimestamp(log.timestamp) }}</td>
+              <td>
+                <span class="badge" [ngClass]="accionClass(log.accion)">{{ log.accion }}</span>
+              </td>
+              <td>{{ log.entidad }}</td>
+              <td class="cell--center">{{ log.entidadId ?? '—' }}</td>
+              <td class="cell--uuid" [title]="log.usuarioId ?? ''">
+                {{ log.usuarioId ? log.usuarioId.slice(0, 8) + '…' : '—' }}
+              </td>
+              <td class="cell--detalles-preview">
+                @if (parsearDetalles(log.detalles).length > 0) {
+                  <span class="detalles-preview">
+                    {{ parsearDetalles(log.detalles)[0].clave }}: {{ parsearDetalles(log.detalles)[0].valor }}
+                    @if (parsearDetalles(log.detalles).length > 1) {
+                      <span class="detalles-more">+{{ parsearDetalles(log.detalles).length - 1 }} más</span>
+                    }
+                  </span>
+                } @else {
+                  <span class="cell--empty">—</span>
+                }
+              </td>
+            </tr>
+
+            <!-- Fila expandida -->
+            @if (isExpanded(log.id)) {
+              <tr class="row--expanded">
+                <td colspan="7">
+                  <div class="detalle-panel">
+
+                    <div class="detalle-section">
+                      <span class="detalle-label">UUID completo</span>
+                      <span class="detalle-value detalle-value--mono">{{ log.usuarioId ?? '—' }}</span>
+                    </div>
+
+                    <div class="detalle-section">
+                      <span class="detalle-label">IP</span>
+                      <span class="detalle-value detalle-value--mono">{{ log.ipAddress ?? '—' }}</span>
+                    </div>
+
+                    <div class="detalle-section">
+                      <span class="detalle-label">Detalles</span>
+                      <div class="detalle-chips">
+                        @for (par of parsearDetalles(log.detalles); track par.clave) {
+                          <span class="detalle-chip">
+                            <span class="chip-key">{{ par.clave }}</span>
+                            <span class="chip-sep">:</span>
+                            <span class="chip-val">{{ par.valor }}</span>
+                          </span>
+                        }
+                        @if (parsearDetalles(log.detalles).length === 0) {
+                          <span class="cell--empty">Sin detalles</span>
+                        }
+                      </div>
+                    </div>
+
+                  </div>
+                </td>
+              </tr>
+            }
+
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Paginación -->
+    <div class="paginacion">
+      <span class="paginacion-info">
+        Página {{ paginaActual() + 1 }} de {{ totalPaginas() }}
+        &nbsp;·&nbsp; {{ totalElementos() }} registros
+      </span>
+      <div class="paginacion-controls">
+        <button class="btn btn--ghost" [disabled]="paginaActual() === 0" (click)="paginaAnterior()">
+          <i class="fa-solid fa-chevron-left"></i> Anterior
+        </button>
+        <button class="btn btn--ghost" [disabled]="paginaActual() >= totalPaginas() - 1" (click)="paginaSiguiente()">
+          Siguiente <i class="fa-solid fa-chevron-right"></i>
+        </button>
+      </div>
+    </div>
+  }
+
+  <!-- Sin resultados -->
+  @if (!cargando() && logs().length === 0 && !error()) {
+    <div class="empty-state">
+      <i class="fa-solid fa-inbox empty-state__icon"></i>
+      <p>No se encontraron registros con los filtros aplicados.</p>
+    </div>
+  }
+
+</div>
