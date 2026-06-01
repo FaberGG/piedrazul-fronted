@@ -32,11 +32,11 @@
         </div>
       </section>
 
-      <!-- Sección editable -->
-      @if (puedeEditar()) {
-        <!-- Datos del paciente -->
-        <section class="dp-section">
-          <h3 class="dp-section-title">Datos del paciente</h3>
+      <!-- Datos del paciente — editable solo para ADMIN o MEDICO en primera cita -->
+      <section class="dp-section">
+        <h3 class="dp-section-title">Datos del paciente</h3>
+
+        @if (puedeEditarPaciente()) {
           <div class="dp-field">
             <label class="dp-field-label">Nombres</label>
             <input class="dp-control" type="text" [ngModel]="pacienteNombres()" (ngModelChange)="pacienteNombres.set($event)" />
@@ -57,9 +57,20 @@
             <label class="dp-field-label">Correo</label>
             <input class="dp-control" type="email" [ngModel]="pacienteCorreo()" (ngModelChange)="pacienteCorreo.set($event)" />
           </div>
-        </section>
+        } @else {
+          <div class="dp-field dp-field--disabled">
+            <p class="dp-disabled-text">{{ d.pacienteNombre }} · {{ d.pacienteDocumento }}</p>
+          </div>
+          @if (rol() === 'MEDICO') {
+            <div class="dp-info-banner">
+              Los datos del paciente solo se pueden modificar en su primera cita.
+            </div>
+          }
+        }
+      </section>
 
-        <!-- Datos de la cita editables -->
+      <!-- Cita — estado y observaciones — editable para ADMIN y MEDICO siempre -->
+      @if (puedeEditarCita()) {
         <section class="dp-section">
           <h3 class="dp-section-title">Actualizar cita</h3>
 
@@ -81,6 +92,12 @@
               [ngModel]="nuevasObservaciones()" (ngModelChange)="nuevasObservaciones.set($event)"
               placeholder="Observaciones sobre la cita…"></textarea>
           </div>
+
+          @if (d.estado === 'ATENDIDA') {
+            <button class="dp-btn dp-btn--reagendar" type="button" (click)="irAReagendar()">
+              Reagendar esta cita
+            </button>
+          }
         </section>
 
         <div class="dp-actions">
@@ -89,30 +106,6 @@
             @if (guardando()) { Guardando… } @else { Guardar cambios }
           </button>
         </div>
-      }
-
-      <!-- Sección restringida para MEDICO en cita no-primera -->
-      @if (!puedeEditar() && rol() === 'MEDICO') {
-        <section class="dp-section">
-          <div class="dp-info-banner">
-            Solo puedes modificar la primera cita de un paciente.
-          </div>
-
-          <div class="dp-field dp-field--disabled">
-            <label class="dp-field-label">Datos del paciente</label>
-            <p class="dp-disabled-text">{{ d.pacienteNombre }} · {{ d.pacienteDocumento }}</p>
-          </div>
-          <div class="dp-field dp-field--disabled">
-            <label class="dp-field-label">Observaciones</label>
-            <p class="dp-disabled-text">{{ d.observaciones || '—' }}</p>
-          </div>
-
-          @if (d.estado === 'ATENDIDA') {
-            <button class="dp-btn dp-btn--reagendar" type="button" (click)="irAReagendar()">
-              Reagendar esta cita
-            </button>
-          }
-        </section>
       }
     }
 

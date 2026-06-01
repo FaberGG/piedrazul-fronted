@@ -52,9 +52,23 @@ export class DetalleCitaPanelComponent implements OnChanges {
   pacienteCelular = signal('');
   pacienteCorreo = signal('');
 
+  // Original patient values — used to detect actual changes before sending
+  private originalNombres = '';
+  private originalApellidos = '';
+  private originalDocumento = '';
+  private originalCelular = '';
+  private originalCorreo = '';
+
   rol = computed(() => this.authService.getCurrentRole());
 
-  puedeEditar = computed(() => {
+  // MEDICO and ADMIN can always update cita fields (estado, observaciones)
+  puedeEditarCita = computed(() => {
+    const r = this.rol();
+    return r === 'ADMIN' || r === 'MEDICO';
+  });
+
+  // Only ADMIN or MEDICO on the patient's FIRST appointment can update patient data
+  puedeEditarPaciente = computed(() => {
     const d = this.detalle();
     const r = this.rol();
     return r === 'ADMIN' || (r === 'MEDICO' && !!d?.esPrimeraCita);
@@ -82,11 +96,19 @@ export class DetalleCitaPanelComponent implements OnChanges {
       next: (d) => {
         this.detalle.set(d);
         const [nombres, ...apellidosParts] = (d.pacienteNombre ?? '').split(' ');
-        this.pacienteNombres.set(nombres ?? '');
-        this.pacienteApellidos.set(apellidosParts.join(' '));
+        const nombres0 = nombres ?? '';
+        const apellidos0 = apellidosParts.join(' ');
+        this.pacienteNombres.set(nombres0);
+        this.pacienteApellidos.set(apellidos0);
         this.pacienteDocumento.set(d.pacienteDocumento ?? '');
         this.pacienteCelular.set(d.pacienteCelular ?? '');
         this.pacienteCorreo.set(d.pacienteCorreo ?? '');
+        // Snapshot originals for change detection
+        this.originalNombres = nombres0;
+        this.originalApellidos = apellidos0;
+        this.originalDocumento = d.pacienteDocumento ?? '';
+        this.originalCelular = d.pacienteCelular ?? '';
+        this.originalCorreo = d.pacienteCorreo ?? '';
         this.nuevasObservaciones.set(d.observaciones ?? '');
         this.nuevoEstado.set('');
         this.cargando.set(false);
@@ -127,11 +149,15 @@ export class DetalleCitaPanelComponent implements OnChanges {
 
     if (this.nuevoEstado()) request.nuevoEstado = this.nuevoEstado();
     if (this.nuevasObservaciones() !== (d.observaciones ?? '')) request.nuevasObservaciones = this.nuevasObservaciones();
-    if (this.pacienteNombres()) request.pacienteNombres = this.pacienteNombres();
-    if (this.pacienteApellidos()) request.pacienteApellidos = this.pacienteApellidos();
-    if (this.pacienteDocumento() !== d.pacienteDocumento) request.pacienteDocumento = this.pacienteDocumento();
-    if (this.pacienteCelular() !== (d.pacienteCelular ?? '')) request.pacienteCelular = this.pacienteCelular();
-    if (this.pacienteCorreo() !== (d.pacienteCorreo ?? '')) request.pacienteCorreo = this.pacienteCorreo();
+
+    // Patient fields are only sent when the user has permission AND the value actually changed
+    if (this.puedeEditarPaciente()) {
+      if (this.pacienteNombres() !== this.originalNombres) request.pacienteNombres = this.pacienteNombres();
+      if (this.pacienteApellidos() !== this.originalApellidos) request.pacienteApellidos = this.pacienteApellidos();
+      if (this.pacienteDocumento() !== this.originalDocumento) request.pacienteDocumento = this.pacienteDocumento();
+      if (this.pacienteCelular() !== this.originalCelular) request.pacienteCelular = this.pacienteCelular();
+      if (this.pacienteCorreo() !== this.originalCorreo) request.pacienteCorreo = this.pacienteCorreo();
+    }
 
     this.service.actualizarCita(this.citaId!, request).subscribe({
       next: (updated) => {
