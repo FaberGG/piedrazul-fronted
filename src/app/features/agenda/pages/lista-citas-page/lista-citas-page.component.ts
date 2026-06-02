@@ -82,6 +82,11 @@ export class ListaCitasPageComponent implements OnInit {
 
   private autoSeleccionarMedicoActual(): void {
     const role = this.rol();
+    if (role === ROLES.ADMIN || role === ROLES.AGENDADOR) {
+      this.medicoSeleccionadoValor.set(SENTINEL_TODOS);
+      this.modoTodos.set(true);
+      return;
+    }
     if (role !== ROLES.MEDICO && role !== ROLES.TERAPISTA) return;
 
     this.medicosService.getMedicoActual().subscribe({
