@@ -1,0 +1,114 @@
+<div class="listado-page">
+
+  <!-- Encabezado -->
+  <div class="page-header">
+    <h1 class="page-title">
+      <i class="fa-solid fa-file-export"></i>
+      Exportar Agenda
+    </h1>
+    <p class="page-subtitle">Descarga reportes de la agenda en PDF o CSV.</p>
+  </div>
+
+  @if (error()) {
+    <div class="alert alert--error">
+      <i class="fa-solid fa-circle-exclamation"></i> {{ error() }}
+    </div>
+  }
+
+  <!-- Sección: Agenda de hoy (todos los médicos) -->
+  <div class="section-card section-card--hoy">
+    <div class="section-header">
+      <div>
+        <h2 class="section-title">
+          <i class="fa-solid fa-calendar-day"></i>
+          Agenda de hoy — todos los médicos
+        </h2>
+        <p class="section-desc">
+          Exporta todas las citas del día de hoy ({{ hoy }}) de todos los médicos en un único PDF.
+        </p>
+      </div>
+      <button
+        class="btn btn--accent"
+        [disabled]="descargandoHoy()"
+        (click)="descargarHoy()"
+      >
+        @if (descargandoHoy()) {
+          <span class="spinner btn-spinner"></span> Generando...
+        } @else {
+          <i class="fa-solid fa-file-pdf"></i> Exportar agenda de hoy
+        }
+      </button>
+    </div>
+  </div>
+
+  <!-- Sección: Exportar agenda de un médico por fecha -->
+  <div class="section-card">
+    <div class="section-header section-header--block">
+      <h2 class="section-title">
+        <i class="fa-solid fa-calendar-range"></i>
+        Agenda por médico y fecha
+      </h2>
+      <p class="section-desc">Filtra por médico, fecha y elige el formato de exportación.</p>
+    </div>
+
+    <div class="form-grid">
+
+      <div class="form-group">
+        <label class="form-label">Médico</label>
+        @if (cargandoMedicos()) {
+          <div class="loading-inline"><span class="spinner"></span> Cargando...</div>
+        } @else {
+          <select
+            class="form-input"
+            [ngModel]="medicoIdSeleccionado()"
+            (ngModelChange)="onMedicoChange($event)"
+          >
+            <option value="">Selecciona un médico</option>
+            @for (m of medicos(); track m.id) {
+              <option [value]="m.id">{{ m.nombresCompletos }} — {{ m.especialidad }}</option>
+            }
+          </select>
+        }
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Fecha</label>
+        <input
+          class="form-input"
+          type="date"
+          [ngModel]="fechaSeleccionada()"
+          (ngModelChange)="fechaSeleccionada.set($event)"
+        />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Formato</label>
+        <select
+          class="form-input"
+          [ngModel]="formatoSeleccionado()"
+          (ngModelChange)="formatoSeleccionado.set($event)"
+        >
+          @for (f of formatos; track f) {
+            <option [value]="f">{{ f }}</option>
+          }
+        </select>
+      </div>
+
+    </div>
+
+    <div class="form-actions">
+      <button
+        class="btn btn--primary"
+        [disabled]="descargando() || !medicoIdSeleccionado()"
+        (click)="descargar()"
+      >
+        @if (descargando()) {
+          <span class="spinner btn-spinner"></span> Generando...
+        } @else {
+          <i class="fa-solid fa-download"></i> Descargar
+        }
+      </button>
+    </div>
+  </div>
+
+</div>

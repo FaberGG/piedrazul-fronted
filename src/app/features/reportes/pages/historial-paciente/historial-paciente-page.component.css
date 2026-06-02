@@ -1,0 +1,316 @@
+.historial-page {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Header */
+.page-header { display: flex; flex-direction: column; gap: 0.25rem; }
+
+.page-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-text-primary, #1a202c);
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0;
+}
+
+.page-subtitle {
+  font-size: 0.9rem;
+  color: var(--color-text-secondary, #718096);
+  margin: 0;
+}
+
+/* Búsqueda */
+.busqueda-card {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
+}
+
+.busqueda-wrap {
+  display: flex;
+  align-items: flex-end;
+  gap: 1rem;
+}
+
+.search-group {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.filtro-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #718096;
+}
+
+.search-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-icon {
+  position: absolute;
+  left: 0.75rem;
+  color: #a0aec0;
+  font-size: 0.85rem;
+  pointer-events: none;
+}
+
+.search-input {
+  width: 100%;
+  padding: 0.5rem 0.75rem 0.5rem 2.2rem;
+  border: 1px solid #cbd5e0;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  color: #2d3748;
+  background: #f7fafc;
+  transition: border-color 0.15s;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #667eea;
+  background: #fff;
+}
+
+.search-spinner {
+  position: absolute;
+  right: 0.75rem;
+}
+
+/* Autocomplete */
+.sugerencias-list {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+  list-style: none;
+  margin: 0;
+  padding: 0.25rem 0;
+  z-index: 100;
+  max-height: 260px;
+  overflow-y: auto;
+}
+
+.sugerencia-item {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  padding: 0.55rem 1rem;
+  cursor: pointer;
+  font-size: 0.875rem;
+  transition: background 0.1s;
+}
+
+.sugerencia-item:hover {
+  background: #f0f4ff;
+}
+
+.sug-doc {
+  font-weight: 600;
+  color: #4a5568;
+  font-family: monospace;
+  font-size: 0.85rem;
+  min-width: 90px;
+}
+
+.sug-nombre { color: #718096; }
+
+/* Paciente header */
+.paciente-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1rem 1.5rem;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.paciente-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.paciente-nombre {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #2d3748;
+}
+
+.paciente-doc {
+  font-size: 0.85rem;
+  color: #718096;
+  font-family: monospace;
+}
+
+.tabla-info {
+  font-size: 0.82rem;
+  color: #a0aec0;
+  margin: 0;
+  text-align: right;
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1.1rem;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  transition: background 0.15s, opacity 0.15s;
+  white-space: nowrap;
+}
+
+.btn:disabled { opacity: 0.55; cursor: not-allowed; }
+
+.btn--primary { background: #667eea; color: #fff; }
+.btn--primary:hover:not(:disabled) { background: #5a67d8; }
+
+.btn--ghost {
+  background: transparent;
+  color: #4a5568;
+  border: 1px solid #e2e8f0;
+}
+.btn--ghost:hover:not(:disabled) { background: #f7fafc; }
+
+/* Alert */
+.alert {
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.alert--error { background: #fff5f5; color: #c53030; border: 1px solid #feb2b2; }
+
+/* Loading */
+.loading-state {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 2rem;
+  color: #718096;
+  font-size: 0.9rem;
+}
+
+/* Spinner */
+.spinner {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #e2e8f0;
+  border-top-color: #667eea;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  flex-shrink: 0;
+}
+
+.btn-spinner { width: 14px; height: 14px; border-width: 2px; border-top-color: #fff; border-color: rgba(255,255,255,0.3); border-top-color: #fff; }
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Table */
+.table-wrapper {
+  overflow-x: auto;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.historial-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+
+.historial-table thead { background: #f7fafc; }
+
+.historial-table th {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #718096;
+  border-bottom: 1px solid #e2e8f0;
+  white-space: nowrap;
+}
+
+.historial-table td {
+  padding: 0.7rem 1rem;
+  color: #2d3748;
+  border-bottom: 1px solid #f0f4f8;
+  vertical-align: middle;
+}
+
+.historial-table tr:last-child td { border-bottom: none; }
+.historial-table tr:hover td { background: #f7fafc; }
+
+.cell--date, .cell--time { white-space: nowrap; font-family: monospace; font-size: 0.82rem; color: #718096; }
+.cell--obs { max-width: 220px; color: #718096; font-size: 0.82rem; }
+
+/* Badges */
+.badge {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: 20px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+.badge--programada { background: #bee3f8; color: #2b6cb0; }
+.badge--atendida   { background: #c6f6d5; color: #276749; }
+.badge--cancelada  { background: #fed7d7; color: #c53030; }
+.badge--default    { background: #e2e8f0; color: #4a5568; }
+
+/* Empty states */
+.empty-state {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: #a0aec0;
+}
+
+.empty-state--initial { padding: 4rem 1rem; }
+
+.empty-state__icon {
+  font-size: 2.5rem;
+  display: block;
+  margin-bottom: 0.75rem;
+}
+
+@media (max-width: 640px) {
+  .historial-page { padding: 1rem; }
+  .busqueda-wrap { flex-direction: column; align-items: stretch; }
+  .paciente-header { flex-direction: column; align-items: flex-start; }
+}

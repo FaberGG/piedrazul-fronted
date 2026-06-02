@@ -1,0 +1,140 @@
+<div class="historial-page">
+
+  <!-- Encabezado -->
+  <div class="page-header">
+    <h1 class="page-title">
+      <i class="fa-solid fa-clock-rotate-left"></i>
+      Historial de Paciente
+    </h1>
+    <p class="page-subtitle">Busca un paciente por número de documento para ver su historial completo de citas y descargarlo en PDF.</p>
+  </div>
+
+  <!-- Búsqueda -->
+  <div class="busqueda-card">
+    <div class="busqueda-wrap">
+      <div class="search-group">
+        <label class="filtro-label">Número de documento</label>
+        <div class="search-input-wrap">
+          <i class="fa-solid fa-magnifying-glass search-icon"></i>
+          <input
+            class="search-input"
+            type="text"
+            placeholder="Escribe el documento del paciente..."
+            [ngModel]="busquedaInput()"
+            (ngModelChange)="onInputChange($event)"
+            (blur)="cerrarSugerencias()"
+            autocomplete="off"
+          />
+          @if (buscando()) {
+            <span class="spinner search-spinner"></span>
+          }
+        </div>
+
+        <!-- Autocomplete -->
+        @if (mostrarSugerencias() && sugerencias().length > 0) {
+          <ul class="sugerencias-list">
+            @for (sug of sugerencias(); track sug.id) {
+              <li class="sugerencia-item" (mousedown)="seleccionar(sug)">
+                <span class="sug-doc">{{ sug.documento }}</span>
+                <span class="sug-nombre">{{ sug.nombresCompletos }}</span>
+              </li>
+            }
+          </ul>
+        }
+      </div>
+
+      @if (pacienteSeleccionado()) {
+        <button class="btn btn--ghost" (click)="limpiar()">
+          <i class="fa-solid fa-xmark"></i> Limpiar
+        </button>
+      }
+    </div>
+  </div>
+
+  <!-- Error al cargar historial -->
+  @if (errorHistorial()) {
+    <div class="alert alert--error">
+      <i class="fa-solid fa-circle-exclamation"></i> {{ errorHistorial() }}
+    </div>
+  }
+
+  <!-- Cargando historial -->
+  @if (cargandoHistorial()) {
+    <div class="loading-state">
+      <span class="spinner"></span>
+      <span>Cargando historial...</span>
+    </div>
+  }
+
+  <!-- Historial cargado -->
+  @if (historial(); as h) {
+
+    <!-- Header del paciente -->
+    <div class="paciente-header">
+      <div class="paciente-info">
+        <span class="paciente-nombre">{{ h.nombreCompleto }}</span>
+        <span class="paciente-doc">Doc: {{ h.documento }}</span>
+      </div>
+      <button
+        class="btn btn--primary"
+        [disabled]="descargando()"
+        (click)="descargarPdf()"
+      >
+        @if (descargando()) {
+          <span class="spinner btn-spinner"></span> Generando PDF...
+        } @else {
+          <i class="fa-solid fa-file-pdf"></i> Descargar PDF
+        }
+      </button>
+    </div>
+
+    <!-- Tabla de citas -->
+    @if (h.citas.length > 0) {
+      <div class="table-wrapper">
+        <table class="historial-table">
+          <thead>
+            <tr>
+              <th>Fecha</th>
+              <th>Hora</th>
+              <th>Tipo Cita</th>
+              <th>Estado</th>
+              <th>Médico</th>
+              <th>Especialidad</th>
+              <th>Observaciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (cita of h.citas; track $index) {
+              <tr>
+                <td class="cell--date">{{ cita.fecha }}</td>
+                <td class="cell--time">{{ cita.hora }}</td>
+                <td>{{ tipoLabel(cita.tipoCita) }}</td>
+                <td>
+                  <span class="badge" [ngClass]="estadoClass(cita.estado)">{{ estadoLabel(cita.estado) }}</span>
+                </td>
+                <td>{{ cita.medicoNombre || '—' }}</td>
+                <td>{{ cita.especialidad || '—' }}</td>
+                <td class="cell--obs">{{ cita.observaciones || '—' }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+      <p class="tabla-info">{{ h.citas.length }} cita{{ h.citas.length !== 1 ? 's' : '' }} en total</p>
+    } @else {
+      <div class="empty-state">
+        <i class="fa-solid fa-calendar-xmark empty-state__icon"></i>
+        <p>Este paciente no tiene citas registradas.</p>
+      </div>
+    }
+  }
+
+  <!-- Estado inicial (sin selección) -->
+  @if (!pacienteSeleccionado() && !cargandoHistorial()) {
+    <div class="empty-state empty-state--initial">
+      <i class="fa-solid fa-user-magnifying-glass empty-state__icon"></i>
+      <p>Busca un paciente por número de documento para ver su historial.</p>
+    </div>
+  }
+
+</div>

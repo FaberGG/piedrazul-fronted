@@ -57,6 +57,7 @@ export class SelectorHorarioComponent implements OnInit, OnChanges {
   @Input() paciente: PacienteFormulario | null = null;
   @Input() pacienteValido = false;
   @Input() resetKey = 0;
+  @Input() medicoIdInicial: number | null = null;
 
   @Output() readonly citaCreada = new EventEmitter<CitaManualResponse>();
   @Output() readonly cancelado = new EventEmitter<void>();
@@ -455,7 +456,11 @@ export class SelectorHorarioComponent implements OnInit, OnChanges {
         tap(() => this.cargandoMedicos.set(false))
       )
       .subscribe((medicos) => {
-        this.medicos.set(medicos.filter((m) => m.activo));
+        const activos = medicos.filter((m) => m.activo);
+        this.medicos.set(activos);
+        if (this.medicoIdInicial && activos.some(m => m.id === this.medicoIdInicial)) {
+          this.form.controls.medicoId.setValue(this.medicoIdInicial);
+        }
       });
   }
 
