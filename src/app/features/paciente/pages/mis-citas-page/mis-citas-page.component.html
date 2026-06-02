@@ -12,36 +12,38 @@
 
     <!-- Cita pendiente -->
     <section class="mis-citas__section">
-      <h2 class="mis-citas__section-title">
-        <i class="fa-solid fa-clock" aria-hidden="true"></i>
-        Cita pendiente
-      </h2>
+      <header class="mis-citas__section-head">
+        <i class="fa-solid fa-clock mis-citas__section-icon" aria-hidden="true"></i>
+        <span>Cita pendiente</span>
+      </header>
 
       @if (citaPendiente(); as cita) {
         <div class="mis-citas__card mis-citas__card--pendiente">
-          <div class="mis-citas__card-row">
-            <span class="mis-citas__label">Fecha</span>
-            <span class="mis-citas__value">{{ cita.fecha }}</span>
-          </div>
-          <div class="mis-citas__card-row">
-            <span class="mis-citas__label">Hora</span>
-            <span class="mis-citas__value">{{ cita.hora }}</span>
-          </div>
-          <div class="mis-citas__card-row">
-            <span class="mis-citas__label">Médico</span>
-            <span class="mis-citas__value">{{ cita.medicoNombre }}</span>
-          </div>
-          <div class="mis-citas__card-row">
-            <span class="mis-citas__label">Especialidad</span>
-            <span class="mis-citas__value">{{ cita.especialidad }}</span>
-          </div>
-          <div class="mis-citas__card-row">
-            <span class="mis-citas__label">Tipo</span>
-            <span class="mis-citas__value">{{ tipoLabel(cita.tipoCita) }}</span>
-          </div>
-          <div class="mis-citas__card-row">
-            <span class="mis-citas__label">Estado</span>
-            <span class="mis-citas__badge mis-citas__badge--programada">{{ estadoLabel(cita.estado) }}</span>
+          <div class="mis-citas__rows">
+            <div class="mis-citas__row">
+              <span class="mis-citas__label">Fecha</span>
+              <span class="mis-citas__value">{{ cita.fecha }}</span>
+            </div>
+            <div class="mis-citas__row">
+              <span class="mis-citas__label">Hora</span>
+              <span class="mis-citas__value">{{ cita.hora }}</span>
+            </div>
+            <div class="mis-citas__row">
+              <span class="mis-citas__label">Médico</span>
+              <span class="mis-citas__value">{{ cita.medicoNombre }}</span>
+            </div>
+            <div class="mis-citas__row">
+              <span class="mis-citas__label">Especialidad</span>
+              <span class="mis-citas__value">{{ cita.especialidad }}</span>
+            </div>
+            <div class="mis-citas__row">
+              <span class="mis-citas__label">Tipo</span>
+              <span class="mis-citas__value">{{ tipoLabel(cita.tipoCita) }}</span>
+            </div>
+            <div class="mis-citas__row">
+              <span class="mis-citas__label">Estado</span>
+              <span class="mis-citas__badge mis-citas__badge--programada">{{ estadoLabel(cita.estado) }}</span>
+            </div>
           </div>
         </div>
       } @else {
@@ -51,43 +53,45 @@
 
     <!-- Historial -->
     <section class="mis-citas__section">
-      <h2 class="mis-citas__section-title">
-        <i class="fa-solid fa-list" aria-hidden="true"></i>
-        Historial
-      </h2>
+      <header class="mis-citas__section-head">
+        <i class="fa-solid fa-list mis-citas__section-icon" aria-hidden="true"></i>
+        <span>Historial</span>
+      </header>
 
       @if (historial().length === 0) {
         <p class="mis-citas__hint">No hay citas anteriores registradas.</p>
       } @else {
-        <div class="mis-citas__table-wrapper">
-          <table class="mis-citas__table">
-            <thead>
-              <tr>
-                <th>Fecha</th>
-                <th>Hora</th>
-                <th>Médico</th>
-                <th>Tipo</th>
-                <th>Estado</th>
-              </tr>
-            </thead>
-            <tbody>
-              @for (cita of historial(); track cita.id) {
+        <div class="mis-citas__card">
+          <div class="mis-citas__table-wrapper">
+            <table class="mis-citas__table">
+              <thead>
                 <tr>
-                  <td>{{ cita.fecha }}</td>
-                  <td>{{ cita.hora }}</td>
-                  <td>{{ cita.medicoNombre }}</td>
-                  <td>{{ tipoLabel(cita.tipoCita) }}</td>
-                  <td>
-                    <span class="mis-citas__badge"
-                          [class.mis-citas__badge--atendida]="cita.estado === EstadoCita.ATENDIDA"
-                          [class.mis-citas__badge--cancelada]="cita.estado === EstadoCita.CANCELADA">
-                      {{ estadoLabel(cita.estado) }}
-                    </span>
-                  </td>
+                  <th>Fecha</th>
+                  <th>Hora</th>
+                  <th>Médico</th>
+                  <th>Tipo</th>
+                  <th>Estado</th>
                 </tr>
-              }
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                @for (cita of historial(); track cita.id) {
+                  <tr>
+                    <td>{{ cita.fecha }}</td>
+                    <td>{{ cita.hora }}</td>
+                    <td>{{ cita.medicoNombre }}</td>
+                    <td>{{ tipoLabel(cita.tipoCita) }}</td>
+                    <td>
+                      <span class="mis-citas__badge"
+                            [class.mis-citas__badge--atendida]="cita.estado === EstadoCita.ATENDIDA"
+                            [class.mis-citas__badge--cancelada]="cita.estado === EstadoCita.CANCELADA">
+                        {{ estadoLabel(cita.estado) }}
+                      </span>
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
         </div>
       }
     </section>

@@ -53,6 +53,39 @@
   line-height: 1.25;
 }
 
+/* ── Nav ── */
+.patient-shell__nav {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  flex: 1;
+  justify-content: center;
+}
+
+.patient-shell__nav-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 1rem;
+  border-radius: var(--menu-item-radius);
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  transition: background 0.15s, color 0.15s;
+}
+
+.patient-shell__nav-link:hover {
+  background: var(--color-primary-subtle);
+  color: var(--color-primary-darker);
+}
+
+.patient-shell__nav-link--active {
+  background: var(--color-primary-light);
+  color: var(--color-primary-darker);
+  font-weight: 600;
+}
+
 /* ── Profile + logout ── */
 .patient-shell__profile {
   display: flex;
@@ -106,6 +139,10 @@
   }
 
   .patient-shell__user-name {
+    display: none;
+  }
+
+  .patient-shell__nav-link span {
     display: none;
   }
 
