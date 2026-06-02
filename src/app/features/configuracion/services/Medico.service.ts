@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { environment } from '../../../../environments/environment';
 
 export type DayOfWeek =
   | 'MONDAY' | 'TUESDAY' | 'WEDNESDAY'
@@ -48,7 +49,7 @@ export interface ConfigurarAgendaMedicoRequest {
 
 @Injectable({ providedIn: 'root' })
 export class MedicoService {
-  private readonly base = 'http://localhost:8080/api/v1/medicos';
+  private readonly base = `${environment.apiUrl}/medicos`;
 
   constructor(private http: HttpClient) {}
 
