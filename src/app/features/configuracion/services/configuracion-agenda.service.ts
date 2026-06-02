@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../../../environments/environment';
 
 export interface ConfiguracionAgendaRequest {
   ventanaAgendamientoSemanas: number;
@@ -24,7 +25,7 @@ export interface DiaNoLaboralResponse {
 @Injectable({ providedIn: 'root' })
 export class ConfiguracionAgendaService {
 
-  private readonly base = 'http://localhost:8080/api/v1/configuracion/agenda';
+  private readonly base = `${environment.apiUrl}/configuracion/agenda`;
 
   constructor(private http: HttpClient) {}
 
