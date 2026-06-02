@@ -1,0 +1,230 @@
+<div class="reg-page">
+
+  <div class="page-header">
+    <h1 class="page-title">
+      <i class="fa-solid fa-user-plus"></i>
+      Registrar usuarios
+    </h1>
+    <p class="page-subtitle">Crea cuentas de médico/terapista y administrador desde un mismo panel.</p>
+  </div>
+
+  <div class="forms-grid">
+
+    <!-- ═══════════════════════════════ MÉDICO / TERAPISTA ═══ -->
+    <div class="form-card">
+
+      <div class="card-header">
+        <span class="card-icon card-icon--medico">
+          <i class="fa-solid fa-user-doctor"></i>
+        </span>
+        <div>
+          <h2 class="card-title">Médico / Terapista</h2>
+          <p class="card-desc">Cuenta con acceso a la agenda y citas.</p>
+        </div>
+      </div>
+
+      @if (exitoMedico()) {
+        <div class="alert alert--success">
+          <i class="fa-solid fa-circle-check"></i> Médico registrado correctamente.
+          <button class="alert-close" (click)="exitoMedico.set(false)">✕</button>
+        </div>
+      }
+
+      @if (errorMedico()) {
+        <div class="alert alert--error">
+          <i class="fa-solid fa-circle-exclamation"></i> {{ errorMedico() }}
+        </div>
+      }
+
+      <form [formGroup]="formMedico" (ngSubmit)="registrarMedico()" novalidate>
+
+        <div class="field-grid">
+
+          <div class="field">
+            <label class="field-label">Nombres*</label>
+            <input
+              class="field-input"
+              type="text"
+              formControlName="nombres"
+              placeholder="Juan Carlos"
+              [class.input-error]="isInvalid(formMedico, 'nombres')"
+              [class.input-ok]="isValid(formMedico, 'nombres')"
+              (input)="touch(formMedico, 'nombres')" />
+            @if (isInvalid(formMedico, 'nombres')) {
+              <span class="error-msg">{{ getError(formMedico, 'nombres') }}</span>
+            }
+          </div>
+
+          <div class="field">
+            <label class="field-label">Apellidos*</label>
+            <input
+              class="field-input"
+              type="text"
+              formControlName="apellidos"
+              placeholder="García López"
+              [class.input-error]="isInvalid(formMedico, 'apellidos')"
+              [class.input-ok]="isValid(formMedico, 'apellidos')"
+              (input)="touch(formMedico, 'apellidos')" />
+            @if (isInvalid(formMedico, 'apellidos')) {
+              <span class="error-msg">{{ getError(formMedico, 'apellidos') }}</span>
+            }
+          </div>
+
+          <div class="field">
+            <label class="field-label">Tipo*</label>
+            <select
+              class="field-input"
+              formControlName="tipo"
+              [class.input-error]="isInvalid(formMedico, 'tipo')"
+              [class.input-ok]="isValid(formMedico, 'tipo')"
+              (change)="touch(formMedico, 'tipo')">
+              <option value="" disabled>Seleccione</option>
+              @for (t of tipos; track t.value) {
+                <option [value]="t.value">{{ t.label }}</option>
+              }
+            </select>
+            @if (isInvalid(formMedico, 'tipo')) {
+              <span class="error-msg">{{ getError(formMedico, 'tipo') }}</span>
+            }
+          </div>
+
+          <div class="field">
+            <label class="field-label">Especialidad*</label>
+            <select
+              class="field-input"
+              formControlName="especialidad"
+              [class.input-error]="isInvalid(formMedico, 'especialidad')"
+              [class.input-ok]="isValid(formMedico, 'especialidad')"
+              (change)="touch(formMedico, 'especialidad')">
+              <option value="" disabled>Seleccione</option>
+              @for (e of especialidades; track e.value) {
+                <option [value]="e.value">{{ e.label }}</option>
+              }
+            </select>
+            @if (isInvalid(formMedico, 'especialidad')) {
+              <span class="error-msg">{{ getError(formMedico, 'especialidad') }}</span>
+            }
+          </div>
+
+          <div class="field field--full">
+            <label class="field-label">Correo electrónico*</label>
+            <input
+              class="field-input"
+              type="email"
+              formControlName="correo"
+              placeholder="correo@ejemplo.com"
+              [class.input-error]="isInvalid(formMedico, 'correo')"
+              [class.input-ok]="isValid(formMedico, 'correo')"
+              (input)="touch(formMedico, 'correo')" />
+            @if (isInvalid(formMedico, 'correo')) {
+              <span class="error-msg">{{ getError(formMedico, 'correo') }}</span>
+            }
+          </div>
+
+          <div class="field field--full">
+            <label class="field-label">Contraseña*</label>
+            <input
+              class="field-input"
+              type="password"
+              formControlName="contrasena"
+              placeholder="Mínimo 6 caracteres, al menos un número"
+              [class.input-error]="isInvalid(formMedico, 'contrasena')"
+              [class.input-ok]="isValid(formMedico, 'contrasena')"
+              (input)="touch(formMedico, 'contrasena')" />
+            @if (isInvalid(formMedico, 'contrasena')) {
+              <span class="error-msg">{{ getError(formMedico, 'contrasena') }}</span>
+            }
+          </div>
+
+        </div>
+
+        <div class="card-actions">
+          <button class="btn btn--medico" type="submit" [disabled]="cargandoMedico()">
+            @if (cargandoMedico()) {
+              <span class="spinner"></span> Registrando...
+            } @else {
+              <i class="fa-solid fa-user-check"></i> Registrar
+            }
+          </button>
+        </div>
+
+      </form>
+    </div>
+
+    <!-- ═══════════════════════════════════════ ADMINISTRADOR ═══ -->
+    <div class="form-card">
+
+      <div class="card-header">
+        <span class="card-icon card-icon--admin">
+          <i class="fa-solid fa-user-tie"></i>
+        </span>
+        <div>
+          <h2 class="card-title">Administrador</h2>
+          <p class="card-desc">Acceso completo al sistema y configuración.</p>
+        </div>
+      </div>
+
+      @if (exitoAdmin()) {
+        <div class="alert alert--success">
+          <i class="fa-solid fa-circle-check"></i> Administrador registrado correctamente.
+          <button class="alert-close" (click)="exitoAdmin.set(false)">✕</button>
+        </div>
+      }
+
+      @if (errorAdmin()) {
+        <div class="alert alert--error">
+          <i class="fa-solid fa-circle-exclamation"></i> {{ errorAdmin() }}
+        </div>
+      }
+
+      <form [formGroup]="formAdmin" (ngSubmit)="registrarAdmin()" novalidate>
+
+        <div class="field-grid">
+
+          <div class="field field--full">
+            <label class="field-label">Correo electrónico*</label>
+            <input
+              class="field-input"
+              type="email"
+              formControlName="username"
+              placeholder="admin@ejemplo.com"
+              [class.input-error]="isInvalid(formAdmin, 'username')"
+              [class.input-ok]="isValid(formAdmin, 'username')"
+              (input)="touch(formAdmin, 'username')" />
+            @if (isInvalid(formAdmin, 'username')) {
+              <span class="error-msg">{{ getError(formAdmin, 'username') }}</span>
+            }
+          </div>
+
+          <div class="field field--full">
+            <label class="field-label">Contraseña*</label>
+            <input
+              class="field-input"
+              type="password"
+              formControlName="password"
+              placeholder="Mínimo 6 caracteres"
+              [class.input-error]="isInvalid(formAdmin, 'password')"
+              [class.input-ok]="isValid(formAdmin, 'password')"
+              (input)="touch(formAdmin, 'password')" />
+            @if (isInvalid(formAdmin, 'password')) {
+              <span class="error-msg">{{ getError(formAdmin, 'password') }}</span>
+            }
+          </div>
+
+        </div>
+
+        <div class="card-actions">
+          <button class="btn btn--admin" type="submit" [disabled]="cargandoAdmin()">
+            @if (cargandoAdmin()) {
+              <span class="spinner"></span> Registrando...
+            } @else {
+              <i class="fa-solid fa-user-check"></i> Registrar
+            }
+          </button>
+        </div>
+
+      </form>
+    </div>
+
+  </div>
+</div>

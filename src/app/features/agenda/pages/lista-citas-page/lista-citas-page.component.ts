@@ -10,12 +10,15 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AgendaService } from '../../services/agenda.service';
-import { MedicosService } from '../../services/medicos.service';
+import { MedicosService, AgendaDiaDtoFrontend } from '../../services/medicos.service';
 import { ReporteService } from '../../../reportes/services/report.service';
 import { AuthService } from '../../../../core/auth/auth.service';
-import { AgendaModel, CitaModel, EstadoCita } from '../../models/cita.model';
+import { AgendaModel, CitaModel } from '../../models/cita.model';
 import { MedicoModel } from '../../models/medico.model';
 import { DetalleCitaPanelComponent } from '../../components/detalle-cita-panel/detalle-cita-panel.component';
+import { ROLES } from '../../../../shared/constants/roles';
+
+const SENTINEL_TODOS = 'todos';
 
 @Component({
   selector: 'app-lista-citas-page',
@@ -33,12 +36,19 @@ export class ListaCitasPageComponent implements OnInit {
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
 
+  readonly SENTINEL_TODOS = SENTINEL_TODOS;
+
   medicos = signal<MedicoModel[]>([]);
   agenda = signal<AgendaModel | null>(null);
+  agendaCompleta = signal<AgendaDiaDtoFrontend[] | null>(null);
   cargando = signal(false);
   descargando = signal(false);
   errorMensaje = signal('');
   agendaCargada = signal(false);
+  modoTodos = signal(false);
+
+  // 'todos' sentinel or a numeric id stored as string to unify the select binding
+  medicoSeleccionadoValor = signal<string>('');
   medicoSeleccionadoId = signal<number | null>(null);
   fechaSeleccionada = signal<string>('');
   formatosDisponibles = signal<string[]>([]);
@@ -46,10 +56,12 @@ export class ListaCitasPageComponent implements OnInit {
   citaSeleccionadaId = signal<number | null>(null);
 
   rol = computed(() => this.authService.getCurrentRole());
-  puedeVerDetalle = computed(() => this.rol() === 'ADMIN' || this.rol() === 'MEDICO');
+  puedeVerDetalle = computed(() => this.rol() === ROLES.ADMIN || this.rol() === ROLES.MEDICO);
 
   puedesBuscar = computed(() =>
-    !!this.medicoSeleccionadoId() && !!this.fechaSeleccionada() && !this.cargando()
+    (!!this.medicoSeleccionadoId() || this.modoTodos()) &&
+    !!this.fechaSeleccionada() &&
+    !this.cargando()
   );
 
   ngOnInit(): void {
@@ -60,8 +72,25 @@ export class ListaCitasPageComponent implements OnInit {
 
   cargarMedicos(): void {
     this.medicosService.listarActivos().subscribe({
-      next: (data) => this.medicos.set(data),
+      next: (data) => {
+        this.medicos.set(data);
+        this.autoSeleccionarMedicoActual();
+      },
       error: () => this.errorMensaje.set('No se pudo cargar la lista de médicos.')
+    });
+  }
+
+  private autoSeleccionarMedicoActual(): void {
+    const role = this.rol();
+    if (role !== ROLES.MEDICO && role !== ROLES.TERAPISTA) return;
+
+    this.medicosService.getMedicoActual().subscribe({
+      next: (medico) => {
+        this.medicoSeleccionadoId.set(medico.id);
+        this.medicoSeleccionadoValor.set(String(medico.id));
+        this.modoTodos.set(false);
+      },
+      error: () => { /* no-op: user can select manually */ }
     });
   }
 
@@ -73,17 +102,34 @@ export class ListaCitasPageComponent implements OnInit {
   }
 
   buscarCitas(): void {
-    const medicoId = this.medicoSeleccionadoId();
     const fecha = this.fechaSeleccionada();
+    this.errorMensaje.set('');
+    this.agendaCargada.set(false);
+    this.agenda.set(null);
+    this.agendaCompleta.set(null);
+
+    if (this.modoTodos()) {
+      this.cargando.set(true);
+      this.medicosService.getAgendaCompleta(fecha).subscribe({
+        next: (data) => {
+          this.agendaCompleta.set(data);
+          this.agendaCargada.set(true);
+          this.cargando.set(false);
+        },
+        error: () => {
+          this.cargando.set(false);
+          this.errorMensaje.set('Error al consultar la agenda del día.');
+        }
+      });
+      return;
+    }
+
+    const medicoId = this.medicoSeleccionadoId();
     if (!medicoId || !fecha) {
       this.errorMensaje.set('Selecciona un médico y una fecha.');
       return;
     }
     this.cargando.set(true);
-    this.errorMensaje.set('');
-    this.agendaCargada.set(false);
-    this.agenda.set(null);
-
     this.agendaService.listarAgendaMedico(medicoId, fecha).subscribe({
       next: (data) => {
         this.agenda.set(data);
@@ -103,15 +149,24 @@ export class ListaCitasPageComponent implements OnInit {
     });
   }
 
-  onMedicoChange(id: string): void {
-    this.medicoSeleccionadoId.set(id ? Number(id) : null);
+  onMedicoChange(valor: string): void {
     this.agendaCargada.set(false);
     this.agenda.set(null);
+    this.agendaCompleta.set(null);
     this.errorMensaje.set('');
+    this.medicoSeleccionadoValor.set(valor);
+
+    if (valor === SENTINEL_TODOS) {
+      this.modoTodos.set(true);
+      this.medicoSeleccionadoId.set(null);
+    } else {
+      this.modoTodos.set(false);
+      this.medicoSeleccionadoId.set(valor ? Number(valor) : null);
+    }
   }
 
-  getEstadoClass(estado: EstadoCita): string {
-    const map: Record<EstadoCita, string> = {
+  getEstadoClass(estado: string): string {
+    const map: Record<string, string> = {
       PROGRAMADA: 'estado--programada',
       ATENDIDA: 'estado--atendida',
       CANCELADA: 'estado--cancelada'
@@ -140,7 +195,7 @@ export class ListaCitasPageComponent implements OnInit {
     const formatoSelec = this.formatoSeleccionado();
 
     if (!medicoId || !fecha) {
-      this.errorMensaje.set('Selecciona un médico y una fecha.');
+      this.errorMensaje.set('Selecciona un médico específico y una fecha para exportar.');
       return;
     }
     if (!formatoSelec) {

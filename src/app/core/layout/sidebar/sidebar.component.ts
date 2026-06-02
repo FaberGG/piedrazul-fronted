@@ -31,7 +31,13 @@ export class SidebarComponent {
       label: 'Ver Agenda',
       path: '/agenda/listar',
       iconClass: 'fa-solid fa-list-check',
-      allowedRoles: [ROLES.ADMIN, ROLES.AGENDADOR, ROLES.MEDICO]
+      allowedRoles: [ROLES.ADMIN, ROLES.AGENDADOR, ROLES.MEDICO, ROLES.TERAPISTA]
+    },
+    {
+      label: 'Exportar Agenda',
+      path: '/reportes/listado-de-citas',
+      iconClass: 'fa-solid fa-file-export',
+      allowedRoles: [ROLES.ADMIN, ROLES.MEDICO, ROLES.AGENDADOR, ROLES.TERAPISTA]
     },
     {
       label: 'Nueva Cita',
@@ -39,25 +45,23 @@ export class SidebarComponent {
       iconClass: 'fa-solid fa-circle-plus',
       allowedRoles: [ROLES.AGENDADOR, ROLES.MEDICO]
     },
-     {
+    {
       label: 'Configuracion global medicos',
       path: '/configuracion/medicos',
       iconClass: 'fa-solid fa-user-doctor',
       allowedRoles: [ROLES.ADMIN]
     },
-
-      {
-      label: 'Registrar administrador',
+    {
+      label: 'Registrar usuarios',
       path: '/admin/registrar',
-      iconClass: 'fa-solid fa-user-tie',
+      iconClass: 'fa-solid fa-user-plus',
       allowedRoles: [ROLES.ADMIN]
     },
-
     {
-      label: 'Registrar medico',
-      path: '/medico/registrar',
-      iconClass: 'fa-solid fa-user-doctor',
-      allowedRoles: [ROLES.ADMIN]
+      label: 'Historial Paciente',
+      path: '/reportes/historial-paciente',
+      iconClass: 'fa-solid fa-clock-rotate-left',
+      allowedRoles: [ROLES.ADMIN, ROLES.MEDICO, ROLES.TERAPISTA]
     },
     {
       label: 'Configuracion global',
@@ -70,8 +74,7 @@ export class SidebarComponent {
       path: '/auditoria',
       iconClass: 'fa-solid fa-shield-halved',
       allowedRoles: [ROLES.ADMIN]
-    }
-
+    },
   ];
 
   readonly utilityItems = [

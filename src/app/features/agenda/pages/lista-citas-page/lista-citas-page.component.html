@@ -4,7 +4,7 @@
   <div class="lc-topbar">
     <div class="lc-topbar__left">
       <h1 class="lc-topbar__title">Listar citas</h1>
-      <p class="lc-topbar__subtitle">Consulta las citas de un médico / terapista por fecha</p>
+      <p class="lc-topbar__subtitle">Consulta la agenda de un médico/terapista o de todos los médicos del día.</p>
     </div>
     <div class="lc-topbar__right">
       <button class="btn-nueva-cita">Nueva cita</button>
@@ -19,11 +19,12 @@
     <div class="lc-search-card__body">
       <div class="lc-field">
         <label class="lc-field__label">Médico / Terapista</label>
-        <select class="lc-field__control" [value]="medicoSeleccionadoId() ?? ''"
+        <select class="lc-field__control" [value]="medicoSeleccionadoValor()"
           (change)="onMedicoChange($any($event.target).value)">
           <option value="" disabled>Seleccione un médico</option>
+          <option [value]="SENTINEL_TODOS">— Todos los médicos —</option>
           @for (m of medicos(); track trackByMedico($index, m)) {
-          <option [value]="m.id">{{ m.nombresCompletos }}</option>
+            <option [value]="m.id">{{ m.nombresCompletos }}</option>
           }
         </select>
       </div>
@@ -36,9 +37,9 @@
 
       <button class="btn-buscar" (click)="buscarCitas()" [disabled]="!puedesBuscar()">
         @if (cargando()) {
-        <span class="spinner"></span>
+          <span class="spinner"></span>
         } @else {
-        Buscar citas
+          Buscar citas
         }
       </button>
     </div>
@@ -46,107 +47,156 @@
 
   <!-- ERROR -->
   @if (errorMensaje()) {
-  <div class="lc-alert">{{ errorMensaje() }}</div>
+    <div class="lc-alert">{{ errorMensaje() }}</div>
   }
 
-  <!-- RESULTADOS -->
+  <!-- RESULTADOS — médico individual -->
   @if (agendaCargada() && agenda(); as ag) {
-  <div class="lc-stats">
-    <div class="lc-stat-card">
-      <span class="lc-stat-card__num">{{ ag.slotsOcupados }}</span>
-      <span class="lc-stat-card__label">Citas Agendadas</span>
-    </div>
-    <div class="lc-stat-card">
-      <span class="lc-stat-card__num">{{ ag.horariosDisponibles.length }}</span>
-      <span class="lc-stat-card__label">Horarios Disponibles</span>
-    </div>
-    <div class="lc-stat-card">
-      <span class="lc-stat-card__num">{{ ag.totalSlots }}</span>
-      <span class="lc-stat-card__label">Total Citas</span>
-    </div>
-    <div class="lc-stat-card">
-      <span class="lc-stat-card__num">{{ ag.porcentajeOcupacion | number:'1.0-0' }}%</span>
-      <span class="lc-stat-card__label">Ocupado</span>
-    </div>
-  </div>
-
-  <div class="lc-medico-bar">{{ ag.medicoNombre }}</div>
-
-  <div class="lc-table-card">
-    <div class="lc-table-card__header">
-      <h3 class="lc-table-card__title">Lista de citas</h3>
-      <div class="lc-export-controls">
-        <div class="lc-export-controls__field">
-          <label class="lc-field__label">Formato Exportación</label>
-          <select class="lc-export-controls__select" [value]="formatoSeleccionado()"
-            (change)="formatoSeleccionado.set($any($event.target).value)">
-            <option value="" disabled selected>Seleccione un formato</option>
-            @for (f of formatosDisponibles(); track f) {
-            <option [value]="f">{{ f }}</option>
-            }
-          </select>
-        </div>
-        <button class="btn-exportar" (click)="exportFormat()" [disabled]="descargando()">
-          @if (descargando()) {
-          <span class="spinner"></span>
-          } @else {
-          Exportar
-          }
-        </button>
+    <div class="lc-stats">
+      <div class="lc-stat-card">
+        <span class="lc-stat-card__num">{{ ag.slotsOcupados }}</span>
+        <span class="lc-stat-card__label">Citas Agendadas</span>
+      </div>
+      <div class="lc-stat-card">
+        <span class="lc-stat-card__num">{{ ag.horariosDisponibles.length }}</span>
+        <span class="lc-stat-card__label">Horarios Disponibles</span>
+      </div>
+      <div class="lc-stat-card">
+        <span class="lc-stat-card__num">{{ ag.totalSlots }}</span>
+        <span class="lc-stat-card__label">Total Citas</span>
+      </div>
+      <div class="lc-stat-card">
+        <span class="lc-stat-card__num">{{ ag.porcentajeOcupacion | number:'1.0-0' }}%</span>
+        <span class="lc-stat-card__label">Ocupado</span>
       </div>
     </div>
 
-    @if (!ag.citas.length) {
-    <div class="lc-empty">No hay citas registradas para esta fecha.</div>
-    } @else {
-    <div class="lc-table-wrap">
-      <table class="lc-table">
-        <thead>
-          <tr>
-            <th>HORA</th>
-            <th>PACIENTE</th>
-            <th>DOCUMENTO</th>
-            <th>ESPECIALIDAD</th>
-            <th>ESTADO</th>
-            <th>OBSERVACIÓN</th>
-            <th>ACCIONES</th>
-          </tr>
-        </thead>
-        <tbody>
-          @for (cita of ag.citas; track trackByCita($index, cita)) {
-          <tr>
-            <td class="lc-table__hora">{{ getRangoHora(cita.hora, 15) }}</td>
-            <td>{{ cita.pacienteNombre }}</td>
-            <td class="lc-table__doc">{{ cita.pacienteDocumento }}</td>
-            <td>{{ cita.especialidad }}</td>
-            <td>
-              <span class="estado-badge" [ngClass]="getEstadoClass(cita.estado)">
-                {{ cita.estado | titlecase }}
-              </span>
-            </td>
-            <td class="lc-table__obs">{{ cita.observaciones || '' }}</td>
-            <td class="lc-table__actions">
-              @if (puedeVerDetalle()) {
-                <button class="btn-detalle" (click)="verDetalle(cita.id)">Ver detalle</button>
+    <div class="lc-medico-bar">{{ ag.medicoNombre }}</div>
+
+    <div class="lc-table-card">
+      <div class="lc-table-card__header">
+        <h3 class="lc-table-card__title">Lista de citas</h3>
+        <div class="lc-export-controls">
+          <div class="lc-export-controls__field">
+            <label class="lc-field__label">Formato Exportación</label>
+            <select class="lc-export-controls__select" [value]="formatoSeleccionado()"
+              (change)="formatoSeleccionado.set($any($event.target).value)">
+              <option value="" disabled selected>Seleccione un formato</option>
+              @for (f of formatosDisponibles(); track f) {
+                <option [value]="f">{{ f }}</option>
               }
-              @if (cita.estado === 'ATENDIDA') {
-                <button class="btn-reagendar" (click)="reagendarCita(cita.id)">Reagendar</button>
+            </select>
+          </div>
+          <button class="btn-exportar" (click)="exportFormat()" [disabled]="descargando()">
+            @if (descargando()) {
+              <span class="spinner"></span>
+            } @else {
+              Exportar
+            }
+          </button>
+        </div>
+      </div>
+
+      @if (!ag.citas.length) {
+        <div class="lc-empty">No hay citas registradas para esta fecha.</div>
+      } @else {
+        <div class="lc-table-wrap">
+          <table class="lc-table">
+            <thead>
+              <tr>
+                <th>HORA</th>
+                <th>PACIENTE</th>
+                <th>DOCUMENTO</th>
+                <th>ESPECIALIDAD</th>
+                <th>ESTADO</th>
+                <th>OBSERVACIÓN</th>
+                <th>ACCIONES</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (cita of ag.citas; track trackByCita($index, cita)) {
+                <tr>
+                  <td class="lc-table__hora">{{ getRangoHora(cita.hora, 15) }}</td>
+                  <td>{{ cita.pacienteNombre }}</td>
+                  <td class="lc-table__doc">{{ cita.pacienteDocumento }}</td>
+                  <td>{{ cita.especialidad }}</td>
+                  <td>
+                    <span class="estado-badge" [ngClass]="getEstadoClass(cita.estado)">
+                      {{ cita.estado | titlecase }}
+                    </span>
+                  </td>
+                  <td class="lc-table__obs">{{ cita.observaciones || '' }}</td>
+                  <td class="lc-table__actions">
+                    @if (puedeVerDetalle()) {
+                      <button class="btn-detalle" (click)="verDetalle(cita.id)">Ver detalle</button>
+                    }
+                    @if (cita.estado === 'ATENDIDA') {
+                      <button class="btn-reagendar" (click)="reagendarCita(cita.id)">Reagendar</button>
+                    }
+                  </td>
+                </tr>
               }
-            </td>
-          </tr>
-          }
-        </tbody>
-      </table>
+            </tbody>
+          </table>
+        </div>
+      }
     </div>
+  }
+
+  <!-- RESULTADOS — todos los médicos -->
+  @if (agendaCargada() && agendaCompleta(); as completa) {
+    @if (!completa.length) {
+      <div class="lc-empty">No hay citas programadas para este día.</div>
+    } @else {
+      @for (agMedico of completa; track agMedico.medicoId) {
+        <div class="lc-table-card lc-table-card--medico-section">
+          <div class="lc-medico-bar">
+            {{ agMedico.medicoNombre }}
+            <span class="lc-medico-bar__esp">{{ agMedico.especialidad }}</span>
+            <span class="lc-medico-bar__count">{{ agMedico.citas.length }} cita{{ agMedico.citas.length !== 1 ? 's' : '' }}</span>
+          </div>
+          @if (!agMedico.citas.length) {
+            <div class="lc-empty lc-empty--sm">Sin citas para este día.</div>
+          } @else {
+            <div class="lc-table-wrap">
+              <table class="lc-table">
+                <thead>
+                  <tr>
+                    <th>HORA</th>
+                    <th>PACIENTE</th>
+                    <th>DOCUMENTO</th>
+                    <th>ESTADO</th>
+                    <th>OBSERVACIÓN</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (cita of agMedico.citas; track $index) {
+                    <tr>
+                      <td class="lc-table__hora">{{ formatHora(cita.hora) }}</td>
+                      <td>{{ cita.pacienteNombre }}</td>
+                      <td class="lc-table__doc">{{ cita.pacienteDocumento }}</td>
+                      <td>
+                        <span class="estado-badge" [ngClass]="getEstadoClass(cita.estado)">
+                          {{ cita.estado | titlecase }}
+                        </span>
+                      </td>
+                      <td class="lc-table__obs">{{ cita.observaciones || '' }}</td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+          }
+        </div>
+      }
     }
-  </div>
   }
 
   <!-- ESTADO INICIAL -->
   @if (!agendaCargada() && !cargando()) {
-  <div class="lc-initial">
-    Selecciona un médico y una fecha para ver las citas.
-  </div>
+    <div class="lc-initial">
+      Selecciona un médico (o "Todos los médicos") y una fecha para ver las citas.
+    </div>
   }
 
 </div>

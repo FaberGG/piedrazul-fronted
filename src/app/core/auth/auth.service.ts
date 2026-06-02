@@ -119,12 +119,14 @@ export class AuthService {
   private pickRole(normalizedRoles: string[]): Role {
     if (normalizedRoles.includes(ROLES.ADMIN)) return ROLES.ADMIN;
     if (normalizedRoles.includes(ROLES.MEDICO)) return ROLES.MEDICO;
+    if (normalizedRoles.includes(ROLES.TERAPISTA)) return ROLES.TERAPISTA;
     if (normalizedRoles.includes(ROLES.AGENDADOR)) return ROLES.AGENDADOR;
     if (normalizedRoles.includes(ROLES.PACIENTE)) return ROLES.PACIENTE;
     return '' as Role;
   }
 
   private isKnownRole(role: string | undefined): role is Role {
-    return role === ROLES.ADMIN || role === ROLES.AGENDADOR || role === ROLES.MEDICO || role === ROLES.PACIENTE;
+    return role === ROLES.ADMIN || role === ROLES.AGENDADOR || role === ROLES.MEDICO
+        || role === ROLES.TERAPISTA || role === ROLES.PACIENTE;
   }
 }

@@ -43,21 +43,20 @@ export const routes: Routes = [
           import('./features/configuracion/configuracion.routes').then((m) => m.configuracionRoutes)
       },
       {
-        path: 'medico/registrar',
-        loadComponent: () =>
-          import('./features/auth/pages/register-medico-page/register-medico-page.component')
-            .then(m => m.RegistrarMedicoPageComponent)
-      },
-      {
         path: 'admin/registrar',
         loadComponent: () =>
-          import('./features/auth/pages/register-admin-page/register-admin-page.component')
-            .then(m => m.RegisterAdminPageComponent)
+          import('./features/auth/pages/registrar-usuarios-page/registrar-usuarios-page.component')
+            .then(m => m.RegistrarUsuariosPageComponent)
       },
       {
         path: 'auditoria',
         loadChildren: () =>
           import('./features/auditoria/auditoria.routes').then((m) => m.auditoriaRoutes)
+      },
+      {
+        path: 'reportes',
+        loadChildren: () =>
+          import('./features/reportes/reportes.routes').then((m) => m.reportesRoutes)
       }
     ]
   },
