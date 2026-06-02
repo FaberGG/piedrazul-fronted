@@ -140,4 +140,8 @@ export class RegisterPageComponent {
     }
   });
 }
+
+goToLogin(): void {
+  this.router.navigate(['/login']);
+}
 }

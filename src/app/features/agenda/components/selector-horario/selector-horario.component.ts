@@ -12,6 +12,7 @@ import {
   CrearCitaPrioridadRequest,
   PacienteFormulario
 } from '../../models/cita-manual.model';
+import { TipoCita, TIPO_CITA_LABELS } from '../../models/tipo-cita.enum';
 import { DisponibilidadGlobal } from '../../models/disponibilidad.model';
 import { MedicoAgenda } from '../../models/medico-agenda.model';
 import { MedicoConfiguracion } from '../../models/medico-configuracion.model';
@@ -89,6 +90,9 @@ export class SelectorHorarioComponent implements OnInit, OnChanges {
   readonly ultimaFechaCargada = signal('');
   readonly hoveredSlotUid = signal<string | null>(null);
   readonly resumenModalLineas = signal<string[]>([]);
+  readonly tipoCitaManual = signal<TipoCita>(TipoCita.CONSULTA_GENERAL);
+  readonly TipoCita = TipoCita;
+  readonly TIPO_CITA_LABELS = TIPO_CITA_LABELS;
 
   readonly diaAnteriorLabel = computed(() => this.getDiaLabel(-1));
   readonly diaSiguienteLabel = computed(() => this.getDiaLabel(1));
@@ -359,6 +363,7 @@ export class SelectorHorarioComponent implements OnInit, OnChanges {
       medicoId,
       fecha,
       hora,
+      tipoCita: this.tipoCitaManual(),
       observaciones: this.form.controls.observaciones.value || undefined
     };
 

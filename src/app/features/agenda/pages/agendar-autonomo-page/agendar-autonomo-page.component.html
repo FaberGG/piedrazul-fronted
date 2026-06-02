@@ -36,6 +36,10 @@
           <span class="agendar-page__detail-value">{{ cita.hora }}</span>
         </div>
         <div class="agendar-page__detail-row">
+          <span class="agendar-page__detail-label">Tipo</span>
+          <span class="agendar-page__detail-value">{{ tipoLabel(cita.tipoCita) }}</span>
+        </div>
+        <div class="agendar-page__detail-row">
           <span class="agendar-page__detail-label">Estado</span>
           <span class="agendar-page__detail-value">{{ cita.estado }}</span>
         </div>
@@ -47,31 +51,48 @@
   @if (!citaConfirmada()) {
     <div class="agendar-page__card">
 
-      <!-- Section: Médico -->
+      <!-- Section: Tipo de atención -->
       <section class="agendar-page__section">
         <header class="agendar-page__section-head">
-          <i class="fa-solid fa-stethoscope agendar-page__section-icon" aria-hidden="true"></i>
-          <span>Médico</span>
+          <i class="fa-solid fa-notes-medical agendar-page__section-icon" aria-hidden="true"></i>
+          <span>Tipo de atención <span class="agendar-page__required" aria-hidden="true">*</span></span>
+        </header>
+        <div class="agendar-page__tipos">
+          @for (tipo of tiposCita; track tipo.valor) {
+            <button type="button"
+                    class="agendar-page__tipo"
+                    [class.agendar-page__tipo--selected]="tipoCitaSeleccionada() === tipo.valor"
+                    [class.agendar-page__tipo--disabled]="tipo.esEspecialidad && !puedeEspecialidad()"
+                    [disabled]="tipo.esEspecialidad && !puedeEspecialidad()"
+                    [title]="tipo.esEspecialidad && !puedeEspecialidad() ? 'Requiere una Consulta General atendida' : ''"
+                    (click)="seleccionarTipo(tipo.valor)">
+              {{ tipo.label }}
+              @if (tipo.esEspecialidad && !puedeEspecialidad()) {
+                <i class="fa-solid fa-lock" aria-hidden="true"></i>
+              }
+            </button>
+          }
+        </div>
+        @if (!puedeEspecialidad()) {
+          <p class="agendar-page__hint">
+            Los tipos de especialidad se habilitarán luego de tu primera Consulta General atendida.
+          </p>
+        }
+      </section>
+
+      <div class="agendar-page__divider"></div>
+
+      <!-- Section: Profesional -->
+      <section class="agendar-page__section">
+        <header class="agendar-page__section-head">
+          <i class="fa-solid fa-user-doctor agendar-page__section-icon" aria-hidden="true"></i>
+          <span>Profesional</span>
         </header>
 
         <div class="agendar-page__field">
-          <label class="agendar-page__label">Filtrar por especialidad</label>
-          <input type="text"
-                 class="agendar-page__control"
-                 placeholder="Ej: Medicina general, Fisioterapia…"
-                 list="especialidades-list"
-                 [(ngModel)]="filtroEspecialidad"
-                 (ngModelChange)="onFiltroEspecialidadChange()" />
-          <datalist id="especialidades-list">
-            @for (e of especialidades(); track e) {
-              <option [value]="e"></option>
-            }
-          </datalist>
-        </div>
-
-        <div class="agendar-page__field">
           <label class="agendar-page__label">
-            Seleccionar médico / terapista <span class="agendar-page__required" aria-hidden="true">*</span>
+            {{ labelProfesional() }}
+            <span class="agendar-page__required" aria-hidden="true">*</span>
           </label>
           <select class="agendar-page__control"
                   [class.agendar-page__control--error]="submitted() && !medicoSeleccionado()"
@@ -79,17 +100,17 @@
                   (change)="onMedicoOFechaChange()"
                   [(ngModel)]="medicoSeleccionado">
             <option [value]="null">
-              {{ cargandoMedicos() ? 'Cargando médicos…' : 'Selecciona un médico o terapista' }}
+              {{ cargandoMedicos() ? 'Cargando…' : 'Selecciona un profesional' }}
             </option>
             @for (m of medicosFiltrados(); track m.id) {
-              <option [value]="m.id">{{ m.nombresCompletos }} — {{ m.especialidad }}</option>
+              <option [value]="m.id">{{ m.nombresCompletos }}</option>
             }
           </select>
           @if (submitted() && !medicoSeleccionado()) {
-            <span class="agendar-page__error-msg">Selecciona un médico o terapista.</span>
+            <span class="agendar-page__error-msg">Selecciona un profesional.</span>
           }
-          @if (filtroEspecialidad() && medicosFiltrados().length === 0) {
-            <span class="agendar-page__hint">No hay médicos con esa especialidad</span>
+          @if (medicosFiltrados().length === 0 && !cargandoMedicos()) {
+            <span class="agendar-page__hint">No hay profesionales disponibles para este tipo de atención.</span>
           }
         </div>
       </section>
@@ -134,7 +155,7 @@
                       class="agendar-page__franja"
                       [class.agendar-page__franja--selected]="horaSeleccionada() === franja"
                       (click)="horaSeleccionada.set(franja)">
-                {{ franja }}
+                {{ formatHora(franja) }}
               </button>
             }
           </div>

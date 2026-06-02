@@ -78,6 +78,18 @@ export const routes: Routes = [
         path: 'agendar',
         loadChildren: () =>
           import('./features/agenda/agenda.routes').then((m) => m.agendaPatientRoutes)
+      },
+      {
+        path: 'mis-citas',
+        loadComponent: () =>
+          import('./features/paciente/pages/mis-citas-page/mis-citas-page.component')
+            .then(m => m.MisCitasPageComponent)
+      },
+      {
+        path: 'perfil',
+        loadComponent: () =>
+          import('./features/paciente/pages/perfil-page/perfil-page.component')
+            .then(m => m.PerfilPageComponent)
       }
     ]
   },

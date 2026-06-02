@@ -23,6 +23,8 @@ export interface CitaResponse {
   fecha: string;
   hora: string;
   estado: string;
+  tipoCita?: string;
+  observaciones?: string;
 }
 
 export interface ReagendarCitaRequest {
