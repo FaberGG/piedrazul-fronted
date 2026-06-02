@@ -167,6 +167,9 @@
                     <th>DOCUMENTO</th>
                     <th>ESTADO</th>
                     <th>OBSERVACIÓN</th>
+                    @if (puedeVerDetalle()) {
+                      <th>ACCIONES</th>
+                    }
                   </tr>
                 </thead>
                 <tbody>
@@ -181,6 +184,14 @@
                         </span>
                       </td>
                       <td class="lc-table__obs">{{ cita.observaciones || '' }}</td>
+                      @if (puedeVerDetalle()) {
+                        <td class="lc-table__actions">
+                          <button class="btn-detalle" (click)="verDetalle(cita.id)">Ver detalle</button>
+                          @if (cita.estado === 'ATENDIDA') {
+                            <button class="btn-reagendar" (click)="reagendarCita(cita.id)">Reagendar</button>
+                          }
+                        </td>
+                      }
                     </tr>
                   }
                 </tbody>

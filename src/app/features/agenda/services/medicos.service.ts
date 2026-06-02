@@ -5,6 +5,7 @@ import { MedicoModel } from '../models/medico.model';
 import { environment } from '../../../../environments/environment';
 
 export interface CitaDiaDtoFrontend {
+  id: number;
   pacienteNombre: string;
   pacienteDocumento: string;
   fecha: string;
