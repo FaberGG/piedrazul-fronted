@@ -8,6 +8,21 @@
       </div>
     </div>
 
+    <nav class="patient-shell__nav" aria-label="Navegación del paciente">
+      <a routerLink="/paciente/agendar"   routerLinkActive="patient-shell__nav-link--active" class="patient-shell__nav-link">
+        <i class="fa-solid fa-calendar-plus" aria-hidden="true"></i>
+        Agendar cita
+      </a>
+      <a routerLink="/paciente/mis-citas" routerLinkActive="patient-shell__nav-link--active" class="patient-shell__nav-link">
+        <i class="fa-solid fa-calendar-days" aria-hidden="true"></i>
+        Mis citas
+      </a>
+      <a routerLink="/paciente/perfil"    routerLinkActive="patient-shell__nav-link--active" class="patient-shell__nav-link">
+        <i class="fa-solid fa-user" aria-hidden="true"></i>
+        Mi perfil
+      </a>
+    </nav>
+
     <div class="patient-shell__profile">
       @if (authService.currentUser(); as user) {
         <span class="patient-shell__user-name">

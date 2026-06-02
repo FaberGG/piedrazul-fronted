@@ -14,6 +14,7 @@ export interface CrearCitaManualRequest extends PacienteFormulario {
   medicoId: number;
   fecha: string;
   hora: string;
+  tipoCita?: string;
   observaciones?: string;
 }
 

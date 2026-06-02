@@ -1,0 +1,56 @@
+.mis-citas {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.mis-citas__header { margin-bottom: 1.5rem; }
+.mis-citas__title  { font-size: 1.5rem; font-weight: 700; color: var(--color-text-primary, #111); }
+
+.mis-citas__section        { margin-bottom: 2rem; }
+.mis-citas__section-title  { display: flex; align-items: center; gap: .5rem; font-size: 1.1rem; font-weight: 600; margin-bottom: 1rem; color: var(--color-text-secondary, #444); }
+
+.mis-citas__hint        { color: var(--color-text-muted, #888); font-size: .95rem; }
+.mis-citas__alert-error { background: #fee2e2; color: #b91c1c; border-radius: .5rem; padding: .75rem 1rem; }
+
+.mis-citas__card {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: .75rem;
+  padding: 1.25rem 1.5rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: .6rem 1.5rem;
+}
+.mis-citas__card--pendiente { border-left: 4px solid #3b82f6; }
+.mis-citas__card-row { display: contents; }
+.mis-citas__label   { font-size: .8rem; text-transform: uppercase; letter-spacing: .04em; color: #6b7280; }
+.mis-citas__value   { font-weight: 500; color: #111; }
+
+.mis-citas__table-wrapper { overflow-x: auto; }
+.mis-citas__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .9rem;
+}
+.mis-citas__table th,
+.mis-citas__table td {
+  padding: .6rem .9rem;
+  text-align: left;
+  border-bottom: 1px solid #f3f4f6;
+}
+.mis-citas__table th { background: #f9fafb; font-weight: 600; color: #6b7280; font-size: .8rem; text-transform: uppercase; letter-spacing: .04em; }
+.mis-citas__table tr:hover td { background: #f9fafb; }
+
+.mis-citas__badge {
+  display: inline-block;
+  padding: .2rem .65rem;
+  border-radius: 9999px;
+  font-size: .78rem;
+  font-weight: 600;
+  background: #e5e7eb;
+  color: #374151;
+}
+.mis-citas__badge--programada { background: #dbeafe; color: #1d4ed8; }
+.mis-citas__badge--atendida   { background: #dcfce7; color: #15803d; }
+.mis-citas__badge--cancelada  { background: #fee2e2; color: #b91c1c; }

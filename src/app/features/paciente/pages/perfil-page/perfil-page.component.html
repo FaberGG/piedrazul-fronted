@@ -1,0 +1,53 @@
+<div class="perfil">
+
+  <div class="perfil__header">
+    <h1 class="perfil__title">Mi perfil</h1>
+    <p class="perfil__subtitle">Información registrada en el sistema. Para cambios contacta la clínica.</p>
+  </div>
+
+  @if (cargando()) {
+    <p class="perfil__hint">Cargando...</p>
+  } @else if (error()) {
+    <div class="perfil__alert-error">{{ error() }}</div>
+  } @else if (perfil(); as p) {
+    <div class="perfil__card">
+
+      <div class="perfil__group">
+        <span class="perfil__label">Nombres</span>
+        <span class="perfil__value">{{ p.nombres }}</span>
+      </div>
+
+      <div class="perfil__group">
+        <span class="perfil__label">Apellidos</span>
+        <span class="perfil__value">{{ p.apellidos }}</span>
+      </div>
+
+      <div class="perfil__group">
+        <span class="perfil__label">Documento</span>
+        <span class="perfil__value">{{ p.documento }}</span>
+      </div>
+
+      <div class="perfil__group">
+        <span class="perfil__label">Celular</span>
+        <span class="perfil__value">{{ p.celular }}</span>
+      </div>
+
+      <div class="perfil__group">
+        <span class="perfil__label">Correo</span>
+        <span class="perfil__value">{{ p.correo ?? '—' }}</span>
+      </div>
+
+      <div class="perfil__group">
+        <span class="perfil__label">Fecha de nacimiento</span>
+        <span class="perfil__value">{{ p.fechaNacimiento ?? '—' }}</span>
+      </div>
+
+      <div class="perfil__group">
+        <span class="perfil__label">Género</span>
+        <span class="perfil__value">{{ p.genero }}</span>
+      </div>
+
+    </div>
+  }
+
+</div>

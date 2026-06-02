@@ -36,6 +36,10 @@
           <span class="agendar-page__detail-value">{{ cita.hora }}</span>
         </div>
         <div class="agendar-page__detail-row">
+          <span class="agendar-page__detail-label">Tipo</span>
+          <span class="agendar-page__detail-value">{{ tipoLabel(cita.tipoCita) }}</span>
+        </div>
+        <div class="agendar-page__detail-row">
           <span class="agendar-page__detail-label">Estado</span>
           <span class="agendar-page__detail-value">{{ cita.estado }}</span>
         </div>
@@ -46,6 +50,37 @@
   <!-- Booking form -->
   @if (!citaConfirmada()) {
     <div class="agendar-page__card">
+
+      <!-- Section: Tipo de cita -->
+      <section class="agendar-page__section">
+        <header class="agendar-page__section-head">
+          <i class="fa-solid fa-stethoscope agendar-page__section-icon" aria-hidden="true"></i>
+          <span>Tipo de cita <span class="agendar-page__required" aria-hidden="true">*</span></span>
+        </header>
+        <div class="agendar-page__tipos">
+          @for (tipo of tiposCita; track tipo.valor) {
+            <button type="button"
+                    class="agendar-page__tipo"
+                    [class.agendar-page__tipo--selected]="tipoCitaSeleccionada() === tipo.valor"
+                    [class.agendar-page__tipo--disabled]="tipo.esEspecialidad && !puedeEspecialidad()"
+                    [disabled]="tipo.esEspecialidad && !puedeEspecialidad()"
+                    [title]="tipo.esEspecialidad && !puedeEspecialidad() ? 'Requiere una Consulta General atendida' : ''"
+                    (click)="seleccionarTipo(tipo.valor)">
+              {{ tipo.label }}
+              @if (tipo.esEspecialidad && !puedeEspecialidad()) {
+                <i class="fa-solid fa-lock" aria-hidden="true"></i>
+              }
+            </button>
+          }
+        </div>
+        @if (!puedeEspecialidad()) {
+          <p class="agendar-page__hint">
+            Los tipos de especialidad se habilitarán luego de tu primera Consulta General atendida.
+          </p>
+        }
+      </section>
+
+      <div class="agendar-page__divider"></div>
 
       <!-- Section: Médico -->
       <section class="agendar-page__section">

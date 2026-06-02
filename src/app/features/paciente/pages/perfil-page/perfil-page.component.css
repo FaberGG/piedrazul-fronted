@@ -1,0 +1,44 @@
+.perfil {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.perfil__header   { margin-bottom: 1.5rem; }
+.perfil__title    { font-size: 1.5rem; font-weight: 700; color: var(--color-text-primary, #111); }
+.perfil__subtitle { font-size: .875rem; color: #6b7280; margin-top: .25rem; }
+
+.perfil__hint        { color: #6b7280; font-size: .95rem; }
+.perfil__alert-error { background: #fee2e2; color: #b91c1c; border-radius: .5rem; padding: .75rem 1rem; }
+
+.perfil__card {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: .75rem;
+  overflow: hidden;
+}
+
+.perfil__group {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: .85rem 1.25rem;
+  border-bottom: 1px solid #f3f4f6;
+}
+.perfil__group:last-child { border-bottom: none; }
+
+.perfil__label {
+  font-size: .8rem;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  color: #6b7280;
+  font-weight: 500;
+  flex-shrink: 0;
+  margin-right: 1rem;
+}
+
+.perfil__value {
+  font-weight: 500;
+  color: #111;
+  text-align: right;
+}
