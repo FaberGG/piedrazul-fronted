@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AgendaService } from '../../services/agenda.service';
 import { MedicoResumen, AgendarAutonomoRequest, CitaResponse } from '../../models/agenda.models';
-import { TipoCita, TIPO_CITA_LABELS, TIPOS_ESPECIALIDAD } from '../../models/tipo-cita.enum';
+import { TipoCita, TIPO_CITA_LABELS, TIPOS_ESPECIALIDAD, ESPECIALIDAD_CONSULTA_GENERAL, ESPECIALIDAD_POR_TIPO } from '../../models/tipo-cita.enum';
 import { PacientePortalService } from '../../../paciente/services/paciente-portal.service';
 
 @Component({
@@ -21,7 +21,6 @@ export class AgendarAutonomoPageComponent implements OnInit {
   franjas = signal<string[]>([]);
   citaConfirmada = signal<CitaResponse | null>(null);
 
-  filtroEspecialidad = signal<string>('');
   puedeEspecialidad = signal<boolean>(false);
 
   readonly TipoCita = TipoCita;
@@ -34,14 +33,27 @@ export class AgendarAutonomoPageComponent implements OnInit {
     { valor: TipoCita.FISIOTERAPIA,     label: TIPO_CITA_LABELS[TipoCita.FISIOTERAPIA],     esEspecialidad: true },
   ];
 
-  readonly especialidades = computed(() =>
-    [...new Set(this.medicos().map(m => m.especialidad).filter(Boolean))].sort()
+  private readonly LABEL_PROFESIONAL: Record<TipoCita, string> = {
+    [TipoCita.CONSULTA_GENERAL]: 'Médico de Medicina General',
+    [TipoCita.TERAPIA_NEURAL]:   'Terapeuta Neural',
+    [TipoCita.QUIROPRAXIA]:      'Quiropráctico',
+    [TipoCita.FISIOTERAPIA]:     'Fisioterapeuta',
+    [TipoCita.ESTANDAR]:         'Profesional',
+    [TipoCita.PRIORIDAD]:        'Profesional',
+  };
+
+  readonly labelProfesional = computed(() =>
+    this.LABEL_PROFESIONAL[this.tipoCitaSeleccionada()] ?? 'Profesional'
   );
 
   readonly medicosFiltrados = computed(() => {
-    const filtro = this.filtroEspecialidad().trim().toLowerCase();
-    if (!filtro) return this.medicos();
-    return this.medicos().filter(m => m.especialidad.toLowerCase().includes(filtro));
+    if (!this.puedeEspecialidad()) {
+      return this.medicos().filter(m => m.especialidad === ESPECIALIDAD_CONSULTA_GENERAL);
+    }
+    const espFiltro = ESPECIALIDAD_POR_TIPO[this.tipoCitaSeleccionada()];
+    return espFiltro
+      ? this.medicos().filter(m => m.especialidad === espFiltro)
+      : this.medicos();
   });
 
   medicoSeleccionado = signal<number | null>(null);
@@ -59,8 +71,14 @@ export class AgendarAutonomoPageComponent implements OnInit {
   ngOnInit(): void {
     this.cargarMedicos();
     this.portalService.puedeAgendarEspecialidad().subscribe({
-      next: ({ puedeEspecialidad }) => this.puedeEspecialidad.set(puedeEspecialidad),
-      error: () => this.puedeEspecialidad.set(false)
+      next: ({ puedeEspecialidad }) => {
+        console.log('[Agendar] puedeEspecialidad:', puedeEspecialidad);
+        this.puedeEspecialidad.set(puedeEspecialidad);
+      },
+      error: (err) => {
+        console.error('[Agendar] puedeEspecialidad error:', err?.status, err?.error);
+        this.puedeEspecialidad.set(false);
+      }
     });
   }
 
@@ -79,21 +97,11 @@ export class AgendarAutonomoPageComponent implements OnInit {
   }
 
   seleccionarTipo(tipo: TipoCita): void {
-    const esEspecialidad = TIPOS_ESPECIALIDAD.includes(tipo);
-    if (esEspecialidad && !this.puedeEspecialidad()) return;
+    if (TIPOS_ESPECIALIDAD.includes(tipo) && !this.puedeEspecialidad()) return;
     this.tipoCitaSeleccionada.set(tipo);
-  }
-
-  onFiltroEspecialidadChange(): void {
-    const seleccionado = this.medicoSeleccionado();
-    if (seleccionado !== null) {
-      const sigueVisible = this.medicosFiltrados().some(m => m.id === seleccionado);
-      if (!sigueVisible) {
-        this.medicoSeleccionado.set(null);
-        this.franjas.set([]);
-        this.horaSeleccionada.set('');
-      }
-    }
+    this.medicoSeleccionado.set(null);
+    this.franjas.set([]);
+    this.horaSeleccionada.set('');
   }
 
   onMedicoOFechaChange(): void {
@@ -120,6 +128,13 @@ export class AgendarAutonomoPageComponent implements OnInit {
     return TIPO_CITA_LABELS[tipo as TipoCita] ?? tipo;
   }
 
+  formatHora(hora: string): string {
+    const [h, m] = hora.split(':').map(Number);
+    const d = new Date();
+    d.setHours(h, m, 0);
+    return d.toLocaleTimeString('es-CO', { hour: 'numeric', minute: '2-digit', hour12: true });
+  }
+
   agendar(): void {
     this.submitted.set(true);
 
@@ -136,7 +151,6 @@ export class AgendarAutonomoPageComponent implements OnInit {
       medicoId,
       fecha,
       hora,
-      tipoCita: this.tipoCitaSeleccionada(),
       observaciones: this.observaciones()
     };
 

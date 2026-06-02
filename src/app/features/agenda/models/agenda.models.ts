@@ -13,7 +13,6 @@ export interface AgendarAutonomoRequest {
   medicoId: number;
   fecha: string;
   hora: string;
-  tipoCita?: string;
   observaciones?: string;
 }
 

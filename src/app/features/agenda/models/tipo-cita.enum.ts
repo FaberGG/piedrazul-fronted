@@ -21,3 +21,14 @@ export const TIPOS_ESPECIALIDAD: TipoCita[] = [
   TipoCita.QUIROPRAXIA,
   TipoCita.FISIOTERAPIA
 ];
+
+/** Doctor specialty that handles CONSULTA_GENERAL appointments */
+export const ESPECIALIDAD_CONSULTA_GENERAL = 'MEDICINA_GENERAL';
+
+/** Maps each TipoCita to the doctor specialty that covers it */
+export const ESPECIALIDAD_POR_TIPO: Partial<Record<TipoCita, string>> = {
+  [TipoCita.CONSULTA_GENERAL]: 'MEDICINA_GENERAL',
+  [TipoCita.TERAPIA_NEURAL]:   'TERAPIA_NEURAL',
+  [TipoCita.QUIROPRAXIA]:      'QUIROPRAXIA',
+  [TipoCita.FISIOTERAPIA]:     'FISIOTERAPIA',
+};
