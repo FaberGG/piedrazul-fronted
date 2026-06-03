@@ -77,7 +77,7 @@ export class DetalleCitaPanelComponent implements OnChanges {
   estadosValidos = computed(() => {
     const estado = this.detalle()?.estado;
     if (estado === 'PROGRAMADA') {
-      return ['ATENDIDA', 'CANCELADA'];
+      return ['ATENDIDA', 'CANCELADA','INASISTENCIA'];
     }
     return [];
   });

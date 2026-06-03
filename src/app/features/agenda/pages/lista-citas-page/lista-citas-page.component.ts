@@ -176,7 +176,8 @@ export class ListaCitasPageComponent implements OnInit {
     const map: Record<string, string> = {
       PROGRAMADA: 'estado--programada',
       ATENDIDA: 'estado--atendida',
-      CANCELADA: 'estado--cancelada'
+      CANCELADA: 'estado--cancelada',
+      INASISTENCIA: 'estado--inasistencia'
     };
     return map[estado] ?? 'estado--default';
   }
