@@ -11,6 +11,10 @@
       {{ errorMessage() }}
     </div>
 
+    <div *ngIf="successMessage()" class="success-banner">
+      {{ successMessage() }}
+    </div>
+
     <form
       [formGroup]="formAdmin"
       (ngSubmit)="registrarAdmin()"

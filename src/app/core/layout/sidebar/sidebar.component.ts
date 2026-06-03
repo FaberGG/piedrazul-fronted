@@ -77,20 +77,7 @@ export class SidebarComponent {
     },
   ];
 
-  readonly utilityItems = [
-    /*
-    {
-      label: 'Configuración', // Centralizamos aquí la configuración de Admin
-      iconClass: 'fa-solid fa-gear',
-      path: '/admin/configuracion' // RUTA CORREGIDA
-    },
-    */
-    {
-      label: 'Ayuda y soporte',
-      iconClass: 'fa-solid fa-circle-info',
-      path: '/soporte'
-    }
-  ];
+  readonly utilityItems: MenuItem[] = [];
 
   readonly visibleItems = computed(() => {
     const role = this.authService.getCurrentRole();

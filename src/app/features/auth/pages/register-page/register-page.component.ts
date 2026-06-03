@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -15,27 +15,24 @@ import { normalizarNombre } from '../../../../shared/utils/nombre-normalizer';
 })
 export class RegisterPageComponent {
 
-  form: FormGroup;
+  private readonly fb = inject(FormBuilder);
+  private readonly router = inject(Router);
+  private readonly authService = inject(AuthService);
+
+  readonly form: FormGroup = this.fb.group({
+    nombres:         ['', [Validators.required, Validators.minLength(2), Validators.pattern(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/)]],
+    apellidos:       ['', [Validators.required, Validators.minLength(2), Validators.pattern(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/)]],
+    documento:       ['', [Validators.required, Validators.pattern(/^[0-9]{6,12}$/)]],
+    celular:         ['', [Validators.required, Validators.pattern(/^[0-9]{10}$/)]],
+    password:        ['', [Validators.required, Validators.minLength(6)]],
+    confirmPassword: ['', Validators.required],
+    fechaNacimiento: [''],
+    correo:          ['', [Validators.required, Validators.email]],
+    genero:          ['', Validators.required]
+  }, { validators: this.passwordsMatchValidator });
+
   isLoading = signal(false);
   errorMessage = signal('');
-
-  constructor(
-    private fb: FormBuilder,
-    private router: Router,
-    private authService: AuthService
-  ) {
-    this.form = this.fb.group({
-      nombres: ['', [Validators.required, Validators.minLength(2), Validators.pattern(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/)]],
-      apellidos: ['', [Validators.required, Validators.minLength(2), Validators.pattern(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/)]], // corregido
-      documento: ['', [Validators.required, Validators.pattern(/^[0-9]{6,12}$/)]],
-      celular: ['', [Validators.required, Validators.pattern(/^[0-9]{10}$/)]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      confirmPassword: ['', Validators.required],
-      fechaNacimiento: [''],
-      correo: ['', [Validators.required, Validators.email]],
-      genero: ['', Validators.required]
-    }, { validators: this.passwordsMatchValidator });
-  }
 
   passwordsMatchValidator(form: FormGroup) {
     const password = form.get('password')?.value;
