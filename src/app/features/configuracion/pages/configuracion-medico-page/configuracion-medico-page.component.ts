@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnInit, signal, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
@@ -30,9 +30,12 @@ export class ConfiguracionMedicoPageComponent implements OnInit {
   error            = signal('');
   success          = signal('');
 
+  // ── Móvil: controla qué panel se ve ──
+  readonly showConfigPanel = signal(false);
+
   // Opciones estáticas
-  readonly diasSemana  = DIAS_SEMANA;
-  readonly intervalos  = INTERVALOS;
+  readonly diasSemana = DIAS_SEMANA;
+  readonly intervalos = INTERVALOS;
 
   // Form
   form!: FormGroup;
@@ -53,20 +56,19 @@ export class ConfiguracionMedicoPageComponent implements OnInit {
     this.cargarMedicos();
   }
 
- cargarMedicos(): void {
-  this.isLoadingMedicos.set(true);
-  this.medicoService.listarMedicos().subscribe({
-    next: (lista) => {
-      console.log('Médicos:', lista); // ← ver qué devuelve
-      this.medicos.set(lista);
-      this.isLoadingMedicos.set(false);
-    },
-    error: (err) => {
-      console.error('Error al cargar médicos:', err); // ← ver el error
-      this.isLoadingMedicos.set(false);
-    }
-  });
-}
+  cargarMedicos(): void {
+    this.isLoadingMedicos.set(true);
+    this.medicoService.listarMedicos().subscribe({
+      next: (lista) => {
+        this.medicos.set(lista);
+        this.isLoadingMedicos.set(false);
+      },
+      error: (err) => {
+        console.error('Error al cargar médicos:', err);
+        this.isLoadingMedicos.set(false);
+      }
+    });
+  }
 
   seleccionarMedico(medico: MedicoListadoResponse): void {
     this.error.set('');
@@ -84,14 +86,38 @@ export class ConfiguracionMedicoPageComponent implements OnInit {
           intervaloMinutos: config.intervaloMinutos ?? null
         });
         this.isLoadingConfig.set(false);
+
+        // En móvil, navegar al panel de config
+        if (this.isMobile()) {
+          this.showConfigPanel.set(true);
+        }
       },
       error: () => {
-        // Sin configuración previa — form vacío
         this.diasSeleccionados.set([]);
         this.form.reset();
         this.isLoadingConfig.set(false);
+
+        if (this.isMobile()) {
+          this.showConfigPanel.set(true);
+        }
       }
     });
+  }
+
+  volverALista(): void {
+    this.showConfigPanel.set(false);
+  }
+
+  // Al redimensionar a desktop, siempre mostrar ambos paneles
+  @HostListener('window:resize')
+  onResize(): void {
+    if (!this.isMobile()) {
+      this.showConfigPanel.set(false);
+    }
+  }
+
+  private isMobile(): boolean {
+    return typeof window !== 'undefined' && window.innerWidth <= 768;
   }
 
   toggleDia(dia: DayOfWeek): void {
@@ -132,8 +158,8 @@ export class ConfiguracionMedicoPageComponent implements OnInit {
 
     this.medicoService.configurarAgenda(medico.medicoId, {
       diasAtencion:     this.diasSeleccionados(),
-      horaInicio:       horaInicio,
-      horaFin:          horaFin,
+      horaInicio,
+      horaFin,
       intervaloMinutos: this.form.value.intervaloMinutos
     }).subscribe({
       next: (updated) => {

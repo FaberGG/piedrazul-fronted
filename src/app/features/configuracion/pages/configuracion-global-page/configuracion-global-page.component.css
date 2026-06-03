@@ -252,3 +252,49 @@
   color: var(--color-text-muted);
   text-align: center;
 }
+
+@media (max-width: 600px) {
+  /* Menos padding en pantallas pequeñas */
+  .config-layout {
+    padding: 1rem;
+    gap: 1.25rem;
+  }
+
+  .form-body {
+    padding: 1.1rem;
+  }
+
+  .dias-list {
+    padding: 0 1.1rem 1rem;
+  }
+
+  /* El campo de fecha ocupa toda la línea antes de romper */
+  .inline-fields {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .field-grow {
+    min-width: unset;
+  }
+
+  .btn-add {
+    width: 100%;
+    text-align: center;
+  }
+
+  /* Fecha y descripción en columna para evitar apretamiento */
+  .dia-info {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+  }
+
+  .dia-fecha {
+    font-size: 0.85rem;
+  }
+
+  .dia-desc {
+    font-size: 0.78rem;
+  }
+}

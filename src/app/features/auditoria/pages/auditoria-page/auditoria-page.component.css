@@ -69,6 +69,8 @@
   color: #2d3748;
   background: #f7fafc;
   transition: border-color 0.15s;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .filtro-input:focus {
@@ -81,6 +83,7 @@
   display: flex;
   justify-content: flex-end;
   gap: 0.75rem;
+  flex-wrap: wrap;
 }
 
 /* Buttons */
@@ -95,6 +98,7 @@
   cursor: pointer;
   border: none;
   transition: background 0.15s, opacity 0.15s;
+  white-space: nowrap;
 }
 
 .btn:disabled {
@@ -163,6 +167,7 @@
   border-top-color: #667eea;
   border-radius: 50%;
   animation: spin 0.7s linear infinite;
+  flex-shrink: 0;
 }
 
 @keyframes spin {
@@ -175,12 +180,14 @@
   border: 1px solid #e2e8f0;
   border-radius: 12px;
   background: #fff;
+  -webkit-overflow-scrolling: touch;
 }
 
 .auditoria-table {
   width: 100%;
   border-collapse: collapse;
   font-size: 0.85rem;
+  min-width: 600px; /* evita que la tabla se aplaste en móvil */
 }
 
 .auditoria-table thead {
@@ -369,8 +376,8 @@
   white-space: nowrap;
 }
 
-.badge--crear     { background: #c6f6d5; color: #276749; }
-.badge--prioridad { background: #bee3f8; color: #2b6cb0; }
+.badge--crear       { background: #c6f6d5; color: #276749; }
+.badge--prioridad   { background: #bee3f8; color: #2b6cb0; }
 .badge--reprogramar { background: #feebc8; color: #c05621; }
 .badge--actualizar  { background: #e9d8fd; color: #553c9a; }
 .badge--default     { background: #e2e8f0; color: #4a5568; }
@@ -393,6 +400,7 @@
 .paginacion-controls {
   display: flex;
   gap: 0.5rem;
+  flex-wrap: wrap;
 }
 
 /* Empty state */
@@ -408,9 +416,118 @@
   margin-bottom: 0.75rem;
 }
 
+/* ─── Responsive ─────────────────────────────────────────── */
+
+/* Tablet: 641px – 900px */
+@media (max-width: 900px) {
+  .filtros-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .cell--uuid {
+    max-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .cell--detalles-preview {
+    max-width: 160px;
+  }
+}
+
+/* Mobile: ≤ 640px */
 @media (max-width: 640px) {
-  .auditoria-page { padding: 1rem; }
-  .filtros-grid { grid-template-columns: 1fr 1fr; }
-  .paginacion { flex-direction: column; align-items: flex-start; }
-  .detalle-panel { padding-left: 1rem; }
+  .auditoria-page {
+    padding: 0.75rem;
+    gap: 1rem;
+  }
+
+  .page-title {
+    font-size: 1.2rem;
+  }
+
+  .filtros-card {
+    padding: 1rem;
+  }
+
+  .filtros-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+
+  .filtros-actions {
+    justify-content: stretch;
+  }
+
+  .filtros-actions .btn {
+    flex: 1;
+    justify-content: center;
+  }
+
+  .paginacion {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .paginacion-controls {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .detalle-panel {
+    padding: 0.75rem 1rem;
+    gap: 1rem;
+  }
+
+  .detalle-section {
+    min-width: 140px;
+    flex: 1 1 140px;
+  }
+}
+
+/* Extra small: ≤ 400px */
+@media (max-width: 400px) {
+  .filtros-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .page-title {
+    font-size: 1.05rem;
+  }
+
+  .btn {
+    font-size: 0.8rem;
+    padding: 0.45rem 0.85rem;
+  }
+}
+/* Columnas ocultables */
+.col--hide-sm { /* oculta en móvil ≤ 640px */ }
+.col--hide-md { /* oculta en tablet ≤ 900px */ }
+
+/* En móvil, las secciones de Entidad/ID solo aparecen en el panel expandido */
+.detalle-section--inline-sm {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .col--hide-md {
+    display: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .col--hide-sm {
+    display: none;
+  }
+
+  /* Ahora sí mostrar Entidad e ID en el detalle expandido */
+  .detalle-section--inline-sm {
+    display: flex;
+  }
+
+  /* La tabla ya no necesita min-width, caben 3 columnas */
+  .auditoria-table {
+    min-width: unset;
+  }
 }

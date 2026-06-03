@@ -90,10 +90,10 @@
             <th></th>
             <th>Fecha / Hora</th>
             <th>Acción</th>
-            <th>Entidad</th>
-            <th>ID</th>
-            <th>Usuario</th>
-            <th>Detalles</th>
+            <th class="col--hide-sm">Entidad</th>
+            <th class="col--hide-sm">ID</th>
+            <th class="col--hide-md">Usuario</th>
+            <th class="col--hide-md">Detalles</th>
           </tr>
         </thead>
         <tbody>
@@ -108,12 +108,12 @@
               <td>
                 <span class="badge" [ngClass]="accionClass(log.accion)">{{ log.accion }}</span>
               </td>
-              <td>{{ log.entidad }}</td>
-              <td class="cell--center">{{ log.entidadId ?? '—' }}</td>
-              <td class="cell--uuid" [title]="log.usuarioId ?? ''">
+              <td class="col--hide-sm">{{ log.entidad }}</td>
+              <td class="col--hide-sm cell--center">{{ log.entidadId ?? '—' }}</td>
+              <td class="col--hide-md cell--uuid" [title]="log.usuarioId ?? ''">
                 {{ log.usuarioId ? log.usuarioId.slice(0, 8) + '…' : '—' }}
               </td>
-              <td class="cell--detalles-preview">
+              <td class="col--hide-md cell--detalles-preview">
                 @if (parsearDetalles(log.detalles).length > 0) {
                   <span class="detalles-preview">
                     {{ parsearDetalles(log.detalles)[0].clave }}: {{ parsearDetalles(log.detalles)[0].valor }}
@@ -127,11 +127,22 @@
               </td>
             </tr>
 
-            <!-- Fila expandida -->
+            <!-- Fila expandida — siempre muestra TODO sin importar el breakpoint -->
             @if (isExpanded(log.id)) {
               <tr class="row--expanded">
                 <td colspan="7">
                   <div class="detalle-panel">
+
+                    <!-- En móvil estas aparecen aquí porque las columnas están ocultas -->
+                    <div class="detalle-section detalle-section--inline-sm">
+                      <span class="detalle-label">Entidad</span>
+                      <span class="detalle-value">{{ log.entidad }}</span>
+                    </div>
+
+                    <div class="detalle-section detalle-section--inline-sm">
+                      <span class="detalle-label">ID Entidad</span>
+                      <span class="detalle-value">{{ log.entidadId ?? '—' }}</span>
+                    </div>
 
                     <div class="detalle-section">
                       <span class="detalle-label">UUID completo</span>
