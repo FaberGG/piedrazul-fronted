@@ -11,7 +11,8 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AgendaService } from '../../services/agenda.service';
 import { MedicosService, AgendaDiaDtoFrontend } from '../../services/medicos.service';
-import { ReporteService } from '../../../reportes/services/report.service';
+import { ReporteService } from '../../../../shared/services/reporte.service';
+import { DownloadService } from '../../../../shared/services/download.service';
 import { AuthService } from '../../../../core/auth/auth.service';
 import { AgendaModel, CitaModel } from '../../models/cita.model';
 import { MedicoModel } from '../../models/medico.model';
@@ -33,6 +34,7 @@ export class ListaCitasPageComponent implements OnInit {
   private readonly agendaService = inject(AgendaService);
   private readonly medicosService = inject(MedicosService);
   private readonly reporteService = inject(ReporteService);
+  private readonly downloadService = inject(DownloadService);
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
 
@@ -82,6 +84,11 @@ export class ListaCitasPageComponent implements OnInit {
 
   private autoSeleccionarMedicoActual(): void {
     const role = this.rol();
+    if (role === ROLES.ADMIN || role === ROLES.AGENDADOR) {
+      this.medicoSeleccionadoValor.set(SENTINEL_TODOS);
+      this.modoTodos.set(true);
+      return;
+    }
     if (role !== ROLES.MEDICO && role !== ROLES.TERAPISTA) return;
 
     this.medicosService.getMedicoActual().subscribe({
@@ -169,7 +176,8 @@ export class ListaCitasPageComponent implements OnInit {
     const map: Record<string, string> = {
       PROGRAMADA: 'estado--programada',
       ATENDIDA: 'estado--atendida',
-      CANCELADA: 'estado--cancelada'
+      CANCELADA: 'estado--cancelada',
+      INASISTENCIA: 'estado--inasistencia'
     };
     return map[estado] ?? 'estado--default';
   }
@@ -207,12 +215,7 @@ export class ListaCitasPageComponent implements OnInit {
 
     this.reporteService.exportarAgendaDiaria(medicoId, fecha, formatoSelec).subscribe({
       next: (blob) => {
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `agenda_${fecha}_medico_${medicoId}.${formatoSelec.toLowerCase()}`;
-        a.click();
-        URL.revokeObjectURL(url);
+        this.downloadService.download(blob, `agenda_${fecha}_medico_${medicoId}.${formatoSelec.toLowerCase()}`);
         this.descargando.set(false);
       },
       error: () => {

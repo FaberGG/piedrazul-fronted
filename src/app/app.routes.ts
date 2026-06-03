@@ -11,6 +11,13 @@ import { RegisterPageComponent } from './features/auth/pages/register-page/regis
 
 export const routes: Routes = [
   {
+    path: '',
+    pathMatch: 'full',
+    loadComponent: () =>
+      import('./features/landing/pages/landing-page/landing-page.component')
+        .then(m => m.LandingPageComponent)
+  },
+  {
     path: 'login',
     component: LoginPageComponent,
     canActivate: [noAuthGuard]

@@ -1,0 +1,324 @@
+<!-- ══════════════════════════════════════════════════════
+     HEADER / NAVBAR
+══════════════════════════════════════════════════════ -->
+<header class="lp__header" [class.lp__header--scrolled]="true">
+  <div class="lp__header-inner">
+    <a routerLink="/" class="lp__logo-link" (click)="closeMenu()">
+      <div class="lp__logo-mark">PZ</div>
+      <span class="lp__logo-text">Piedrazul</span>
+    </a>
+
+    <nav class="lp__nav" [class.lp__nav--open]="menuOpen()">
+      <a href="#servicios" class="lp__nav-link" (click)="closeMenu()">Servicios</a>
+      <a href="#como-funciona" class="lp__nav-link" (click)="closeMenu()">Cómo funciona</a>
+      <a routerLink="/register" class="lp__nav-link" (click)="closeMenu()">Registro</a>
+      <a routerLink="/login" class="lp__nav-cta" (click)="closeMenu()">Iniciar sesión</a>
+    </nav>
+
+    <button
+      class="lp__hamburger"
+      [class.lp__hamburger--open]="menuOpen()"
+      (click)="toggleMenu()"
+      aria-label="Abrir menú"
+    >
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+</header>
+
+
+<!-- ══════════════════════════════════════════════════════
+     HERO
+══════════════════════════════════════════════════════ -->
+<section class="lp__hero-scene">
+  <div class="lp__hero-scene-overlay" aria-hidden="true"></div>
+
+  <div class="lp__hero">
+    <div class="lp__hero-blob lp__hero-blob--1" aria-hidden="true"></div>
+    <div class="lp__hero-blob lp__hero-blob--2" aria-hidden="true"></div>
+    <div class="lp__hero-blob lp__hero-blob--3" aria-hidden="true"></div>
+
+    <div class="lp__hero-content">
+    <div class="lp__hero-badge">
+      <span class="lp__hero-badge-dot" aria-hidden="true"></span>
+      Sistema de salud digital
+    </div>
+
+    <h1 class="lp__hero-title">
+      Tu salud,<br>
+      <em>en buenas manos</em>
+    </h1>
+
+    <p class="lp__hero-subtitle">
+      Agenda, gestiona y controla tus citas médicas desde cualquier lugar.
+      Atención personalizada con tecnología al servicio de tu bienestar.
+    </p>
+
+    <div class="lp__hero-actions">
+      <a routerLink="/login" class="lp__btn lp__btn--primary">
+        Agendar mi cita
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+      <a href="#como-funciona" class="lp__btn lp__btn--ghost">
+        Cómo funciona
+      </a>
+    </div>
+
+    <div class="lp__hero-stats">
+      <div class="lp__stat">
+        <strong class="lp__stat-value">500+</strong>
+        <span class="lp__stat-label">Pacientes</span>
+      </div>
+      <div class="lp__stat-divider" aria-hidden="true"></div>
+      <div class="lp__stat">
+        <strong class="lp__stat-value">15+</strong>
+        <span class="lp__stat-label">Especialistas</span>
+      </div>
+      <div class="lp__stat-divider" aria-hidden="true"></div>
+      <div class="lp__stat">
+        <strong class="lp__stat-value">98%</strong>
+        <span class="lp__stat-label">Satisfacción</span>
+      </div>
+    </div>
+    </div><!-- /.lp__hero-content -->
+
+    <div class="lp__hero-visual" aria-hidden="true">
+      <div class="lp__hero-card lp__hero-card--main">
+        <div class="lp__hero-card-header">
+          <div class="lp__hero-card-icon">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+              <rect x="2" y="3" width="14" height="13" rx="2" stroke="#0069ae" stroke-width="1.5"/>
+              <path d="M6 2V5M12 2V5" stroke="#0069ae" stroke-width="1.5" stroke-linecap="round"/>
+              <path d="M2 7H16" stroke="#0069ae" stroke-width="1.5"/>
+            </svg>
+          </div>
+          <span class="lp__hero-card-label">Próxima cita</span>
+        </div>
+        <p class="lp__hero-card-doctor">Dr. Alejandro García</p>
+        <p class="lp__hero-card-specialty">Cardiología</p>
+        <div class="lp__hero-card-footer">
+          <span class="lp__hero-card-time">
+            <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+              <circle cx="6.5" cy="6.5" r="5.5" stroke="#607F85" stroke-width="1.2"/>
+              <path d="M6.5 4V6.8L8.5 8" stroke="#607F85" stroke-width="1.2" stroke-linecap="round"/>
+            </svg>
+            Hoy · 3:00 PM
+          </span>
+          <span class="lp__hero-card-status">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+              <path d="M2.5 6L5 8.5L9.5 3.5" stroke="#15803d" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Confirmada
+          </span>
+        </div>
+      </div>
+
+      <div class="lp__hero-card lp__hero-card--mini lp__hero-card--mini-top">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M2 8L6 12L14 4" stroke="#0069ae" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>Recordatorio enviado</span>
+      </div>
+
+      <div class="lp__hero-card lp__hero-card--mini lp__hero-card--mini-bottom">
+        <div class="lp__avatar-stack">
+          <div class="lp__avatar">M</div>
+          <div class="lp__avatar">A</div>
+          <div class="lp__avatar">R</div>
+        </div>
+        <span>+128 pacientes hoy</span>
+      </div>
+    </div><!-- /.lp__hero-visual -->
+
+  </div><!-- /.lp__hero -->
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════
+     SERVICES
+══════════════════════════════════════════════════════ -->
+<section class="lp__services" id="servicios">
+  <div class="lp__section-inner">
+    <p class="lp__section-label">Nuestros servicios</p>
+    <h2 class="lp__section-title">Todo lo que necesitas,<br>en un solo lugar</h2>
+    <p class="lp__section-subtitle">
+      Diseñado para médicos, agendadores y pacientes. Una plataforma completa de gestión médica.
+    </p>
+
+    <div class="lp__services-grid">
+
+      <article class="lp__service-card">
+        <div class="lp__service-icon lp__service-icon--primary">
+          <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+            <rect x="3" y="5" width="20" height="18" rx="2.5" stroke="currentColor" stroke-width="1.7"/>
+            <path d="M8 3V7M18 3V7" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+            <path d="M3 11H23" stroke="currentColor" stroke-width="1.7"/>
+            <path d="M8 16H13M8 19.5H18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3 class="lp__service-title">Agenda en línea</h3>
+        <p class="lp__service-desc">
+          Reserva citas médicas en segundos. Elige tu médico, especialidad y horario disponible desde cualquier dispositivo.
+        </p>
+      </article>
+
+      <article class="lp__service-card">
+        <div class="lp__service-icon lp__service-icon--teal">
+          <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+            <circle cx="13" cy="9" r="5" stroke="currentColor" stroke-width="1.7"/>
+            <path d="M4 23c0-4.418 4.03-8 9-8s9 3.582 9 8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3 class="lp__service-title">Gestión de pacientes</h3>
+        <p class="lp__service-desc">
+          Historial médico centralizado. Accede al perfil completo de cada paciente de manera segura y organizada.
+        </p>
+      </article>
+
+      <article class="lp__service-card">
+        <div class="lp__service-icon lp__service-icon--indigo">
+          <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+            <path d="M13 3C9.134 3 6 6.134 6 10c0 3.28 2.093 6.062 5 7.122V20h4v-2.878C17.907 16.062 20 13.28 20 10c0-3.866-3.134-7-7-7Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+            <path d="M9 22H17" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3 class="lp__service-title">Notificaciones inteligentes</h3>
+        <p class="lp__service-desc">
+          Recordatorios automáticos para médicos y pacientes. Reduce inasistencias y mantén tu agenda siempre organizada.
+        </p>
+      </article>
+
+      <article class="lp__service-card">
+        <div class="lp__service-icon lp__service-icon--green">
+          <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+            <path d="M4 19L9 13L13 17L18 9.5L22 13" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M4 7H22M4 23H22" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3 class="lp__service-title">Reportes y auditoría</h3>
+        <p class="lp__service-desc">
+          Reportes detallados de asistencia, historial de citas y trazabilidad completa de todas las acciones del sistema.
+        </p>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════
+     HOW IT WORKS
+══════════════════════════════════════════════════════ -->
+<section class="lp__how" id="como-funciona">
+  <div class="lp__how-bg" aria-hidden="true"></div>
+  <div class="lp__section-inner">
+    <p class="lp__section-label lp__section-label--light">Proceso sencillo</p>
+    <h2 class="lp__section-title lp__section-title--light">
+      Tres pasos hacia<br>tu próxima cita
+    </h2>
+
+    <div class="lp__steps">
+
+      <div class="lp__step">
+        <div class="lp__step-number" aria-hidden="true">01</div>
+        <div class="lp__step-body">
+          <h3 class="lp__step-title">Regístrate o inicia sesión</h3>
+          <p class="lp__step-desc">
+            Crea tu cuenta como paciente en menos de dos minutos. Accede con tus credenciales de manera segura.
+          </p>
+        </div>
+      </div>
+
+      <div class="lp__step-connector" aria-hidden="true">
+        <svg width="40" height="24" viewBox="0 0 40 24" fill="none">
+          <path d="M0 12H38M38 12L28 4M38 12L28 20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4 3"/>
+        </svg>
+      </div>
+
+      <div class="lp__step">
+        <div class="lp__step-number" aria-hidden="true">02</div>
+        <div class="lp__step-body">
+          <h3 class="lp__step-title">Elige tu especialista</h3>
+          <p class="lp__step-desc">
+            Selecciona la especialidad médica, el médico disponible y el horario que mejor se adapte a ti.
+          </p>
+        </div>
+      </div>
+
+      <div class="lp__step-connector" aria-hidden="true">
+        <svg width="40" height="24" viewBox="0 0 40 24" fill="none">
+          <path d="M0 12H38M38 12L28 4M38 12L28 20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4 3"/>
+        </svg>
+      </div>
+
+      <div class="lp__step">
+        <div class="lp__step-number" aria-hidden="true">03</div>
+        <div class="lp__step-body">
+          <h3 class="lp__step-title">Confirma tu cita</h3>
+          <p class="lp__step-desc">
+            Recibe confirmación al instante. Consulta y gestiona tus citas en cualquier momento desde tu perfil.
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="lp__how-cta">
+      <a routerLink="/login" class="lp__btn lp__btn--white">Comenzar ahora</a>
+      <a routerLink="/register" class="lp__btn lp__btn--ghost-light">Crear cuenta gratis</a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════
+     CTA BANNER
+══════════════════════════════════════════════════════ -->
+<section class="lp__banner">
+  <div class="lp__banner-blob" aria-hidden="true"></div>
+  <div class="lp__banner-inner">
+    <h2 class="lp__banner-title">¿Listo para cuidar tu salud?</h2>
+    <p class="lp__banner-subtitle">
+      Únete a cientos de pacientes que ya gestionan su salud con Piedrazul.
+    </p>
+    <a routerLink="/login" class="lp__btn lp__btn--white">
+      Agendar mi primera cita
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+        <path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════
+     FOOTER
+══════════════════════════════════════════════════════ -->
+<footer class="lp__footer">
+  <div class="lp__footer-inner">
+    <div class="lp__footer-brand">
+      <div class="lp__logo-mark lp__logo-mark--sm">PZ</div>
+      <span class="lp__footer-brand-name">Piedrazul</span>
+      <p class="lp__footer-tagline">Sistema de agendamiento médico</p>
+    </div>
+
+    <div class="lp__footer-links">
+      <a href="#servicios" class="lp__footer-link">Servicios</a>
+      <a href="#como-funciona" class="lp__footer-link">Cómo funciona</a>
+      <a routerLink="/login" class="lp__footer-link">Iniciar sesión</a>
+      <a routerLink="/register" class="lp__footer-link">Registrarse</a>
+    </div>
+
+    <div class="lp__footer-bottom">
+      <span>© 2025 Piedrazul. Todos los derechos reservados.</span>
+      <span class="lp__footer-status">
+        <span class="lp__footer-status-dot" aria-hidden="true"></span>
+        Sistema activo
+      </span>
+    </div>
+  </div>
+</footer>

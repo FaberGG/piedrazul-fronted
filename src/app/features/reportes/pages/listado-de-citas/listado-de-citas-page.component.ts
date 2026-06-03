@@ -6,6 +6,7 @@ import { MedicosAgendaService } from '../../../agenda/services/medicos-agenda.se
 import { MedicosService } from '../../../agenda/services/medicos.service';
 import { MedicoAgenda } from '../../../agenda/models/medico-agenda.model';
 import { ReporteService } from '../../services/report.service';
+import { DownloadService } from '../../../../shared/services/download.service';
 import { AuthService } from '../../../../core/auth/auth.service';
 import { ROLES } from '../../../../shared/constants/roles';
 
@@ -21,6 +22,7 @@ export class ListadoDeCitasPageComponent implements OnInit {
   private readonly medicosService = inject(MedicosAgendaService);
   private readonly medicosServiceMe = inject(MedicosService);
   private readonly reporteService = inject(ReporteService);
+  private readonly downloadService = inject(DownloadService);
   private readonly authService = inject(AuthService);
 
   readonly hoy = new Date().toISOString().split('T')[0];
@@ -74,12 +76,7 @@ export class ListadoDeCitasPageComponent implements OnInit {
     this.error.set('');
     this.reporteService.exportarAgendaDiaCompleta(this.hoy).subscribe({
       next: (blob) => {
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `agenda-completa-${this.hoy}.pdf`;
-        a.click();
-        URL.revokeObjectURL(url);
+        this.downloadService.download(blob, `agenda-completa-${this.hoy}.pdf`);
         this.descargandoHoy.set(false);
       },
       error: () => {
@@ -104,12 +101,7 @@ export class ListadoDeCitasPageComponent implements OnInit {
 
     this.reporteService.exportarAgendaDiaria(medicoId, fecha, formato).subscribe({
       next: (blob) => {
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `agenda_${fecha}_medico_${medicoId}.${formato.toLowerCase()}`;
-        a.click();
-        URL.revokeObjectURL(url);
+        this.downloadService.download(blob, `agenda_${fecha}_medico_${medicoId}.${formato.toLowerCase()}`);
         this.descargando.set(false);
       },
       error: () => {

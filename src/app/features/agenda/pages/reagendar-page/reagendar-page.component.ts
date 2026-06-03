@@ -58,7 +58,7 @@ export class ReagendarPageComponent implements OnInit {
     });
     this.agendaManualService.obtenerHistorialCita(id).subscribe({
       next: (h) => this.historial.set(h),
-      error: () => {}
+      error: () => this.error.set('No se pudo cargar el historial de la cita.')
     });
   }
 

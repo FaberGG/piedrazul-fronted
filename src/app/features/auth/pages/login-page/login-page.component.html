@@ -1,80 +1,124 @@
-<div class="login-page">
+<div class="auth-page">
 
-  <div class="login-page__card">
+  <!-- ══════════════════════════════════════════════════════
+       LEFT PANEL — Image + branding
+  ══════════════════════════════════════════════════════ -->
+  <aside class="auth-panel">
+    <div class="auth-panel__overlay" aria-hidden="true"></div>
+    <div class="auth-panel__content">
 
-    <!-- Brand -->
-    <div class="login-page__brand">
-      <div class="login-page__logo-mark">PZ</div>
-      <h1 class="login-page__brand-name">Piedrazul</h1>
-      <p class="login-page__tagline">Sistema de agendamiento de citas</p>
-    </div>
+      <a routerLink="/" class="auth-panel__back">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Volver al inicio
+      </a>
 
-    <!-- Form -->
-    <form [formGroup]="form" (ngSubmit)="submit()" class="login-page__form">
-
-      <div class="login-page__field">
-        <label for="username" class="login-page__label">Usuario</label>
-        <input
-          id="username"
-          type="text"
-          formControlName="username"
-          class="login-page__input"
-          placeholder="Ingresa tu nombre de usuario"
-          autocomplete="username"
-        />
+      <div class="auth-panel__brand">
+        <div class="auth-mark">PZ</div>
+        <h2 class="auth-panel__title">
+          Tu salud,<br><em>en buenas manos</em>
+        </h2>
+        <p class="auth-panel__desc">
+          Agenda tus citas médicas de manera sencilla, rápida y segura desde cualquier lugar.
+        </p>
       </div>
 
-      <div class="login-page__field">
-        <label for="password" class="login-page__label">Contraseña</label>
-        <input
-          id="password"
-          type="password"
-          formControlName="password"
-          class="login-page__input"
-          placeholder="Ingresa tu contraseña"
-          autocomplete="current-password"
-        />
-      </div>
-
-      @if (errorMessage()) {
-        <div class="login-page__error" role="alert">
-          <i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i>
-          {{ errorMessage() }}
+      <div class="auth-panel__stats">
+        <div class="auth-panel__stat">
+          <strong>500+</strong>
+          <span>Pacientes</span>
         </div>
-      }
+        <div class="auth-panel__stat">
+          <strong>15+</strong>
+          <span>Especialistas</span>
+        </div>
+        <div class="auth-panel__stat">
+          <strong>98%</strong>
+          <span>Satisfacción</span>
+        </div>
+      </div>
 
-      <button
-        type="submit"
-        class="login-page__submit"
-        [disabled]="form.invalid || isLoading()"
-      >
-        @if (isLoading()) {
-          <span class="login-page__spinner" aria-hidden="true"></span>
-          Ingresando…
-        } @else {
-          Iniciar sesión
+      <div class="auth-panel__footer">
+        <span class="auth-status-dot" aria-hidden="true"></span>
+        Sistema activo &nbsp;·&nbsp; © 2025 Piedrazul
+      </div>
+
+    </div>
+  </aside>
+
+
+  <!-- ══════════════════════════════════════════════════════
+       RIGHT PANEL — Form
+  ══════════════════════════════════════════════════════ -->
+  <main class="auth-form-side">
+    <div class="auth-form-inner">
+
+      <!-- Mobile brand (visible only on small screens) -->
+      <div class="auth-mobile-header">
+        <div class="auth-mark auth-mark--sm">PZ</div>
+        <span class="auth-brand-name">Piedrazul</span>
+      </div>
+
+      <div class="auth-form-header">
+        <h1 class="auth-form-title">Bienvenido de vuelta</h1>
+        <p class="auth-form-subtitle">Inicia sesión para acceder a tu cuenta</p>
+      </div>
+
+      <form [formGroup]="form" (ngSubmit)="submit()" class="auth-form">
+
+        <div class="auth-field">
+          <label for="username" class="auth-label">Usuario</label>
+          <input
+            id="username"
+            type="text"
+            formControlName="username"
+            class="auth-input"
+            placeholder="Ingresa tu nombre de usuario"
+            autocomplete="username"
+          />
+        </div>
+
+        <div class="auth-field">
+          <label for="password" class="auth-label">Contraseña</label>
+          <input
+            id="password"
+            type="password"
+            formControlName="password"
+            class="auth-input"
+            placeholder="Ingresa tu contraseña"
+            autocomplete="current-password"
+          />
+        </div>
+
+        @if (errorMessage()) {
+          <div class="auth-error" role="alert">
+            <i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i>
+            {{ errorMessage() }}
+          </div>
         }
-      </button>
 
-    </form>
+        <button
+          type="submit"
+          class="auth-submit"
+          [disabled]="form.invalid || isLoading()"
+        >
+          @if (isLoading()) {
+            <span class="auth-spinner" aria-hidden="true"></span>
+            Ingresando…
+          } @else {
+            Iniciar sesión
+          }
+        </button>
 
-    <!-- Register link -->
-    <p class="login-page__register-hint">
-      ¿No tienes cuenta?
-      <button type="button" class="login-page__register-btn" (click)="goToRegister()">
-        Regístrate
-      </button>
-    </p>
+      </form>
 
-  </div>
+      <p class="auth-hint">
+        ¿No tienes cuenta?
+        <button type="button" class="auth-hint-btn" (click)="goToRegister()">Regístrate</button>
+      </p>
 
-  <!-- Minimal footer -->
-  <footer class="login-page__footer">
-    <span class="login-page__status">
-      <span class="login-page__status-dot" aria-hidden="true"></span>
-      Sistema activo
-    </span>
-    <span>© 2025 Piedrazul</span>
-  </footer>
+    </div>
+  </main>
 
 </div>

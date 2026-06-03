@@ -1,30 +1,28 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
+import { RegisterPacienteRequest } from '../../auth/models/auth.models';
+import { Paciente } from '../models/paciente.model';
 
 @Injectable({ providedIn: 'root' })
 export class PacienteService {
-  // URL base del AuthController
+  private readonly http = inject(HttpClient);
   private readonly apiUrl = `${environment.apiUrl}/auth`;
 
-  constructor(private http: HttpClient) {}
-
-  // Registro de paciente → POST /api/v1/auth/register/paciente
-  registrarPaciente(paciente: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/register/paciente`, paciente);
+  registrarPaciente(paciente: RegisterPacienteRequest): Observable<void> {
+    return this.http.post<void>(`${this.apiUrl}/register/paciente`, paciente);
   }
 
-  // Ejemplo de otros métodos:
-  listarPacientes(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/pacientes`);
+  listarPacientes(): Observable<Paciente[]> {
+    return this.http.get<Paciente[]>(`${this.apiUrl}/pacientes`);
   }
 
-  buscarPacientes(nombre: string): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/pacientes/buscar`, { params: { nombre } });
+  buscarPacientes(nombre: string): Observable<Paciente[]> {
+    return this.http.get<Paciente[]>(`${this.apiUrl}/pacientes/buscar`, { params: { nombre } });
   }
 
-  obtenerPaciente(id: number): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/pacientes/${id}`);
+  obtenerPaciente(id: number): Observable<Paciente> {
+    return this.http.get<Paciente>(`${this.apiUrl}/pacientes/${id}`);
   }
 }

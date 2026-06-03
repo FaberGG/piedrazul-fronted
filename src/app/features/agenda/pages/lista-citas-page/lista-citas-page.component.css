@@ -364,6 +364,7 @@
 .estado--atendida   { background: var(--color-success-bg); color: var(--color-success); }
 .estado--cancelada  { background: var(--color-error-bg); color: var(--color-error); }
 .estado--pendiente  { background: var(--color-warning-bg); color: var(--color-warning); }
+.estado--inasistencia{ background: var(--color-error-bg); color: var(--color-error); }
 .estado--default    { background: var(--color-border-subtle); color: var(--color-text); }
 
 /* ── Empty / initial ── */

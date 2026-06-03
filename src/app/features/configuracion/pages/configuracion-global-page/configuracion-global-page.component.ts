@@ -54,7 +54,7 @@ export class ConfiguracionGlobalPageComponent implements OnInit {
       next: (config) => {
         this.formVentana.patchValue({ ventanaAgendamientoSemanas: config.ventanaAgendamientoSemanas });
       },
-      error: () => {}
+      error: () => this.errorVentana.set('No se pudo cargar la configuración.')
     });
   }
 
@@ -65,7 +65,10 @@ export class ConfiguracionGlobalPageComponent implements OnInit {
         this.diasNoLaborales.set(dias);
         this.isLoadingDias.set(false);
       },
-      error: () => { this.isLoadingDias.set(false); }
+      error: () => {
+        this.isLoadingDias.set(false);
+        this.errorDia.set('No se pudo cargar los días no laborales.');
+      }
     });
   }
 

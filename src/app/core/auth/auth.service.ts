@@ -8,6 +8,17 @@ import { Role, ROLES } from '../../shared/constants/roles';
 import { User } from '../models/user.model';
 import { TokenService } from './token.service';
 
+interface JwtPayload {
+  roles?: string[];
+  realm_access?: { roles?: string[] };
+  resource_access?: Record<string, { roles?: string[] }>;
+  id?: string | number;
+  sub?: string;
+  preferred_username?: string;
+  name?: string;
+  [key: string]: unknown;
+}
+
 interface LoginRequest {
   username: string;
   password: string;
@@ -88,7 +99,7 @@ export class AuthService {
   }
 
   private userFromToken(token: string | null): User {
-    const payload = this.tokenService.getPayload(token);
+    const payload = this.tokenService.getPayload(token) as JwtPayload | null;
     const normalizedRoles = this.getNormalizedRoles(payload);
     const rol = this.pickRole(normalizedRoles);
 
@@ -100,13 +111,12 @@ export class AuthService {
     };
   }
 
-  private getNormalizedRoles(payload: unknown): string[] {
-    const tokenPayload = payload as any;
+  private getNormalizedRoles(payload: JwtPayload | null | undefined): string[] {
     const roleSet = new Set<string>();
 
-    const directRoles: string[] = tokenPayload?.roles ?? [];
-    const realmRoles: string[] = tokenPayload?.realm_access?.roles ?? [];
-    const clientRoles: string[] = tokenPayload?.resource_access?.[this.clientId]?.roles ?? [];
+    const directRoles: string[] = payload?.roles ?? [];
+    const realmRoles: string[] = payload?.realm_access?.roles ?? [];
+    const clientRoles: string[] = payload?.resource_access?.[this.clientId]?.roles ?? [];
 
     [...directRoles, ...realmRoles, ...clientRoles].forEach(role => {
       if (!role) return;
