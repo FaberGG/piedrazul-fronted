@@ -1,170 +1,234 @@
-<section class="register-page">
-  <div class="register-page__card">
+<div class="auth-page">
 
-    <!-- Brand -->
-    <div class="register-page__brand">
-      <div class="register-page__logo-mark">PZ</div>
-      <h1 class="register-page__brand-name">Piedrazul</h1>
-      <p class="register-page__tagline">Sistema de agendamiento de citas</p>
-    </div>
+  <!-- ══════════════════════════════════════════════════════
+       LEFT PANEL — Image + branding
+  ══════════════════════════════════════════════════════ -->
+  <aside class="auth-panel">
+    <div class="auth-panel__overlay" aria-hidden="true"></div>
+    <div class="auth-panel__content">
 
-    <!-- Title -->
-    <div class="register-page__title-block">
-      <h2 class="register-page__title">Crear cuenta</h2>
-      <p class="register-page__subtitle">Regístrate como paciente para agendar citas</p>
-    </div>
+      <a routerLink="/" class="auth-panel__back">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Volver al inicio
+      </a>
 
-    <!-- Section header -->
-    <div class="register-page__section-header">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
-        stroke="currentColor" stroke-width="2" aria-hidden="true">
-        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-        <circle cx="12" cy="7" r="4" />
-      </svg>
-      <span>Información del paciente</span>
-    </div>
-
-    <!-- Form -->
-    <form [formGroup]="form" (ngSubmit)="submit()" class="register-page__form">
-      <div class="register-page__grid">
-
-        <div class="register-page__field">
-          <label for="nombres" class="register-page__label">Nombres *</label>
-          <input id="nombres" type="text" formControlName="nombres"
-            class="register-page__input"
-            [class.register-page__input--error]="isInvalid('nombres')"
-            [class.register-page__input--success]="isValid('nombres')"
-            placeholder="Ingrese los nombres"
-            (input)="validateOnInput('nombres')" />
-          @if (isInvalid('nombres')) {
-            <p class="register-page__error">{{ getError('nombres') }}</p>
-          }
-        </div>
-
-        <div class="register-page__field">
-          <label for="documento" class="register-page__label">Número de documento *</label>
-          <input id="documento" type="text" formControlName="documento"
-            class="register-page__input"
-            [class.register-page__input--error]="isInvalid('documento')"
-            [class.register-page__input--success]="isValid('documento')"
-            placeholder="Ingrese el número de documento"
-            maxlength="12"
-            (input)="validateOnInput('documento')" />
-          @if (isInvalid('documento')) {
-            <p class="register-page__error">{{ getError('documento') }}</p>
-          }
-        </div>
-
-        <div class="register-page__field">
-          <label for="apellidos" class="register-page__label">Apellidos *</label>
-          <input id="apellidos" type="text" formControlName="apellidos"
-            class="register-page__input"
-            [class.register-page__input--error]="isInvalid('apellidos')"
-            [class.register-page__input--success]="isValid('apellidos')"
-            placeholder="Ingrese los apellidos"
-            (input)="validateOnInput('apellidos')" />
-          @if (isInvalid('apellidos')) {
-            <p class="register-page__error">{{ getError('apellidos') }}</p>
-          }
-        </div>
-
-        <div class="register-page__field">
-          <label for="celular" class="register-page__label">Número de celular *</label>
-          <input id="celular" type="tel" formControlName="celular"
-            class="register-page__input"
-            [class.register-page__input--error]="isInvalid('celular')"
-            [class.register-page__input--success]="isValid('celular')"
-            placeholder="Ingrese el número de celular"
-            maxlength="10"
-            (input)="validateOnInput('celular')" />
-          @if (isInvalid('celular')) {
-            <p class="register-page__error">{{ getError('celular') }}</p>
-          }
-        </div>
-
-        <div class="register-page__field">
-          <label for="password" class="register-page__label">Contraseña *</label>
-          <input id="password" type="password" formControlName="password"
-            class="register-page__input"
-            [class.register-page__input--error]="isInvalid('password')"
-            [class.register-page__input--success]="isValid('password')"
-            placeholder="Mínimo 6 caracteres"
-            (input)="validateOnInput('password')" />
-          @if (isInvalid('password')) {
-            <p class="register-page__error">{{ getError('password') }}</p>
-          }
-        </div>
-
-        <div class="register-page__field">
-          <label for="confirmPassword" class="register-page__label">Confirmar contraseña *</label>
-          <input id="confirmPassword" type="password" formControlName="confirmPassword"
-            class="register-page__input"
-            [class.register-page__input--error]="isConfirmPasswordInvalid()"
-            [class.register-page__input--success]="isConfirmPasswordValid()"
-            placeholder="Repita la contraseña"
-            (input)="validateOnInput('confirmPassword')" />
-          @if (isConfirmPasswordInvalid()) {
-            <p class="register-page__error">{{ getConfirmPasswordError() }}</p>
-          }
-        </div>
-
-        <div class="register-page__field">
-          <label for="fechaNacimiento" class="register-page__label">Fecha de nacimiento</label>
-          <input id="fechaNacimiento" type="date" formControlName="fechaNacimiento"
-            class="register-page__input" />
-        </div>
-
-        <div class="register-page__field">
-          <label for="correo" class="register-page__label">Correo electrónico *</label>
-          <input id="correo" type="email" formControlName="correo"
-            class="register-page__input"
-            [class.register-page__input--error]="isInvalid('correo')"
-            [class.register-page__input--success]="isValid('correo')"
-            placeholder="Ingrese el correo"
-            (input)="validateOnInput('correo')" />
-          @if (isInvalid('correo')) {
-            <p class="register-page__error">{{ getError('correo') }}</p>
-          }
-        </div>
-
-        <div class="register-page__field">
-          <label for="genero" class="register-page__label">Género *</label>
-          <select id="genero" formControlName="genero"
-            class="register-page__input register-page__select"
-            [class.register-page__input--error]="isInvalid('genero')"
-            [class.register-page__input--success]="isValid('genero')"
-            (change)="validateOnInput('genero')">
-            <option value="" disabled selected>Seleccione el género</option>
-            <option value="masculino">Masculino</option>
-            <option value="femenino">Femenino</option>
-            <option value="otro">Otro</option>
-            <option value="prefiero_no_decir">Prefiero no decir</option>
-          </select>
-          @if (isInvalid('genero')) {
-            <p class="register-page__error">{{ getError('genero') }}</p>
-          }
-        </div>
-
+      <div class="auth-panel__brand">
+        <div class="auth-mark">PZ</div>
+        <h2 class="auth-panel__title">
+          Únete a<br><em>Piedrazul</em>
+        </h2>
+        <p class="auth-panel__desc">
+          Crea tu cuenta como paciente y empieza a gestionar tus citas médicas de forma sencilla y segura.
+        </p>
       </div>
 
-      @if (errorMessage()) {
-        <p class="register-page__error register-page__error--global">{{ errorMessage() }}</p>
-      }
+      <div class="auth-panel__checklist">
+        <div class="auth-panel__check-item">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M3 8L6.5 11.5L13 4.5" stroke="#4ade80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Agenda citas en segundos
+        </div>
+        <div class="auth-panel__check-item">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M3 8L6.5 11.5L13 4.5" stroke="#4ade80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Consulta tu historial de citas
+        </div>
+        <div class="auth-panel__check-item">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M3 8L6.5 11.5L13 4.5" stroke="#4ade80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Recibe recordatorios automáticos
+        </div>
+        <div class="auth-panel__check-item">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M3 8L6.5 11.5L13 4.5" stroke="#4ade80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Acceso 24/7 desde cualquier dispositivo
+        </div>
+      </div>
 
-      <button type="submit" class="register-page__submit" [disabled]="form.invalid || isLoading()">
-        @if (isLoading()) {
-          <span class="register-page__spinner"></span>
-          Registrando...
-        } @else {
-          Registrarse
+      <div class="auth-panel__footer">
+        <span class="auth-status-dot" aria-hidden="true"></span>
+        Sistema activo &nbsp;·&nbsp; © 2025 Piedrazul
+      </div>
+
+    </div>
+  </aside>
+
+
+  <!-- ══════════════════════════════════════════════════════
+       RIGHT PANEL — Form
+  ══════════════════════════════════════════════════════ -->
+  <main class="auth-form-side">
+    <div class="auth-form-inner">
+
+      <!-- Mobile brand -->
+      <div class="auth-mobile-header">
+        <div class="auth-mark auth-mark--sm">PZ</div>
+        <span class="auth-brand-name">Piedrazul</span>
+      </div>
+
+      <div class="auth-form-header">
+        <h1 class="auth-form-title">Crear cuenta</h1>
+        <p class="auth-form-subtitle">Regístrate como paciente para agendar citas</p>
+      </div>
+
+      <!-- Section label -->
+      <div class="auth-section-label">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+          <circle cx="12" cy="7" r="4"/>
+        </svg>
+        Información del paciente
+      </div>
+
+      <form [formGroup]="form" (ngSubmit)="submit()" class="auth-form">
+        <div class="auth-grid">
+
+          <div class="auth-field">
+            <label for="nombres" class="auth-label">Nombres *</label>
+            <input id="nombres" type="text" formControlName="nombres"
+              class="auth-input"
+              [class.auth-input--error]="isInvalid('nombres')"
+              [class.auth-input--success]="isValid('nombres')"
+              placeholder="Ingrese los nombres"
+              (input)="validateOnInput('nombres')" />
+            @if (isInvalid('nombres')) {
+              <p class="auth-field-error">{{ getError('nombres') }}</p>
+            }
+          </div>
+
+          <div class="auth-field">
+            <label for="documento" class="auth-label">N.º de documento *</label>
+            <input id="documento" type="text" formControlName="documento"
+              class="auth-input"
+              [class.auth-input--error]="isInvalid('documento')"
+              [class.auth-input--success]="isValid('documento')"
+              placeholder="Número de documento"
+              maxlength="12"
+              (input)="validateOnInput('documento')" />
+            @if (isInvalid('documento')) {
+              <p class="auth-field-error">{{ getError('documento') }}</p>
+            }
+          </div>
+
+          <div class="auth-field">
+            <label for="apellidos" class="auth-label">Apellidos *</label>
+            <input id="apellidos" type="text" formControlName="apellidos"
+              class="auth-input"
+              [class.auth-input--error]="isInvalid('apellidos')"
+              [class.auth-input--success]="isValid('apellidos')"
+              placeholder="Ingrese los apellidos"
+              (input)="validateOnInput('apellidos')" />
+            @if (isInvalid('apellidos')) {
+              <p class="auth-field-error">{{ getError('apellidos') }}</p>
+            }
+          </div>
+
+          <div class="auth-field">
+            <label for="celular" class="auth-label">Celular *</label>
+            <input id="celular" type="tel" formControlName="celular"
+              class="auth-input"
+              [class.auth-input--error]="isInvalid('celular')"
+              [class.auth-input--success]="isValid('celular')"
+              placeholder="10 dígitos"
+              maxlength="10"
+              (input)="validateOnInput('celular')" />
+            @if (isInvalid('celular')) {
+              <p class="auth-field-error">{{ getError('celular') }}</p>
+            }
+          </div>
+
+          <div class="auth-field">
+            <label for="password" class="auth-label">Contraseña *</label>
+            <input id="password" type="password" formControlName="password"
+              class="auth-input"
+              [class.auth-input--error]="isInvalid('password')"
+              [class.auth-input--success]="isValid('password')"
+              placeholder="Mínimo 6 caracteres"
+              (input)="validateOnInput('password')" />
+            @if (isInvalid('password')) {
+              <p class="auth-field-error">{{ getError('password') }}</p>
+            }
+          </div>
+
+          <div class="auth-field">
+            <label for="confirmPassword" class="auth-label">Confirmar contraseña *</label>
+            <input id="confirmPassword" type="password" formControlName="confirmPassword"
+              class="auth-input"
+              [class.auth-input--error]="isConfirmPasswordInvalid()"
+              [class.auth-input--success]="isConfirmPasswordValid()"
+              placeholder="Repita la contraseña"
+              (input)="validateOnInput('confirmPassword')" />
+            @if (isConfirmPasswordInvalid()) {
+              <p class="auth-field-error">{{ getConfirmPasswordError() }}</p>
+            }
+          </div>
+
+          <div class="auth-field">
+            <label for="fechaNacimiento" class="auth-label">Fecha de nacimiento</label>
+            <input id="fechaNacimiento" type="date" formControlName="fechaNacimiento"
+              class="auth-input" />
+          </div>
+
+          <div class="auth-field">
+            <label for="correo" class="auth-label">Correo electrónico *</label>
+            <input id="correo" type="email" formControlName="correo"
+              class="auth-input"
+              [class.auth-input--error]="isInvalid('correo')"
+              [class.auth-input--success]="isValid('correo')"
+              placeholder="ejemplo@correo.com"
+              (input)="validateOnInput('correo')" />
+            @if (isInvalid('correo')) {
+              <p class="auth-field-error">{{ getError('correo') }}</p>
+            }
+          </div>
+
+          <div class="auth-field auth-field--full">
+            <label for="genero" class="auth-label">Género *</label>
+            <select id="genero" formControlName="genero"
+              class="auth-input auth-select"
+              [class.auth-input--error]="isInvalid('genero')"
+              [class.auth-input--success]="isValid('genero')"
+              (change)="validateOnInput('genero')">
+              <option value="" disabled selected>Seleccione el género</option>
+              <option value="masculino">Masculino</option>
+              <option value="femenino">Femenino</option>
+              <option value="otro">Otro</option>
+              <option value="prefiero_no_decir">Prefiero no decir</option>
+            </select>
+            @if (isInvalid('genero')) {
+              <p class="auth-field-error">{{ getError('genero') }}</p>
+            }
+          </div>
+
+        </div>
+
+        @if (errorMessage()) {
+          <p class="auth-error-global">{{ errorMessage() }}</p>
         }
-      </button>
-    </form>
 
-    <p class="register-page__login-hint">
-      ¿Ya tienes cuenta?
-      <button type="button" class="register-page__login-btn" (click)="goToLogin()">Inicia sesión</button>
-    </p>
+        <button type="submit" class="auth-submit" [disabled]="form.invalid || isLoading()">
+          @if (isLoading()) {
+            <span class="auth-spinner" aria-hidden="true"></span>
+            Registrando...
+          } @else {
+            Crear cuenta
+          }
+        </button>
+      </form>
 
-  </div>
-</section>
+      <p class="auth-hint">
+        ¿Ya tienes cuenta?
+        <button type="button" class="auth-hint-btn" (click)="goToLogin()">Inicia sesión</button>
+      </p>
+
+    </div>
+  </main>
+
+</div>
