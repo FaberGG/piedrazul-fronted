@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../../auth/services/auth.service';
@@ -12,19 +12,17 @@ import { AuthService } from '../../../auth/services/auth.service';
 })
 export class RegisterAdminPageComponent {
 
-  formAdmin: FormGroup;
+  private readonly fb = inject(FormBuilder);
+  private readonly authService = inject(AuthService);
+
+  formAdmin: FormGroup = this.fb.group({
+    username: ['', [Validators.required, Validators.email]],
+    password: ['', [Validators.required, Validators.minLength(6)]]
+  });
+
   isLoading = signal(false);
   errorMessage = signal('');
-
-  constructor(
-    private fb: FormBuilder,
-    private authService: AuthService
-  ) {
-    this.formAdmin = this.fb.group({
-      username: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]]
-    });
-  }
+  successMessage = signal('');
 
   isInvalid(form: FormGroup, campo: string): boolean {
     const c = form.get(campo);
@@ -67,7 +65,8 @@ export class RegisterAdminPageComponent {
     this.authService.registerAdmin(this.formAdmin.value).subscribe({
       next: () => {
         this.isLoading.set(false);
-        alert('¡Administrador registrado exitosamente!');
+        this.successMessage.set('¡Administrador registrado exitosamente!');
+        this.errorMessage.set('');
         this.formAdmin.reset();
       },
       error: (err) => {

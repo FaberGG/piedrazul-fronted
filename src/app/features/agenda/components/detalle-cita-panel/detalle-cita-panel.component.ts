@@ -115,7 +115,7 @@ export class DetalleCitaPanelComponent implements OnChanges {
         // Load historial after detail (secondary, non-blocking)
         this.service.obtenerHistorialCita(this.citaId!).subscribe({
           next: (h) => this.historial.set(h),
-          error: () => {}
+          error: () => this.error.set('No se pudo cargar el historial.')
         });
       },
       error: () => {

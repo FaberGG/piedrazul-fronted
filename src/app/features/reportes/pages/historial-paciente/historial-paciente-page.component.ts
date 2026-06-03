@@ -8,6 +8,7 @@ import { PacienteBusqueda } from '../../../agenda/models/paciente-busqueda.model
 import { EstadoCita, ESTADO_CITA_LABELS } from '../../../agenda/models/estado-cita.enum';
 import { TipoCita, TIPO_CITA_LABELS } from '../../../agenda/models/tipo-cita.enum';
 import { ReporteService, HistorialPaciente } from '../../services/report.service';
+import { DownloadService } from '../../../../shared/services/download.service';
 
 @Component({
   selector: 'app-historial-paciente-page',
@@ -20,6 +21,7 @@ import { ReporteService, HistorialPaciente } from '../../services/report.service
 export class HistorialPacientePageComponent {
   private readonly pacientesService = inject(PacientesAgendaService);
   private readonly reporteService = inject(ReporteService);
+  private readonly downloadService = inject(DownloadService);
 
   readonly EstadoCita = EstadoCita;
 
@@ -104,12 +106,7 @@ export class HistorialPacientePageComponent {
     this.descargando.set(true);
     this.reporteService.exportarHistorialPaciente(paciente.id).subscribe({
       next: (blob) => {
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `historial-paciente-${paciente.documento}.pdf`;
-        a.click();
-        URL.revokeObjectURL(url);
+        this.downloadService.download(blob, `historial-paciente-${paciente.documento}.pdf`);
         this.descargando.set(false);
       },
       error: () => this.descargando.set(false)

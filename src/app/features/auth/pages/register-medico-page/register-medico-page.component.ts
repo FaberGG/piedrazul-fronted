@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   ReactiveFormsModule,
@@ -20,31 +20,29 @@ import { RegisterMedicoRequest } from '../../../auth/models/auth.models';
 })
 export class RegistrarMedicoPageComponent {
 
-  formMedico: FormGroup;
+  private readonly fb = inject(FormBuilder);
+  private readonly authService = inject(AuthService);
 
-  private _isLoading = signal(false);
-  private _errorMessage = signal('');
+  private readonly _isLoading = signal(false);
+  private readonly _errorMessage = signal('');
+  private readonly _successMessage = signal('');
 
-  isLoading = this._isLoading.asReadonly();
-  errorMessage = this._errorMessage.asReadonly();
+  readonly isLoading = this._isLoading.asReadonly();
+  readonly errorMessage = this._errorMessage.asReadonly();
+  readonly successMessage = this._successMessage.asReadonly();
 
-  especialidadesValidas: string[] = ['Terapia Neural', 'Quiropraxia', 'Fisioterapia'];
-  tiposValidos: string[] = ['MEDICO', 'TERAPISTA'];
+  readonly especialidadesValidas: string[] = ['Terapia Neural', 'Quiropraxia', 'Fisioterapia'];
+  readonly tiposValidos: string[] = ['MEDICO', 'TERAPISTA'];
 
-  constructor(
-    private fb: FormBuilder,
-    private authService: AuthService
-  ) {
-    this.formMedico = this.fb.group({
-      nombres:      ['', [Validators.required, Validators.pattern(/^[a-zA-ZÁÉÍÓÚáéíóúñÑ\s]+$/)]],
-      apellidos:    ['', [Validators.required, Validators.pattern(/^[a-zA-ZÁÉÍÓÚáéíóúñÑ\s]+$/)]],
-      genero:       ['', Validators.required],
-      tipo:         ['', Validators.required],
-      correo:       ['', [Validators.required, Validators.email]],
-      contrasena:   ['', [Validators.required, Validators.minLength(6), this.passwordValidator]],
-      especialidad: ['', Validators.required]
-    });
-  }
+  formMedico: FormGroup = this.fb.group({
+    nombres:      ['', [Validators.required, Validators.pattern(/^[a-zA-ZÁÉÍÓÚáéíóúñÑ\s]+$/)]],
+    apellidos:    ['', [Validators.required, Validators.pattern(/^[a-zA-ZÁÉÍÓÚáéíóúñÑ\s]+$/)]],
+    genero:       ['', Validators.required],
+    tipo:         ['', Validators.required],
+    correo:       ['', [Validators.required, Validators.email]],
+    contrasena:   ['', [Validators.required, Validators.minLength(6), this.passwordValidator]],
+    especialidad: ['', Validators.required]
+  });
 
   passwordValidator(control: AbstractControl): ValidationErrors | null {
     const value = control.value || '';
@@ -78,7 +76,8 @@ export class RegistrarMedicoPageComponent {
     this.authService.registerMedico(payload).subscribe({
       next: () => {
         this._isLoading.set(false);
-        alert('¡Médico registrado exitosamente!');
+        this._successMessage.set('¡Médico registrado exitosamente!');
+        this._errorMessage.set('');
         this.formMedico.reset();
       },
       error: (err) => {
