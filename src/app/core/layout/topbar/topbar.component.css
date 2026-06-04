@@ -8,6 +8,7 @@
   background: var(--neutro-white);
   color: var(--neutro-gray-700);
   overflow: visible;
+  border-bottom: 1px solid var(--color-border-subtle);
   transition: padding 180ms ease, box-shadow 180ms ease;
 }
 
@@ -19,8 +20,9 @@
 .topbar__title {
   margin: 0;
   font-size: var(--font-size-topbar-title);
-  color: var(--neutro-gray-700);
-  font-weight: 500;
+  font-family: var(--font-display, Georgia, serif);
+  color: var(--neutro-gray-800);
+  font-weight: 700;
   transition: font-size 180ms ease;
 }
 
@@ -68,7 +70,7 @@
   width: 2.4rem;
   height: 2.4rem;
   border-radius: 50%;
-  background: var(--blue-green-500);
+  background: var(--blue-green-700);
   color: var(--neutro-white);
   font-weight: 700;
   display: grid;
