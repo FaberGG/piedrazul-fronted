@@ -4,8 +4,11 @@
 <header class="lp__header" [class.lp__header--scrolled]="true">
   <div class="lp__header-inner">
     <a routerLink="/" class="lp__logo-link" (click)="closeMenu()">
-      <div class="lp__logo-mark">PZ</div>
-      <span class="lp__logo-text">Piedrazul</span>
+      <img
+        ngSrc="assets/branding/logo/piedrazul-logo.svg"
+        alt="Logo de la aplicación"
+        class="sidebar__logo-img"
+        height="16" width="16"/>
     </a>
 
     <nav class="lp__nav" [class.lp__nav--open]="menuOpen()">

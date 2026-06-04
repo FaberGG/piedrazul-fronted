@@ -185,6 +185,11 @@
   50%       { opacity: 0.6; transform: scale(0.85); }
 }
 
+.isotipo__logo-img{
+  width: 78px;
+  height: auto;
+  color: white;
+}
 
 /* ════════════════════════════════════════════════════════
    RIGHT PANEL — form
