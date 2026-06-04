@@ -3,11 +3,12 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 
 import { AuthService } from '../../../../core/auth/auth.service';
+import {NgOptimizedImage} from '@angular/common';
 
 @Component({
   selector: 'app-login-page',
   standalone: true,
-  imports: [ReactiveFormsModule, RouterLink],
+  imports: [ReactiveFormsModule, RouterLink, NgOptimizedImage],
   templateUrl: './login-page.component.html',
   styleUrl: './login-page.component.css'
 })
@@ -43,7 +44,7 @@ export class LoginPageComponent {
         console.error('Error login:', err);
         this.errorMessage.set('Credenciales invalidas. Intenta nuevamente.');
       }
-      
+
     });
   }
 
@@ -52,5 +53,5 @@ export class LoginPageComponent {
     this.router.navigate(['/register']);
   }
 
-  
+
 }
