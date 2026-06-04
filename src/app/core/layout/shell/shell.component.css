@@ -4,7 +4,7 @@
   display: grid;
   grid-template-columns: clamp(250px, 22vw, 320px) 1fr;
   gap: var(--layout-shell-gap);
-  background: var(--blue-green-100);
+  background: var(--color-app-bg);
   transition: grid-template-columns 180ms ease;
 }
 
@@ -42,13 +42,13 @@
   right: 0;
   bottom: 100%;
   height: var(--layout-padding);
-  background: var(--blue-green-200);
+  background: var(--color-app-bg);
   pointer-events: none;
 }
 
 .shell__main {
   border-radius: 0 0 var(--layout-radius) var(--layout-radius);
-  background: var(--blue-green-50);
+  background: #ffffff;
   color: var(--neutro-gray-700);
   /*padding: clamp(0.75rem, 2vw, 1.25rem);*/
   padding: 1rem 2rem;

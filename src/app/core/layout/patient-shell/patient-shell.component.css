@@ -2,7 +2,7 @@
   min-height: 100vh;
   display: grid;
   grid-template-rows: auto 1fr;
-  background: var(--blue-green-200);
+  background: var(--color-app-bg);
   padding: var(--layout-padding);
   gap: var(--layout-gap);
 }
@@ -122,7 +122,7 @@
 
 /* ── Content area ── */
 .patient-shell__content {
-  background: var(--blue-green-50);
+  background: #ffffff;
   border-radius: 0 0 var(--layout-radius) var(--layout-radius);
   padding: 2rem 2.5rem;
   min-height: calc(100vh - 8rem);

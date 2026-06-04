@@ -26,9 +26,10 @@
 }
 
 .card-icon {
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   line-height: 1;
   margin-top: 2px;
+  color: var(--color-primary-dark);
 }
 
 .card-title {
