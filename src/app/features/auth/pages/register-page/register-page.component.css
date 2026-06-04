@@ -24,6 +24,10 @@
   display: flex;
   min-height: 100vh;
 }
+.isotipo__logo-img{
+  width: 70px;
+  height: auto;
+}
 
 /* ════════════════════════════════════════════════════════
    LEFT PANEL

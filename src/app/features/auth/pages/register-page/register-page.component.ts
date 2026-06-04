@@ -1,5 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {CommonModule, NgOptimizedImage} from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
@@ -9,7 +9,7 @@ import { normalizarNombre } from '../../../../shared/utils/nombre-normalizer';
 @Component({
   selector: 'app-register-page',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink, NgOptimizedImage],
   templateUrl: './register-page.component.html',
   styleUrl: './register-page.component.css'
 })
